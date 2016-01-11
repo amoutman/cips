@@ -15,7 +15,7 @@ public class CustomerController {
 
 	final static Logger logger = LoggerFactory.getLogger(CustomerController.class); 
 	
-	@Resource(name="CustomerService")
+	@Resource(name="customerService")
 	private CustomerService customerServic;
 	
 	
