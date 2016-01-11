@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document */
+@charset "utf-8";
+/* CSS Document */
+*{-webkit-backface-visibility: hidden;}
+/* 全局样式 */
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, address, big, cite, code, del, em, font, img, ins, small, strong, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, input{margin:0; padding:0 }
+body, button, input, select, textarea{font:14px/1.5 'MicroSoft YaHei','simhei',Arial !important;}
+body{-webkit-transform-style: preserve-3d;color:#444; background-color:#eff2f4;}
+ul, ol, li{list-style:none;}
+img{border:none;}
+input, img{vertical-align:middle;}
+h1, h2, h3, h4, h5, h6{font-size:100%;}
+table{border-spacing:0; border-collapse:collapse;}
+em, i, address{font-style:normal;}
+textarea{overflow-y:auto;}
+input{outline:none;}
+address, caption, cite, code, dfn, em, th, var{font-style:normal; font-weight:normal;}
+/* 链接样式 */
+a{text-decoration:none; color:#444;}
+a:hover{color:#009ce5;}
+a, area{blr:expression(this.onFocus=this.blur());}
+:focus{outline:none;}
+.left { float: left; }
+.right { float: right; }
+
+.clear:after { content: ' '; clear: both; display: block; height: 0; visibility: hidden; line-height: 0 }
+.clear { zoom: 1 }
+.clearFix { display: block; zoom: 1 }
+.clearFix:after { content: " "; display: block; visibility: hidden; height: 0; clear: both; }
+
+
+input:focus,textarea:focus {border-color:#7ecef4;-webkit-box-shadow:0 0 6px #7ecef4;-moz-box-shadow:0 0 6px #7ecef4;box-shadow:0 0 6px #7ecef4;}
+
+/* 定位 */
+.pos_r{position:relative}
+.pos_a{position:absolute}
+
+/* 公用样式 */
+.tal{ text-align:left;}
+.tac{ text-align:center;}
+.tar{ text-align:right;}
+
+.w1200{width:1200px; margin:0 auto;}
+
+.blod{font-weight:bold;}
+.font12{font-size:12px;}
+.font18{font-size:18px;}
+.font24{font-size:24px;}
+.colorBlue{ color:#009ce5;}
+.colorGreen{ color:#05c005;}
+.color_orange{ color:#f89700;}
+.color_red{color:#e00024;}
+.color_grey{color:#5b5b5b;}
+.color_888{color:#888;}
+.color_666{ color:#666;}
+
+
+/* 分页 */
+.page{ margin-bottom:25px; display:inline-block;width:100%; padding-top:30px; color:#7b7b7b; text-align:center;}
+.page a{ color:#afafaf; background-color:#fff; width:25px; height:25px; line-height:25px; text-align:center;margin:0 3px; border:1px solid #f2f2f2;display:inline-block; border-radius:25px;}
+.page a:hover,.page .active{ color:#fff; background-color:#009ce5; border-color:#009ce5;}
+.page i{ color:#ff6600;}
+
+/*尾部样式*/
+.footer{ background-color:#eaeaea; border-top:1px solid #c2c2c2; text-align:center; padding:15px 0 20px; line-height:20px; color:#444;}
