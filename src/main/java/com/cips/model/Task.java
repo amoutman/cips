@@ -2,7 +2,7 @@ package com.cips.model;
 
 import java.util.Date;
 
-public class Risk {
+public class Task {
     private String id;
 
     private String orderId;

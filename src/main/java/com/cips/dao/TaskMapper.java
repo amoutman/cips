@@ -2,7 +2,7 @@ package com.cips.dao;
 
 import com.cips.model.Task;
 
-public interface RiskMapper {
+public interface TaskMapper {
     int deleteByPrimaryKey(String id);
 
     int insert(Task record);
