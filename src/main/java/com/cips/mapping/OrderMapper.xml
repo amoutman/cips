@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cips.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.cips.model.Order" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="poundage_amount" property="poundageAmount" jdbcType="DECIMAL" />
+    <result column="exchange_rate_rmb" property="exchangeRateRmb" jdbcType="DECIMAL" />
+    <result column="exchange_rate_usd" property="exchangeRateUsd" jdbcType="DECIMAL" />
+    <result column="apply_id" property="applyId" jdbcType="CHAR" />
+    <result column="apply_date" property="applyDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
+    <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
+    <result column="completed_date" property="completedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, apply_amount, pay_amount, poundage_amount, exchange_rate_rmb, exchange_rate_usd, 
+    apply_id, apply_date, status, modified_id, modified_date, completed_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_order
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cips.model.Order" >
+    insert into tb_order (id, order_no, apply_amount, 
+      pay_amount, poundage_amount, exchange_rate_rmb, 
+      exchange_rate_usd, apply_id, apply_date, 
+      status, modified_id, modified_date, 
+      completed_date)
+    values (#{id,jdbcType=CHAR}, #{orderNo,jdbcType=VARCHAR}, #{applyAmount,jdbcType=DECIMAL}, 
+      #{payAmount,jdbcType=DECIMAL}, #{poundageAmount,jdbcType=DECIMAL}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
+      #{exchangeRateUsd,jdbcType=DECIMAL}, #{applyId,jdbcType=CHAR}, #{applyDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP}, 
+      #{completedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cips.model.Order" >
+    insert into tb_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="applyAmount != null" >
+        apply_amount,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="poundageAmount != null" >
+        poundage_amount,
+      </if>
+      <if test="exchangeRateRmb != null" >
+        exchange_rate_rmb,
+      </if>
+      <if test="exchangeRateUsd != null" >
+        exchange_rate_usd,
+      </if>
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+      <if test="applyDate != null" >
+        apply_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="modifiedId != null" >
+        modified_id,
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date,
+      </if>
+      <if test="completedDate != null" >
+        completed_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyAmount != null" >
+        #{applyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="poundageAmount != null" >
+        #{poundageAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangeRateRmb != null" >
+        #{exchangeRateRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangeRateUsd != null" >
+        #{exchangeRateUsd,jdbcType=DECIMAL},
+      </if>
+      <if test="applyId != null" >
+        #{applyId,jdbcType=CHAR},
+      </if>
+      <if test="applyDate != null" >
+        #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedId != null" >
+        #{modifiedId,jdbcType=CHAR},
+      </if>
+      <if test="modifiedDate != null" >
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completedDate != null" >
+        #{completedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cips.model.Order" >
+    update tb_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyAmount != null" >
+        apply_amount = #{applyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="poundageAmount != null" >
+        poundage_amount = #{poundageAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangeRateRmb != null" >
+        exchange_rate_rmb = #{exchangeRateRmb,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangeRateUsd != null" >
+        exchange_rate_usd = #{exchangeRateUsd,jdbcType=DECIMAL},
+      </if>
+      <if test="applyId != null" >
+        apply_id = #{applyId,jdbcType=CHAR},
+      </if>
+      <if test="applyDate != null" >
+        apply_date = #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedId != null" >
+        modified_id = #{modifiedId,jdbcType=CHAR},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completedDate != null" >
+        completed_date = #{completedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cips.model.Order" >
+    update tb_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      apply_amount = #{applyAmount,jdbcType=DECIMAL},
+      pay_amount = #{payAmount,jdbcType=DECIMAL},
+      poundage_amount = #{poundageAmount,jdbcType=DECIMAL},
+      exchange_rate_rmb = #{exchangeRateRmb,jdbcType=DECIMAL},
+      exchange_rate_usd = #{exchangeRateUsd,jdbcType=DECIMAL},
+      apply_id = #{applyId,jdbcType=CHAR},
+      apply_date = #{applyDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      modified_id = #{modifiedId,jdbcType=CHAR},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      completed_date = #{completedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
