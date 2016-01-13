@@ -1,5 +1,8 @@
 package com.cips.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cips.model.Task;
 
 public interface TaskMapper {
@@ -11,7 +14,7 @@ public interface TaskMapper {
 
     Task selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Task record);
-
     int updateByPrimaryKey(Task record);
+    
+    List<Task> toPageTaskListByParams(Map<String,Object> params);
 }

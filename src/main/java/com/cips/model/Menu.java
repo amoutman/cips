@@ -15,6 +15,8 @@ public class Menu {
 
     private Integer status;
 
+    private Integer menuType;
+
     private String createdId;
 
     private Date createdDate;
@@ -69,6 +71,14 @@ public class Menu {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(Integer menuType) {
+        this.menuType = menuType;
     }
 
     public String getCreatedId() {

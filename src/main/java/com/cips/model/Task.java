@@ -11,6 +11,8 @@ public class Task {
 
     private Integer orderStatus;
 
+    private Integer taskType;
+
     private Date beginTime;
 
     private Date endTime;
@@ -51,6 +53,14 @@ public class Task {
 
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Integer getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(Integer taskType) {
+        this.taskType = taskType;
     }
 
     public Date getBeginTime() {

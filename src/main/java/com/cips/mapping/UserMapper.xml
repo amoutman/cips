@@ -3,20 +3,22 @@
 <mapper namespace="com.cips.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.cips.model.User" >
     <id column="id" property="id" jdbcType="CHAR" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="role_id" property="roleId" jdbcType="CHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="credit_id" property="creditId" jdbcType="VARCHAR" />
+    <result column="is_first_login" property="isFirstLogin" jdbcType="INTEGER" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, password, mobile, email, role_id, status, created_id, created_date, 
-    modified_id, modified_date
+    id, user_code, user_name, password, mobile, email, status, credit_id, is_first_login, 
+    created_id, created_date, modified_id, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -29,20 +31,25 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.cips.model.User" >
-    insert into tb_user (id, user_name, password, 
-      mobile, email, role_id, 
-      status, created_id, created_date, 
-      modified_id, modified_date)
-    values (#{id,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{roleId,jdbcType=CHAR}, 
-      #{status,jdbcType=INTEGER}, #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
-      #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP})
+    insert into tb_user (id, user_code, user_name, 
+      password, mobile, email, 
+      status, credit_id, is_first_login, 
+      created_id, created_date, modified_id, 
+      modified_date)
+    values (#{id,jdbcType=CHAR}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{creditId,jdbcType=VARCHAR}, #{isFirstLogin,jdbcType=INTEGER}, 
+      #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=CHAR}, 
+      #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.cips.model.User" >
     insert into tb_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
       </if>
       <if test="userName != null" >
         user_name,
@@ -56,11 +63,14 @@
       <if test="email != null" >
         email,
       </if>
-      <if test="roleId != null" >
-        role_id,
-      </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="creditId != null" >
+        credit_id,
+      </if>
+      <if test="isFirstLogin != null" >
+        is_first_login,
       </if>
       <if test="createdId != null" >
         created_id,
@@ -79,6 +89,9 @@
       <if test="id != null" >
         #{id,jdbcType=CHAR},
       </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
       </if>
@@ -91,11 +104,14 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=CHAR},
-      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creditId != null" >
+        #{creditId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFirstLogin != null" >
+        #{isFirstLogin,jdbcType=INTEGER},
       </if>
       <if test="createdId != null" >
         #{createdId,jdbcType=CHAR},
@@ -114,6 +130,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.cips.model.User" >
     update tb_user
     <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
       <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
@@ -126,11 +145,14 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        role_id = #{roleId,jdbcType=CHAR},
-      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creditId != null" >
+        credit_id = #{creditId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFirstLogin != null" >
+        is_first_login = #{isFirstLogin,jdbcType=INTEGER},
       </if>
       <if test="createdId != null" >
         created_id = #{createdId,jdbcType=CHAR},
@@ -149,12 +171,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cips.model.User" >
     update tb_user
-    set user_name = #{userName,jdbcType=VARCHAR},
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=CHAR},
       status = #{status,jdbcType=INTEGER},
+      credit_id = #{creditId,jdbcType=VARCHAR},
+      is_first_login = #{isFirstLogin,jdbcType=INTEGER},
       created_id = #{createdId,jdbcType=CHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       modified_id = #{modifiedId,jdbcType=CHAR},

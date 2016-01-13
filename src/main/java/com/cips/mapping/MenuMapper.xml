@@ -3,19 +3,20 @@
 <mapper namespace="com.cips.dao.MenuMapper" >
   <resultMap id="BaseResultMap" type="com.cips.model.Menu" >
     <id column="id" property="id" jdbcType="CHAR" />
-    <result column="pid" property="pid" jdbcType="CHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
     <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
     <result column="menu_path" property="menuPath" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="menu_type" property="menuType" jdbcType="INTEGER" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, pid, menu_name, menu_path, level, status, created_id, created_date, modified_id, 
-    modified_date
+    id, pid, menu_name, menu_path, level, status, menu_type, created_id, created_date, 
+    modified_id, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -30,12 +31,12 @@
   <insert id="insert" parameterType="com.cips.model.Menu" >
     insert into tb_menu (id, pid, menu_name, 
       menu_path, level, status, 
-      created_id, created_date, modified_id, 
-      modified_date)
-    values (#{id,jdbcType=CHAR}, #{pid,jdbcType=CHAR}, #{menuName,jdbcType=VARCHAR}, 
+      menu_type, created_id, created_date, 
+      modified_id, modified_date)
+    values (#{id,jdbcType=CHAR}, #{pid,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
       #{menuPath,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=CHAR}, 
-      #{modifiedDate,jdbcType=TIMESTAMP})
+      #{menuType,jdbcType=INTEGER}, #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.cips.model.Menu" >
     insert into tb_menu
@@ -58,6 +59,9 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="menuType != null" >
+        menu_type,
+      </if>
       <if test="createdId != null" >
         created_id,
       </if>
@@ -76,7 +80,7 @@
         #{id,jdbcType=CHAR},
       </if>
       <if test="pid != null" >
-        #{pid,jdbcType=CHAR},
+        #{pid,jdbcType=VARCHAR},
       </if>
       <if test="menuName != null" >
         #{menuName,jdbcType=VARCHAR},
@@ -89,6 +93,9 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null" >
+        #{menuType,jdbcType=INTEGER},
       </if>
       <if test="createdId != null" >
         #{createdId,jdbcType=CHAR},
@@ -108,7 +115,7 @@
     update tb_menu
     <set >
       <if test="pid != null" >
-        pid = #{pid,jdbcType=CHAR},
+        pid = #{pid,jdbcType=VARCHAR},
       </if>
       <if test="menuName != null" >
         menu_name = #{menuName,jdbcType=VARCHAR},
@@ -121,6 +128,9 @@
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null" >
+        menu_type = #{menuType,jdbcType=INTEGER},
       </if>
       <if test="createdId != null" >
         created_id = #{createdId,jdbcType=CHAR},
@@ -139,11 +149,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cips.model.Menu" >
     update tb_menu
-    set pid = #{pid,jdbcType=CHAR},
+    set pid = #{pid,jdbcType=VARCHAR},
       menu_name = #{menuName,jdbcType=VARCHAR},
       menu_path = #{menuPath,jdbcType=VARCHAR},
       level = #{level,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      menu_type = #{menuType,jdbcType=INTEGER},
       created_id = #{createdId,jdbcType=CHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       modified_id = #{modifiedId,jdbcType=CHAR},
