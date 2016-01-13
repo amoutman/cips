@@ -8,6 +8,8 @@
 .btnOrage:hover{color:#fff;}
 .btnGrey{color:#fff; background-color:#c7c7c7;text-align:center; display:inline-block;width:62px; height:26px; line-height:26px;border-radius:3px;}
 .btnGrey:hover{color:#fff;}
+.btnUpload{display:inline-block;width:42px; padding-left:30px; height:26px; line-height:26px;border-radius:3px; color:#fff; background:url(../images/icon_upload.png) no-repeat 8px center #f89700;}
+.btnUpload:hover{color:#fff;}
 
 .inpt1{width:120px; height:38px; line-height:20px; padding:0 10px; border:1px solid #cecece;}
 .bg{ position:fixed;width:100%; height:100%; z-index:9998; background-color:#000; opacity:.5; display:none;}
@@ -238,3 +240,9 @@
 .tc_zh .tcDiv{width:560px;}
 .tc_zh .tcDiv .tcbox ul{width:260px; padding:0 10px; float:left;}
 .tc_zh .tcDiv .tcbox ul .btnOrage{ margin-top:42px;}
+
+/*上传*/
+.imgShow{ padding-top:10px;}
+.imgShow img{ margin-right:10px; margin-bottom:10px; float:left;}
+
+

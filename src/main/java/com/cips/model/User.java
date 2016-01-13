@@ -6,37 +6,21 @@ import java.util.List;
 public class User {
     private String id;
 
-    private String userName;
+    private String userCode;
+
+    private String userName; 
 
     private String password;
 
     private String mobile;
 
-    private String email;
-
-    private String roleId;
+    private String email; 
 
     private Integer status;
-    
+
     private Integer isFirstLogin;
-
-    public Integer getIsFirstLogin() {
-		return isFirstLogin;
-	}
-
-	public void setIsFirstLogin(Integer isFirstLogin) {
-		this.isFirstLogin = isFirstLogin;
-	}
-	
+   
 	private String creditId;
-
-	public String getCreditId() {
-		return creditId;
-	}
-
-	public void setCreditId(String creditId) {
-		this.creditId = creditId;
-	}
 
 	private String createdId;
 
@@ -49,6 +33,16 @@ public class User {
     private List<Role> roleList;
     
     private String roleNames; //角色名称集合
+    
+    private String roleId;
+    
+    public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
 
 	public String getRoleNames() {
 		return roleNames;
@@ -72,6 +66,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
     }
 
     public String getUserName() {
@@ -106,20 +108,28 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
-    }
-
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getCreditId() {
+        return creditId;
+    }
+
+    public void setCreditId(String creditId) {
+        this.creditId = creditId == null ? null : creditId.trim();
+    }
+
+    public Integer getIsFirstLogin() {
+        return isFirstLogin;
+    }
+
+    public void setIsFirstLogin(Integer isFirstLogin) {
+        this.isFirstLogin = isFirstLogin;
     }
 
     public String getCreatedId() {

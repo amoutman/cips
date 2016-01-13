@@ -1,22 +1,14 @@
 package com.cips.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
-public class Menu {
+public class Poundage {
     private String id;
 
-    private String pid;
-
-    private String menuName;
-
-    private String menuPath;
-
-    private Integer level;
+    private BigDecimal poundageAmount;
 
     private Integer status;
-
-    private Integer menuType;
 
     private String createdId;
 
@@ -25,18 +17,8 @@ public class Menu {
     private String modifiedId;
 
     private Date modifiedDate;
-    
-    private List<Menu> children;
 
-    public List<Menu> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Menu> children) {
-		this.children = children;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -44,36 +26,12 @@ public class Menu {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getPid() {
-        return pid;
+    public BigDecimal getPoundageAmount() {
+        return poundageAmount;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid == null ? null : pid.trim();
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName == null ? null : menuName.trim();
-    }
-
-    public String getMenuPath() {
-        return menuPath;
-    }
-
-    public void setMenuPath(String menuPath) {
-        this.menuPath = menuPath == null ? null : menuPath.trim();
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setPoundageAmount(BigDecimal poundageAmount) {
+        this.poundageAmount = poundageAmount;
     }
 
     public Integer getStatus() {
@@ -82,14 +40,6 @@ public class Menu {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Integer getMenuType() {
-        return menuType;
-    }
-
-    public void setMenuType(Integer menuType) {
-        this.menuType = menuType;
     }
 
     public String getCreatedId() {
