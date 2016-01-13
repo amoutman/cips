@@ -1,5 +1,7 @@
 package com.cips.web.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cips.constants.BusConstants;
 import com.cips.constants.GlobalPara;
+import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.service.TaskService;
 
@@ -30,13 +34,16 @@ public class TaskController {
 	 */
 	@RequestMapping(value = "/toPageTaskMage",  method = RequestMethod.POST)
 	public ModelAndView toPageTaskManagement(HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
 		//获取客户用户名userId
 		User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 		//根据userId查询该用户所属角色
 		
 		//根据用户角色查询该角色所有未处理任务
-		
-		return null;
+//		List<Task> tasks = taskService.getTaskListByParams(roleIds, user.getId(), BusConstants.TASK_STATUS_NOT_PROCESS);
+//		mv.addObject("tasks", tasks);
+//		mv.setViewName("");
+		return mv;
 	}
 	
 	/**

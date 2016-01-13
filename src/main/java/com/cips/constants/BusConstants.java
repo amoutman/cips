@@ -5,10 +5,10 @@ package com.cips.constants;
  */
 public class BusConstants {
 
-	/**样例：代金券状态 0：未使用  1：已使用  2：已冻结*/
-	public static final Integer USER_COUPON_STATUS_NOT_USED = 0;
-	public static final Integer USER_COUPON_STATUS_USED = 1;
-	public static final Integer USER_COUPON_STATUS_FROZEN = 2;
+	/**任务状态 0：未处理  1：已处理  2：处理中*/
+	public static final Integer TASK_STATUS_NOT_PROCESS = 0;
+	public static final Integer TASK_STATUS_PROCESSED = 1;
+	public static final Integer TASK_STATUS_PROCESSING = 2;
 	
 
 
