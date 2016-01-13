@@ -23,4 +23,6 @@ public class GlobalPara {
 	public static final String SPLIT = ",";
 	
 	public static final String DICTIONARY_ORDER_CODE = "ORDER_CODE";
+	
+	public static final String MENU_SESSION = "MenuSession";
 }

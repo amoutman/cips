@@ -1,5 +1,7 @@
 package com.cips.dao;
 
+import java.util.List;
+
 import com.cips.model.Rate;
 
 public interface RateMapper {
@@ -14,4 +16,6 @@ public interface RateMapper {
     int updateByPrimaryKeySelective(Rate record);
 
     int updateByPrimaryKey(Rate record);
+    
+    List<Rate> getRateList();
 }

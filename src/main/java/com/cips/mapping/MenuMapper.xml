@@ -14,10 +14,18 @@
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List" > 
     id, pid, menu_name, menu_path, level, status, menu_type, created_id, created_date, 
     modified_id, modified_date
   </sql>
+  <select id="getMenuListByRoleId" resultMap="BaseResultMap" parameterType="map">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_menu a,tb_right b
+    where a.id = b.menu_id
+      and b.role_id = #{roleId,jdbcType=CHAR}
+      and a.pid = #{pid,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

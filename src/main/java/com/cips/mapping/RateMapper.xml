@@ -17,6 +17,12 @@
     id, type, status, rate_high, rate_low, rate_diff, created_id, created_date, modified_id, 
     modified_date
   </sql>
+  <select id="getRateList" resultMap="BaseResultMap" >
+  	select
+  	<include refid="Base_Column_List" />
+    from tb_rate
+    order by created_date,type
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
