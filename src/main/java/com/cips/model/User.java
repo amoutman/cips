@@ -1,6 +1,7 @@
 package com.cips.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
     private String id;
@@ -16,16 +17,56 @@ public class User {
     private String roleId;
 
     private Integer status;
+    
+    private Integer isFirstLogin;
 
-    private String createdId;
+    public Integer getIsFirstLogin() {
+		return isFirstLogin;
+	}
+
+	public void setIsFirstLogin(Integer isFirstLogin) {
+		this.isFirstLogin = isFirstLogin;
+	}
+	
+	private String creditId;
+
+	public String getCreditId() {
+		return creditId;
+	}
+
+	public void setCreditId(String creditId) {
+		this.creditId = creditId;
+	}
+
+	private String createdId;
 
     private Date createdDate;
 
     private String modifiedId;
 
     private Date modifiedDate;
+    
+    private List<Role> roleList;
+    
+    private String roleNames; //角色名称集合
 
-    public String getId() {
+	public String getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(String roleNames) {
+		this.roleNames = roleNames;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public String getId() {
         return id;
     }
 

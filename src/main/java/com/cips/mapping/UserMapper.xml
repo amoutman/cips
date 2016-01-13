@@ -7,15 +7,16 @@
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="role_id" property="roleId" jdbcType="CHAR" />
+    <result column="credit_id" property="creditId" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="is_first_login" property="isFirstLogin" jdbcType="INTEGER" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, password, mobile, email, role_id, status, created_id, created_date, 
+    id, user_name, password, mobile, email, credit_id, status,is_first_login, created_id, created_date, 
     modified_id, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -23,6 +24,20 @@
     <include refid="Base_Column_List" />
     from tb_user
     where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="toPageGetUserList" resultType="com.cips.model.User" parameterType="map">
+  	select 
+  	<include refid="Base_Column_List"></include>
+    from tb_user
+  </select>
+  <select id="toPageSelectUserInfo"  resultType="com.cips.model.User" parameterType="java.lang.String" >
+  	select 
+    <include refid="Base_Column_List"></include>
+    from tb_user
+   where 1=1
+    <if test="userInfo != null">
+    user_name like '%${userInfo}%' or mobile like '%${userInfo}%' or credit_id like '%${userInfo}%' or email like '%${userInfo}%'
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_user

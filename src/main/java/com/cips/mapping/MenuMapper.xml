@@ -3,20 +3,29 @@
 <mapper namespace="com.cips.dao.MenuMapper" >
   <resultMap id="BaseResultMap" type="com.cips.model.Menu" >
     <id column="id" property="id" jdbcType="CHAR" />
-    <result column="pid" property="pid" jdbcType="CHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
     <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
     <result column="menu_path" property="menuPath" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="menu_type" property="menuType" jdbcType="INTEGER" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, pid, menu_name, menu_path, level, status, created_id, created_date, modified_id, 
+    id, pid, menu_name, menu_path, level, status, menu_type, created_id, created_date, modified_id, 
     modified_date
   </sql>
+  <select id="getMenuListByRoleId" resultMap="BaseResultMap" parameterType="map">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_menu a,tb_right b
+    where a.id = b.menu_id
+      and b.role_id = #{roleId,jdbcType=CHAR}
+      and a.pid = #{pid,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
