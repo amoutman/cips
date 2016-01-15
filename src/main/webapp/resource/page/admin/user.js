@@ -7,6 +7,9 @@ $(document).ready(function() {
 			"userName":{
 				required:true
 			},
+			"roleId":{
+				required:true
+			},
 			"mobile":{
 				required:true
 			},
@@ -21,6 +24,9 @@ $(document).ready(function() {
 		message:{
 			"userName":{
 				required:"用户名不能为空"
+			},
+			"roleId":{
+				required:"至少选择一个角色"
 			},
 			"mobile":{
 				required:"电话号码不能为空"
@@ -121,4 +127,19 @@ $(document).ready(function() {
 			});
 		}
 	}
+	
+	$("input[type=checkbox]").change(function(){
+		var roleIdInput = $(this).parent().parent().parent().find("#roleId").val("");
+		String roleIds = "";
+		$(this).parent().find("input[type=checkbox]").each(function(){
+			if($(this).checked==true){
+				if(roleIds==""){
+					roleIds = $(this).val();
+				}else{
+					roleIds = "," + $(this).val();
+				}
+			}
+		});
+		$(this).parent().parent().parent().find("#roleId").val(roleIds);
+	})
 })

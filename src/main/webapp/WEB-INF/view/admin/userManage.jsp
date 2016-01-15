@@ -9,6 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>用户管理</title>
 </head>
@@ -60,17 +61,12 @@
                       <input type="text" name="userName" id="userName" class="input-txt"/>
                     </li>
                     <li class="li_sex">
-                      <label>角色</label>
-                      <div class="m-calculator-con">
-                        <span class="calculator-tit">好望角</span>
-                        <span class="calculator-rect"></span>
-                        <ul class="calculator-dis" style="display:none">
-                            <li>好望角</li>
-                            <li>中间人</li>
-                            <li>管理员</li>
-        
-                        </ul>
-                    </div>
+                       <label>角色<input type="hidden" name="roleId" id="roleId"/></label>
+                       <ul class="jsSelect clearFix">
+                      	<c:forEach var="role" items="${roleList }">
+                      		<li><input type="checkbox" name="roleIds" id="roleIds" value="${role.id }" />${role.roleName }</li>
+                      	</c:forEach>
+                       </ul>
                     </li>
                     <li class="clearFix"></li> 
                     <li>
@@ -106,7 +102,7 @@
            </div>
            <div class="role-date">
               <p><span class="color_888">姓名：</span> <span class="color_666">${user.userName }</span></p>
-              <p><span class="color_888">角色：</span> <span class="color_666">${user.roleName }</span></p>
+              <p><span class="color_888">角色：</span> <span class="color_666">${user.roleNames }</span></p>
               <p><span class="color_888">电话：</span> <span class="color_666">${user.mobile }</span></p>
            </div>
            <div class="role-deal">
@@ -125,16 +121,17 @@
                       <input type="text" name="userName" id="userName" class="input-txt" value="${user.userName }"/>
                     </li>
                     <li class="li_sex">
-                      <label>角色</label>
-                      <div class="m-calculator-con">
-                        <span class="calculator-tit">好望角</span>
-                        <span class="calculator-rect"></span>
-                        <ul class="calculator-dis" style="display:none">
-                            <li>好望角</li>
-                            <li>中间人</li>
-                            <li>管理员</li>
-                        </ul>
-                    </div>
+                     <label>角色<input type="hidden" name="roleId" id="roleId"/></label>
+                      <ul class="jsSelect clearFix">
+                      		<c:forEach var="role" items="${user.roleList }">
+                      			<c:if test="${role.isCheck == 1 }">
+                      				<li><input type="checkbox" name="roleIds" id="roleIds" value="${role.id }" checked="true"/>${role.roleName }</li>
+                      			</c:if>
+                      			<c:if test="${role.isCheck == 0 }">
+                      				<li><input type="checkbox" name="roleIds" id="roleIds" value="${role.id }"/>${role.roleName }</li>
+                      			</c:if>
+                      		</c:forEach>
+                      </ul>
                     </li>
                     <li class="clearFix"></li> 
                     <li>
