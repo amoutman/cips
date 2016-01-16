@@ -30,8 +30,10 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv) throws Exception {
 		// TODO Auto-generated method stub
-		List<Menu> menuList = (List<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
-		mv.addObject("menuList", menuList);
+		//List<Menu> menuList = (List<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
+		if(mv!=null){
+			mv.addObject("menuList", request.getSession().getAttribute(GlobalPara.MENU_SESSION));
+		}
 	}
 
 

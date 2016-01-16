@@ -2,10 +2,6 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 <link href="resource/css/base.css" rel="stylesheet" type="text/css" />
 <link href="resource/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="resource/js/jquery-1.9.1.min.js"></script>

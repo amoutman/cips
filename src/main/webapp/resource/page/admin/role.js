@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	function addRole(){
+		
 		var roleName = $("#newRoleName").val();
 		if(roleName == ""){
 			alert("角色名称不能为空");

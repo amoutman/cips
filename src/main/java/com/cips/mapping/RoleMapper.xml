@@ -11,7 +11,7 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, role_name, status, created_id, created_date, modified_id, modified_date
+    id, role_name, status, created_id, created_date
   </sql>
   <select id="getRoleList" resultMap="BaseResultMap">
   	select 
@@ -24,7 +24,7 @@
     	a.id id, 
     	a.role_name roleName
     from tb_role a,tb_user_role b
-    where a.id = b.user_id
+    where a.id = b.role_id
     and b.user_id = #{userId,jdbcType=CHAR}
     and a.status=0
   </select>

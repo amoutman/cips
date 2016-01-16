@@ -22,6 +22,7 @@ import com.cips.constants.GlobalPara;
 import com.cips.model.Menu;
 import com.cips.model.Role;
 import com.cips.model.User;
+import com.cips.model.UserRole;
 import com.cips.service.MenuService;
 import com.cips.service.RoleService;
 import com.cips.service.UserService;
@@ -43,10 +44,10 @@ public class UserController {
 	public ModelAndView toIndexPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		User loginUser = (User)request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-		if(loginUser.getIsFirstLogin().equals(0)){
-			mv.setViewName("redirect:user/toChangePassword");
+		if(loginUser!=null){
+			mv.setViewName("redirect:user/toPageUserManage");
 		}else{
-			mv.setViewName("redirect:");
+			mv.setViewName("redirect:user/toLogin");
 		}
 		return mv;
 	}
@@ -54,6 +55,7 @@ public class UserController {
 	@RequestMapping("/toLogin")
 	public ModelAndView toLogin(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin/login");
 		return mv;
 	}
 	
@@ -63,13 +65,40 @@ public class UserController {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		User user = new User();
 		user.setUserName(userName);
-		user.setPassword(password);
+		user.setPassword(MD5.md5(password));
 		try {
 			User lUser = userService.loginUser(user);
-			request.getSession().setAttribute(GlobalPara.USER_SESSION_TOKEN, lUser);
-			List<Menu> menuList = getMenuListByRoleId(lUser.getRoleId());
-			request.getSession().setAttribute(GlobalPara.MENU_SESSION, menuList);
-			resultMap.put("success", true);
+			if(lUser==null){
+				resultMap.put("success", false);
+				resultMap.put("error", "用户名或者密码不正确");
+			}else{
+				if(lUser.getIsFirstLogin().equals(0)){
+					resultMap.put("isFirstLogin", true);
+				}else{
+					resultMap.put("isFirstLogin", false);
+				}
+				request.getSession().setAttribute(GlobalPara.USER_SESSION_TOKEN, lUser);
+				//查询用户的角色
+				List<Role> urList = roleService.getRoleListByUserId(lUser.getId());
+				String[] roleIdArray;
+				String roleIds = "";
+				for(Role role:urList){
+					if(roleIds.equals("")){
+						roleIds = role.getId();
+					}else{
+						roleIds = roleIds + "," + role.getId();
+					}
+				}
+				if(roleIds.length() > 32){
+					roleIdArray = roleIds.split(",");
+				}else{
+					roleIdArray = new String[]{roleIds};
+				}
+				List<Menu> menuList = getMenuListByRoleId(roleIdArray);
+				request.getSession().setAttribute(GlobalPara.MENU_SESSION, menuList);
+				resultMap.put("success", true);
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			resultMap.put("success", false);
@@ -83,6 +112,69 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<User> userList = userService.getUserList(map);
+		//查询系统中所有角色
+		List<Role> roleList = roleService.getRoleList();
+		
+		List<User> nUserList = new ArrayList<User>();
+		if(!userList.isEmpty()){
+			for(User user:userList){
+				String userId = user.getId();
+				//查询用户的角色
+				List<Role> urList = roleService.getRoleListByUserId(userId);
+				String roleName = "";
+				String roleIds = "";
+				for(Role r:urList){
+					if(roleName.equals("")){
+						roleName = r.getRoleName();
+					}else{
+						roleName = roleName + "," + r.getRoleName();
+					}
+					if(roleIds.equals("")){
+						roleIds = r.getId();
+					}else{
+						roleIds = roleIds + "," + r.getId();
+					}
+				}
+				
+				if(roleName!=""){
+					user.setRoleNames(roleName);
+				}
+				if(roleIds!=""){
+					user.setRoleId(roleIds);
+				}
+				List<Role> checkRoleList = new ArrayList<Role>();
+				for(Role role:roleList){
+					String rid = role.getId();
+					boolean isIndex = roleIds.matches(rid);
+					if(isIndex){
+						role.setIsCheck(1);
+					}else if(roleIds.equals(rid)){
+						role.setIsCheck(1);
+					}else{
+						role.setIsCheck(0);
+					}
+					checkRoleList.add(role);
+				}
+				
+				user.setRoleList(checkRoleList);
+				nUserList.add(user);
+			}
+			mv.addObject("userList", nUserList);
+		}
+		
+		
+		if(!roleList.isEmpty()){
+			mv.addObject("roleList", roleList);
+		}	
+		
+		mv.setViewName("admin/userManage");
+		return mv;
+	}
+	
+	@RequestMapping("/toPageSelectUserInfo")
+	public ModelAndView selectUserInfo(HttpServletRequest request,HttpServletResponse response,@RequestParam("userInfo") String userInfo){
+		ModelAndView mv = new ModelAndView();
+		List<User> userList = userService.selectUserInfo(userInfo);
 		List<User> nUserList = new ArrayList<User>();
 		if(!userList.isEmpty()){
 			for(User user:userList){
@@ -91,10 +183,10 @@ public class UserController {
 				List<Role> urList = roleService.getRoleListByUserId(userId);
 				String roleName = "";
 				for(Role r:urList){
-					if(roleName == ""){
+					if(roleName.equals("")){
 						roleName = r.getRoleName();
 					}else{
-						roleName = ","+r.getRoleName();
+						roleName = roleName + ","+r.getRoleName();
 					}
 				}
 				if(roleName!=""){
@@ -111,16 +203,6 @@ public class UserController {
 		if(!roleList.isEmpty()){
 			mv.addObject("roleList", roleList);
 		}	
-		
-		mv.setViewName("admin/userManage");
-		return mv;
-	}
-	
-	@RequestMapping("/toPageSelectUserInfo")
-	public ModelAndView selectUserInfo(HttpServletRequest request,HttpServletResponse response,@RequestParam("userInfo") String userInfo){
-		ModelAndView mv = new ModelAndView();
-		List<User> userList = userService.selectUserInfo(userInfo);
-		mv.addObject("userList", userList);
 		mv.setViewName("admin/userManage");
 		return mv;
 	}
@@ -139,16 +221,35 @@ public class UserController {
 		
 		//添加用户角色
 		String roleIds = user.getRoleId();
+		List<UserRole> urList = new ArrayList<UserRole>();
+		UserRole ur = null;
 		if(roleIds.length()>32){
 			String[] roleIdArray = roleIds.split(",");
-			
+			for(int i=0;i<roleIdArray.length-1;i++){
+				ur = new UserRole();
+				ur.setId(PKIDUtils.getUuid());
+				ur.setUserId(user.getId());
+				ur.setRoleId(roleIdArray[i]);
+				ur.setCreatedId(loginUser.getId());
+				ur.setCreatedDate(new Date());
+				urList.add(ur);
+			}
 		}else{
-			
+			ur = new UserRole();
+			ur.setId(PKIDUtils.getUuid());
+			ur.setUserId(user.getId());
+			ur.setRoleId(roleIds);
+			ur.setCreatedId(loginUser.getId());
+			ur.setCreatedDate(new Date());
+			urList.add(ur);
 		}
 		
 		resultMap.put("success", true);
 		try {
 			userService.insertUser(user);
+			if(!urList.isEmpty()){
+				roleService.insertUserRoleList(urList);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			resultMap.put("success", false);
@@ -168,15 +269,36 @@ public class UserController {
 		
 		//修改用户角色（先删除再添加tb_user_role表中的记录）
 		String roleIds = user.getRoleId();
+		List<UserRole> urList = new ArrayList<UserRole>();
+		UserRole ur = null;
 		if(roleIds.length()>32){
 			String[] roleIdArray = roleIds.split(",");
-			
+			for(int i=0;i<roleIdArray.length-1;i++){
+				ur = new UserRole();
+				ur.setId(PKIDUtils.getUuid());
+				ur.setUserId(user.getId());
+				ur.setRoleId(roleIdArray[i]);
+				ur.setCreatedId(loginUser.getId());
+				ur.setCreatedDate(new Date());
+				urList.add(ur);
+			}
 		}else{
-					
+			ur = new UserRole();
+			ur.setId(PKIDUtils.getUuid());
+			ur.setUserId(user.getId());
+			ur.setRoleId(roleIds);
+			ur.setCreatedId(loginUser.getId());
+			ur.setCreatedDate(new Date());
+			urList.add(ur);
 		}
+		
 		resultMap.put("success", true);
 		try {
 			userService.updateUser(user);
+			roleService.deleteUserRoleByUserId(user.getId());
+			if(!urList.isEmpty()){
+				roleService.insertUserRoleList(urList);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			resultMap.put("success", false);
@@ -200,6 +322,7 @@ public class UserController {
 		resultMap.put("success", true);
 		try {
 			userService.updateUser(user);
+			roleService.deleteUserRoleByUserId(userId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			resultMap.put("success", false);
@@ -208,7 +331,7 @@ public class UserController {
 		return resultMap;
 	}
 	
-	@RequestMapping("/toPageRoleManage")
+	@RequestMapping("/toRoleManage")
 	public ModelAndView toRoleManage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		List<Role> roleList = roleService.getRoleList();
@@ -288,6 +411,9 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		User loginUser = (User)request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 		mv.addObject("user", loginUser);
+//		List<Menu> menuList = (List<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
+//		System.out.println("---------------------"+menuList.size());
+//		mv.addObject("menuList", menuList);
 		mv.setViewName("admin/changePassword");
 		return mv;
 	}
@@ -297,11 +423,13 @@ public class UserController {
 	public Map<String,Object> updatePassword(HttpServletRequest request,HttpServletResponse response,@RequestParam("password") String password){
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		User loginUser = (User)request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-		loginUser.setPassword(password);
-		loginUser.setModifiedId(loginUser.getId());
-		loginUser.setModifiedDate(new Date());
+		User nUser = new User();
+		nUser.setId(loginUser.getId());
+		nUser.setPassword(MD5.md5(password));
+		nUser.setModifiedId(loginUser.getId());
+		nUser.setModifiedDate(new Date());
 		if(loginUser.getIsFirstLogin().equals(0)){
-			loginUser.setIsFirstLogin(1);
+			nUser.setIsFirstLogin(1);
 		}
 		resultMap.put("success", true);
 		try {
@@ -313,6 +441,7 @@ public class UserController {
 			resultMap.put("error", e.getMessage());
 		}
 		if(resultMap.get("success").equals(true)){
+			loginUser.setPassword(MD5.md5(password));
 			request.getSession().setAttribute(GlobalPara.USER_SESSION_TOKEN, loginUser);
 		}
 		return resultMap;
@@ -324,25 +453,25 @@ public class UserController {
 		return resultMap;
 	}
 	
-	private List<Menu> getMenuListByRoleId(String roleId){
+	private List<Menu> getMenuListByRoleId(String[] roleId){
 		Map<String,Object> paraMap = new HashMap<String,Object>();
 		paraMap.put("roleId", roleId);
 		paraMap.put("pid", "0");
 		List<Menu> menuList = menuService.getMenuListByRoleId(paraMap);
-		List<Menu> showMenuList = new ArrayList<Menu>();
-		if(!menuList.isEmpty()){
-			for(Menu menu:menuList){
-				Map<String,Object> cMap = new HashMap<String,Object>();
-				cMap.put("roleId", roleId);
-				cMap.put("pid", menu.getId());
-				List<Menu> cList = menuService.getMenuListByRoleId(cMap);
-				if(!cList.isEmpty()){
-					menu.setChildren(cList);
-					showMenuList.add(menu);
-				}
-			}
-		}
+//		List<Menu> showMenuList = new ArrayList<Menu>();
+//		if(!menuList.isEmpty()){
+//			for(Menu menu:menuList){
+//				Map<String,Object> cMap = new HashMap<String,Object>();
+//				cMap.put("roleId", roleId);
+//				cMap.put("pid", menu.getId());
+//				List<Menu> cList = menuService.getMenuListByRoleId(cMap);
+//				if(!cList.isEmpty()){
+//					menu.setChildren(cList);
+//					showMenuList.add(menu);
+//				}
+//			}
+//		}
 		
-		return showMenuList;
+		return menuList;
 	}
 }

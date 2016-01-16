@@ -12,6 +12,7 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>用户管理</title>
+
 </head>
 <body>
 	<!--header start-->
@@ -34,8 +35,7 @@
 <!--主题内容 start-->
 <div class="w1200">
 <jsp:include page="../header/header.jsp"></jsp:include>
-<script type="text/javascript" src="resource/js/jquery.validate.js"></script>
-<script type="text/javascript" src="resource/page/user.js"></script>
+
  <!--右侧模块 start-->
   <div class="part-right">
      <div class="r-tit">
@@ -55,7 +55,7 @@
                <h2>新增用户</h2>
                <div class="tcbox">
                     <ul>
-                    <form action="user/addUser" method="post" id="addUserForm">
+                    <form action="user/insertUser" method="post" id="addUserForm">
                      <li class="li_user">
                       <label>用户名</label>
                       <input type="text" name="userName" id="userName" class="input-txt"/>
@@ -83,7 +83,8 @@
                     </li>
                     </form>
                    </ul>
-                    <a href="javascript:void(0)" class="btnOrage" id="btnAddUser">确认添加</a>
+                   
+                    <a href="javascript:void(0);" class="btnOrage" id="btnAddUser">确认添加</a>
                </div>
                
            </div>
@@ -108,7 +109,7 @@
            <div class="role-deal">
               <p><span class="color_888">身份证号码：</span> <span class="color_666">${user.creditId }</span></p>
               <p><span class="color_888">邮箱：</span> <span class="color_666">${user.email }</span></p>
-              <div class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnOrage btnck">修改</a> <a href="javascript:void(0)" onClick="deleteUser(${user.id})" class="btnGrey">删除</a></div>
+              <div class="ck-deal"> <input type="hidden" name="userId" id="userId" value="${user.id }"/> <a href="javascript:void(0);" id="btnDeleteUser" onClick="return deleteUser()" class="btnGrey">删除</a></div>
              <!--弹窗start-->
              <div class="tcDiv">
                <span class="close"></span>
@@ -118,14 +119,15 @@
                     <form action="user/updateUser" method="post" id="updateUserForm">
                      <li class="li_user">
                       <label>用户名</label>
+                      <input type="hidden" name="id" id="id" value="${user.id }"/>
                       <input type="text" name="userName" id="userName" class="input-txt" value="${user.userName }"/>
                     </li>
                     <li class="li_sex">
-                     <label>角色<input type="hidden" name="roleId" id="roleId"/></label>
+                     <label>角色<input type="input" name="roleId" id="roleId" value="${user.roleId }"/></label>
                       <ul class="jsSelect clearFix">
                       		<c:forEach var="role" items="${user.roleList }">
-                      			<c:if test="${role.isCheck == 1 }">
-                      				<li><input type="checkbox" name="roleIds" id="roleIds" value="${role.id }" checked="true"/>${role.roleName }</li>
+								<c:if test="${role.isCheck == 1 }">
+                      				<li><input type="checkbox" name="roleIds" id="roleIds" value="${role.id }" checked="checked"/>${role.roleName }</li>
                       			</c:if>
                       			<c:if test="${role.isCheck == 0 }">
                       				<li><input type="checkbox" name="roleIds" id="roleIds" value="${role.id }"/>${role.roleName }</li>
@@ -144,7 +146,7 @@
                     </li>
                     <li>
                       <label>邮箱</label>
-                      <input type="text" name="email" id="email" class="input-txt" placeholder="${user.email }"/>
+                      <input type="text" name="email" id="email" class="input-txt" value="${user.email }"/>
                     </li>
                     </form>
                    </ul>
@@ -166,5 +168,153 @@
 
 <div class="bg"></div>
 
+
 </body>
+<script type="text/javascript" src="resource/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("[id='btnDeleteUser']").click(function(){
+		var userId = $(this).parent().find("#userId").val();
+		alert(userId);
+		if(confirm("确定删除该用户？")){
+			$.post(
+				"user/deleteUser",
+				{
+					userId:userId
+				},
+				function(data){
+					if(data["success"]){
+						alert("删除成功");
+						window.location.href="user/toPageUserManage";
+					}else{
+						alert("删除失败");
+					}
+				},
+				"json"
+			)
+		}
+	})
+	
+	$("#updateUserForm").validate({
+		success:function(label){
+			label.remove();
+		},
+		rules:{
+			"userName":{
+				required:true
+			},
+			"mobile":{
+				required:true
+			},
+			"creditId":{
+				required:true
+			},
+			"email":{
+				required:true,
+				email:true
+			}	
+		},
+		messages:{
+			"userName":{
+				required:"用户名不能为空"
+			},
+			"mobile":{
+				required:"电话号码不能为空"
+			},
+			"creditId":{
+				required:"身份证号不能为空"
+			},
+			"email":{
+				required:"邮件不能为空",
+				email:"请输入正确的邮箱地址"
+			}
+		},
+		errorPlacement: function(error, element) {
+			var span = $("<span class='icon errorInfo' />").append(error);
+			span.appendTo(element.parent());
+		}
+	});
+
+$("[id='btnUpdateUser']").click(function(e){
+	//var validForm = $(this).parents(".tcbox").find("#updateUserForm");
+	if($(this).parents(".tcbox").find("#updateUserForm").valid()){
+		$(this).parents(".tcbox").find("#updateUserForm").submit();
+	}else{
+		alert("验证失败");
+	}
+});
+
+$('#addUserForm').validate({
+	success:function(label){
+		label.remove();
+	},
+	rules:{
+		"userName":{
+			required:true
+		},
+		"roleId":{
+			required:true
+		},
+		"mobile":{
+			required:true
+		},
+		"creditId":{
+			required:true
+		},
+		"email":{
+			required:true,
+			email:true
+		}	
+	},
+	messages:{
+		"userName":{
+			required:"用户名不能为空"
+		},
+		"roleId":{
+			required:"至少选择一个角色"
+		},
+		"mobile":{
+			required:"电话号码不能为空"
+		},
+		"creditId":{
+			required:"身份证号不能为空"
+		},
+		"email":{
+			required:"邮件不能为空",
+			email:"请输入正确的邮箱地址"
+		}
+	},
+	errorPlacement: function(error, element) {
+		var span = $("<span class='icon errorInfo' />").append(error);
+		span.appendTo(element.parent());
+	}
+});
+
+$("#btnAddUser").click(function(e){
+	if($('#addUserForm').valid()){
+		$('#addUserForm').submit();
+	}
+});
+
+$("input[type=checkbox]").change(function(){
+	$(this).parents(".li_sex").find("#roleId").val("");
+	var roleIds = "";
+	$(this).parents(".jsSelect").find("input[type=checkbox]").each(function(){
+		if($(this).is(":checked")){
+			if(roleIds == ""){
+				roleIds = $(this).val();
+			}else{
+				roleIds = roleIds + "," + $(this).val();
+			}
+		}
+		
+	});
+	$(this).parents(".li_sex").find("#roleId").val(roleIds);
+});
+	
+})
+
+
+</script>
 </html>
