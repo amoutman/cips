@@ -14,4 +14,6 @@ public interface PoundageMapper {
     int updateByPrimaryKeySelective(Poundage record);
 
     int updateByPrimaryKey(Poundage record);
+    
+    Poundage getCurrPoundage(Integer status);
 }

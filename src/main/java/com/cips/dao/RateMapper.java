@@ -1,6 +1,7 @@
 package com.cips.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cips.model.Rate;
 
@@ -18,4 +19,6 @@ public interface RateMapper {
     int updateByPrimaryKey(Rate record);
     
     List<Rate> getRateList();
+    
+    Rate getCurrentRate(Map<String,Object> paramMap);
 }

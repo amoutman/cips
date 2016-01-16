@@ -17,4 +17,5 @@ public interface RoleService {
 	
 	public List<Role> getRoleListByUserId(String userId);
 	
+	public Role selectRoleByName(String roleName);
 }

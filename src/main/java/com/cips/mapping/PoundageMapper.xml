@@ -114,4 +114,10 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="getCurrPoundage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_poundage
+    where status = #{status,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -21,36 +21,37 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Override
 	public List<Role> getRoleList() {
-		// TODO Auto-generated method stub
 		return roleMapper.getRoleList();
 	}
 
 	@Override
 	public void insertRole(Role role) {
-		// TODO Auto-generated method stub
 		roleMapper.insertSelective(role);
 	}
 
 	@Override
 	public void updateRole(Role role) {
-		// TODO Auto-generated method stub
 		roleMapper.updateByPrimaryKeySelective(role);
 	}
 
 	@Override
 	public void deleteRoleById(String roleId) {
-		// TODO Auto-generated method stub
 		roleMapper.deleteByPrimaryKey(roleId);
 	}
 
 	@Override
 	public Role selectRoleById(String roleId) {
-		// TODO Auto-generated method stub
 		return roleMapper.selectByPrimaryKey(roleId);
 	}
 	
 	public List<Role> getRoleListByUserId(String userId){
 		return roleMapper.getRoleListByUserId(userId);
+	}
+
+
+	@Override
+	public Role selectRoleByName(String roleName) {
+		return roleMapper.selectRoleByName(roleName);
 	}
 
 }

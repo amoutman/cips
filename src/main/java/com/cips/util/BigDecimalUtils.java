@@ -35,4 +35,8 @@ public class BigDecimalUtils {
 		// ROUND_HALF_UP是BigDecimal的一个常量，表示进行四舍五入的操作
 		return b1.divide(b2, len, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
+	
+	public static BigDecimal mul(BigDecimal d1, BigDecimal d2) { // 进行乘法运算
+		return d1.multiply(d2);
+	}
 }

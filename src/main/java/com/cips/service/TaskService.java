@@ -14,10 +14,15 @@ public interface TaskService {
 	/**
 	 * 待办处理
 	 */
-	public String processingTaskById(String taskId) throws Exception;
+	public String processingTaskById(String taskId, String userId) throws Exception;
 	
 	/**
 	 * 待办实际处理
 	 */
 	public void processedTaskById(String taskId) throws Exception;
+	
+	/**
+	 * 新增待办
+	 */
+	public void insertTask(Task task) throws Exception;
 }

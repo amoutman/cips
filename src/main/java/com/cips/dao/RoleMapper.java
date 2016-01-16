@@ -20,4 +20,6 @@ public interface RoleMapper {
     List<Role> getRoleList();
     
     List<Role> getRoleListByUserId(String userId);
+    
+    Role selectRoleByName(String roleName);
 }

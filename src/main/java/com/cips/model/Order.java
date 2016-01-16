@@ -29,8 +29,28 @@ public class Order {
     private Date modifiedDate;
 
     private Date completedDate;
+    
+    private Date applyDateBegin;
+    
+    private Date applyDateEnd;
+    
+    public Date getApplyDateBegin() {
+		return applyDateBegin;
+	}
 
-    public String getId() {
+	public void setApplyDateBegin(Date applyDateBegin) {
+		this.applyDateBegin = applyDateBegin;
+	}
+
+	public Date getApplyDateEnd() {
+		return applyDateEnd;
+	}
+
+	public void setApplyDateEnd(Date applyDateEnd) {
+		this.applyDateEnd = applyDateEnd;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -156,4 +156,11 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="getCurrentRate" parameterType="Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_rate
+    where status = #{status}
+    and type = #{type}
+  </select>
 </mapper>

@@ -2,14 +2,18 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<link href="resource/css/base.css" rel="stylesheet" type="text/css" />
-<link href="resource/css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="resource/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="resource/js/style.js"></script>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<link href="${pageContext.request.contextPath}/resource/css/base.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resource/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/style.js"></script>
 <!--左侧栏目 start-->
   <div class="part-left">
   	<ul class="menu">
