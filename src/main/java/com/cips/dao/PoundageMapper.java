@@ -1,5 +1,7 @@
 package com.cips.dao;
 
+import java.util.Map;
+
 import com.cips.model.Poundage;
 
 public interface PoundageMapper {
@@ -16,4 +18,8 @@ public interface PoundageMapper {
     int updateByPrimaryKey(Poundage record);
     
     Poundage getCurrPoundage(Integer status);
+    
+    Poundage selectPoundageByStatus();
+    
+    int updatePoundageByStatus(Map<String,Object> map);
 }

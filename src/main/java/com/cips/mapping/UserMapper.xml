@@ -17,21 +17,27 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, password, mobile, email, credit_id, status,is_first_login, created_id, created_date, 
-    modified_id, modified_date
+    id, user_name, password, mobile, email, credit_id, status,is_first_login
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="loginUser" resultMap="BaseResultMap" parameterType="map" >
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where user_name = #{userName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select 
     <include refid="Base_Column_List" />
     from tb_user
-    where id = #{id,jdbcType=CHAR}
+    where user_name = #{userName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
-  <select id="toPageGetUserList" resultType="com.cips.model.User" parameterType="map">
+  <select id="toPageGetUserList" resultMap="BaseResultMap" parameterType="map">
   	select 
   	<include refid="Base_Column_List"></include>
-    from tb_user
+    from tb_user a
+    where a.status = 0
   </select>
-  <select id="toPageSelectUserInfo"  resultType="com.cips.model.User" parameterType="java.lang.String" >
+  <select id="toPageSelectUserInfo"  resultMap="BaseResultMap" parameterType="java.lang.String" >
   	select 
     <include refid="Base_Column_List"></include>
     from tb_user

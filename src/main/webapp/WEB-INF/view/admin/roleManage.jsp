@@ -8,6 +8,7 @@
 %>
 <html>
 <head>
+<base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>角色管理</title>
 </head>
@@ -33,7 +34,7 @@
 <!--主题内容 start-->
 <div class="w1200">
 <jsp:include page="../header/header.jsp"></jsp:include>
-<script type="text/javascript" src="resource/page/role.js"></script>
+
  <!--右侧模块 start-->
   <div class="part-right">
      <div class="r-tit">
@@ -48,7 +49,7 @@
                <span class="close"></span>
                <h2>新增角色</h2>
                <div class="tcbox">
-                    <input type="text" name="newRoleName" id="newRoleName" class="input-txt"  placeholder="请输入角色名称"/> <a href="javascript:void(0)" onclick="addRole()" id="btnAdd" class="btnOrage">确认添加</a>
+                    <input type="text" name="newRoleName" id="newRoleName" class="input-txt"  placeholder="请输入角色名称"/> <a href="javascript:void(0);" onClick="addRole();" id="btnAddRole" class="btnOrage">确认添加</a>
                </div>
                
            </div>
@@ -89,4 +90,29 @@
 <div class="bg"></div>
 
 </body>
+<script type="text/javascript" src="resource/page/role.js"></script>
+<script type="text/javascript">
+function addRole(){
+	
+	var roleName = $("#newRoleName").val();
+	if(roleName == ""){
+		alert("角色名称不能为空");
+	}
+	$.post(
+		"user/insertRole",
+		{
+			roleName:roleName
+		},
+		function(data){
+			if(data['success']){
+				alert("添加成功");
+				window.location.href="user/toRoleManage";
+			}else{
+				alert("添加失败");
+			}
+		},
+		"json"
+	);
+}
+</script>
 </html>

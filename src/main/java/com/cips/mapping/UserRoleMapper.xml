@@ -11,6 +11,24 @@
   <sql id="Base_Column_List" >
     id, user_id, role_id, created_id, created_date
   </sql>
+  <select id="getUserRoleListByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_user_role
+    where user_id = #{userId,jdbcType=CHAR}
+  </select>
+  <insert id="insertUserRoleList" parameterType="java.lang.String">
+  	 insert into tb_user_role (id, user_id, role_id, created_id, 
+      created_date)
+    values
+    <foreach collection="list" item="ur" index="index" separator="," >  
+       (#{ur.id,jdbcType=CHAR}, #{ur.userId,jdbcType=CHAR}, #{ur.roleId,jdbcType=CHAR}, #{ur.createdId,jdbcType=CHAR}, 
+      	#{ur.createdDate,jdbcType=TIMESTAMP})
+    </foreach> 	
+  </insert>
+  <delete id="deleteUserRoleByUserId" parameterType="java.lang.String" >
+  	delete from tb_user_role where user_id = #{userId,jdbcType=CHAR}
+  </delete>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

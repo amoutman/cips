@@ -14,7 +14,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	<!-- 配置数据源 -->
 	<bean id="dataSource" name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/cips" />
+		<property name="url" value="jdbc:mysql://localhost:3306/cips?useUnicode=yes&amp;characterEncoding=UTF8" />
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
 		
@@ -51,14 +51,14 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	<!-- myBatis文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- 分页拦截器 -->
+		<!-- 分页拦截器 
 		<property name="plugins">
 			<array>
 				<bean class="com.cips.interceptor.PagerInterceptor">
 					<property name="mappingSqlId" value=".*toPage.*"></property>
 				</bean>
 			</array>
-		</property>
+		</property>-->
 		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
 		<property name="mapperLocations" value="classpath:com/cips/mapping/*.xml" />
 	</bean>

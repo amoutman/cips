@@ -21,4 +21,8 @@ public interface RateMapper {
     List<Rate> getRateList();
     
     Rate getCurrentRate(Map<String,Object> paramMap);
+
+    List<Rate> toPageGetRateList();
+    
+    void updateRateByStatus(Map<String,Object> map);
 }

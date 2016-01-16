@@ -23,6 +23,15 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors">
+         <list>
+         <bean class="com.cips.interceptor.SysInterceptor">
+         </bean>
+         </list>
+         </property>
+  	</bean>
 
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean
@@ -63,7 +72,7 @@
 		</property>
 	</bean>
 	
-	<mvc:annotation-driven />
+	<!-- mvc:annotation-driven /> -->
 	
 	<!-- 拦截器配置 -->
 	<!--  
