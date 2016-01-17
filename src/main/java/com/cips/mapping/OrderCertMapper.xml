@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cips.dao.OrderCertMapper" >
+  <resultMap id="BaseResultMap" type="com.cips.model.OrderCert" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="order_id" property="orderId" jdbcType="CHAR" />
+    <result column="order_operate_id" property="orderOperateId" jdbcType="CHAR" />
+    <result column="order_account_id" property="orderAccountId" jdbcType="CHAR" />
+    <result column="cert_type" property="certType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="cert_pic" property="certPic" jdbcType="VARCHAR" />
+    <result column="created_id" property="createdId" jdbcType="CHAR" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
+    <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, order_operate_id, order_account_id, cert_type, status, cert_pic, created_id, 
+    created_date, modified_id, modified_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order_cert
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_order_cert
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cips.model.OrderCert" >
+    insert into tb_order_cert (id, order_id, order_operate_id, 
+      order_account_id, cert_type, status, 
+      cert_pic, created_id, created_date, 
+      modified_id, modified_date)
+    values (#{id,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{orderOperateId,jdbcType=CHAR}, 
+      #{orderAccountId,jdbcType=CHAR}, #{certType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{certPic,jdbcType=VARCHAR}, #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cips.model.OrderCert" >
+    insert into tb_order_cert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderOperateId != null" >
+        order_operate_id,
+      </if>
+      <if test="orderAccountId != null" >
+        order_account_id,
+      </if>
+      <if test="certType != null" >
+        cert_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="certPic != null" >
+        cert_pic,
+      </if>
+      <if test="createdId != null" >
+        created_id,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="modifiedId != null" >
+        modified_id,
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="orderOperateId != null" >
+        #{orderOperateId,jdbcType=CHAR},
+      </if>
+      <if test="orderAccountId != null" >
+        #{orderAccountId,jdbcType=CHAR},
+      </if>
+      <if test="certType != null" >
+        #{certType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="certPic != null" >
+        #{certPic,jdbcType=VARCHAR},
+      </if>
+      <if test="createdId != null" >
+        #{createdId,jdbcType=CHAR},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        #{modifiedId,jdbcType=CHAR},
+      </if>
+      <if test="modifiedDate != null" >
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cips.model.OrderCert" >
+    update tb_order_cert
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="orderOperateId != null" >
+        order_operate_id = #{orderOperateId,jdbcType=CHAR},
+      </if>
+      <if test="orderAccountId != null" >
+        order_account_id = #{orderAccountId,jdbcType=CHAR},
+      </if>
+      <if test="certType != null" >
+        cert_type = #{certType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="certPic != null" >
+        cert_pic = #{certPic,jdbcType=VARCHAR},
+      </if>
+      <if test="createdId != null" >
+        created_id = #{createdId,jdbcType=CHAR},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        modified_id = #{modifiedId,jdbcType=CHAR},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cips.model.OrderCert" >
+    update tb_order_cert
+    set order_id = #{orderId,jdbcType=CHAR},
+      order_operate_id = #{orderOperateId,jdbcType=CHAR},
+      order_account_id = #{orderAccountId,jdbcType=CHAR},
+      cert_type = #{certType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      cert_pic = #{certPic,jdbcType=VARCHAR},
+      created_id = #{createdId,jdbcType=CHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      modified_id = #{modifiedId,jdbcType=CHAR},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
