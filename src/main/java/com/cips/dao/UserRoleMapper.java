@@ -1,5 +1,7 @@
 package com.cips.dao;
 
+import java.util.List;
+
 import com.cips.model.UserRole;
 
 public interface UserRoleMapper {
@@ -14,4 +16,10 @@ public interface UserRoleMapper {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+    
+    int insertUserRoleList(List<UserRole> urList);
+    
+    int deleteUserRoleByUserId(String userId);
+    
+    List<UserRole> getUserRoleListByUserId(String userId);
 }

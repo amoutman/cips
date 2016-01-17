@@ -88,7 +88,7 @@ public class FeeController {
 		BigDecimal poundageRatio = new BigDecimal(pRatio);
 		Poundage poundage = new Poundage();
 		poundage.setId(PKIDUtils.getUuid());
-		poundage.setPoundageAmount(poundageRatio);
+		poundage.setPoundageRatio(poundageRatio);
 		poundage.setStatus(0);
 		poundage.setCreatedId(loginUser.getId());
 		poundage.setCreatedDate(new Date());

@@ -101,7 +101,7 @@ public class OrderController {
 			order.setPayAmount(order.getApplyAmount().multiply(curUToRRate.getRateHigh()));
 			//手续费 先获取收费标准再进行计算
 			Poundage curPoundage = feeService.getCurrPoundage(BusConstants.POUNDAGE_STATUS_YES);
-			order.setPoundageAmount(order.getApplyAmount().multiply(curPoundage.getPoundageAmount()));
+			order.setPoundageRatio(order.getApplyAmount().multiply(curPoundage.getPoundageRatio()));
 			//订单提交人
 			order.setApplyId(user.getId());
 			//订单提交时间
@@ -122,7 +122,7 @@ public class OrderController {
 			oOperate.setOrderId(order.getId());
 			oOperate.setStatus(order.getStatus());
 			oOperate.setOperatedId(user.getId());
-			oOperate.setOpBeginTime(order.getApplyDate());
+			//oOperate.setOpBeginTime(order.getApplyDate());
 			oOperate.setOpEndTime(order.getApplyDate());
 			//orderService.saveOrderOperate(oOperate);
 			

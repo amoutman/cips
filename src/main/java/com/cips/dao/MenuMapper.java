@@ -1,5 +1,8 @@
 package com.cips.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cips.model.Menu;
 
 public interface MenuMapper {
@@ -14,4 +17,6 @@ public interface MenuMapper {
     int updateByPrimaryKeySelective(Menu record);
 
     int updateByPrimaryKey(Menu record);
+    
+    List<Menu> getMenuListByRoleId(Map<String,Object> map);
 }
