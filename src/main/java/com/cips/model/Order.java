@@ -12,7 +12,7 @@ public class Order {
 
     private BigDecimal payAmount;
 
-    private Integer poundageRatio;
+    private BigDecimal poundageRatio;
 
     private BigDecimal exchangeRateRmb;
 
@@ -62,11 +62,11 @@ public class Order {
         this.payAmount = payAmount;
     }
 
-    public Integer getPoundageRatio() {
+    public BigDecimal getPoundageRatio() {
         return poundageRatio;
     }
 
-    public void setPoundageRatio(Integer poundageRatio) {
+    public void setPoundageRatio(BigDecimal poundageRatio) {
         this.poundageRatio = poundageRatio;
     }
 

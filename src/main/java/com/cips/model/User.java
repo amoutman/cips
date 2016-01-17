@@ -1,6 +1,9 @@
 package com.cips.model;
 
 import java.util.Date;
+import java.util.List;
+
+import com.cips.model.Role;
 
 public class User {
     private String id;
@@ -28,6 +31,38 @@ public class User {
     private String modifiedId;
 
     private Date modifiedDate;
+    
+    private List<Role> roleList;
+    
+	private String roleNames; //角色名称集合
+    
+    private String roleId;
+    
+    public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public String getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(String roleNames) {
+		this.roleNames = roleNames;
+	}
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+
 
     public String getId() {
         return id;

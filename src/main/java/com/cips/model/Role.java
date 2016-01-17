@@ -16,8 +16,18 @@ public class Role {
     private String modifiedId;
 
     private Date modifiedDate;
+    
+	private Integer isCheck; //是否选中，用作修改用户角色
 
-    public String getId() {
+    public Integer getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(Integer isCheck) {
+		this.isCheck = isCheck;
+	}
+
+	public String getId() {
         return id;
     }
 
