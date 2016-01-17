@@ -30,8 +30,28 @@ public class FeeServiceImpl implements FeeService {
 
 	@Override
 	public List<Rate> getRateList() {
-		return rateMapper.getRateList();
+		return rateMapper.toPageGetRateList();
 	}
+	
+	public void insertRate(Rate rate){
+		rateMapper.insertSelective(rate);
+	}
+
+	public void updateRateByStatus(Map<String,Object> map){
+		rateMapper.updateRateByStatus(map);
+	}
+	
+	public void insertPoundage(Poundage record){
+		poundageMapper.insertSelective(record);
+	}
+	
+	public Poundage selectPoundageByStatus(){
+		return poundageMapper.selectPoundageByStatus();
+	}
+    
+    public void updatePoundageByStatus(Map<String,Object> map){
+    	poundageMapper.updatePoundageByStatus(map);
+    }
 
 	@Override
 	public Rate getCurrentRate(Map<String,Object> paramMap) throws Exception {

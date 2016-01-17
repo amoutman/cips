@@ -34,8 +34,14 @@
   <select id="toPageGetUserList" resultMap="BaseResultMap" parameterType="map">
   	select 
   	<include refid="Base_Column_List"></include>
-    from tb_user a
-    where a.status = 0
+    from tb_user
+    where status = 0
+    <if test="userInfo !=null ">
+    	and 
+    	<trim prefix="(" suffix=")">
+    		user_name like '%${userInfo}%' or mobile like '%${userInfo}%' or credit_id like '%${userInfo}%' or email like '%${userInfo}%'
+		</trim>
+	</if>
   </select>
   <select id="toPageSelectUserInfo"  resultMap="BaseResultMap" parameterType="java.lang.String" >
   	select 

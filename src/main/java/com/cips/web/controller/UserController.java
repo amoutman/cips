@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.druid.util.StringUtils;
 import com.cips.constants.GlobalPara;
 import com.cips.model.Menu;
 import com.cips.model.Role;
 import com.cips.model.User;
 import com.cips.model.UserRole;
+import com.cips.page.Pager;
 import com.cips.service.MenuService;
 import com.cips.service.RoleService;
 import com.cips.service.UserService;
@@ -108,9 +110,16 @@ public class UserController {
 	}
 
 	@RequestMapping("/toPageUserManage")
-	public ModelAndView toUserManage(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView toUserManage(HttpServletRequest request,HttpServletResponse response,@RequestParam(value="userInfo", required=false) String userInfo){
 		ModelAndView mv = new ModelAndView();
 		Map<String,Object> map = new HashMap<String,Object>();
+		//分页条件
+		Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
+
+		if(!StringUtils.isEmpty(userInfo)){
+			map.put("userInfo", userInfo);
+		}
+		map.put(GlobalPara.PAGER_SESSION, pager);
 		List<User> userList = userService.getUserList(map);
 		//查询系统中所有角色
 		List<Role> roleList = roleService.getRoleList();
@@ -166,7 +175,7 @@ public class UserController {
 		if(!roleList.isEmpty()){
 			mv.addObject("roleList", roleList);
 		}	
-		
+		mv.addObject("pager", pager);
 		mv.setViewName("admin/userManage");
 		return mv;
 	}
@@ -208,9 +217,8 @@ public class UserController {
 	}
 	
 	@RequestMapping("/insertUser")
-	@ResponseBody
-	public Map<String,Object> insertUser(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("user") User user){
-		Map<String,Object> resultMap = new HashMap<String,Object>();
+	public ModelAndView insertUser(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("user") User user){
+		ModelAndView mv = new ModelAndView();
 		User loginUser = (User)request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 		user.setId(PKIDUtils.getUuid());
 		user.setPassword(MD5.md5("12345678"));
@@ -243,8 +251,6 @@ public class UserController {
 			ur.setCreatedDate(new Date());
 			urList.add(ur);
 		}
-		
-		resultMap.put("success", true);
 		try {
 			userService.insertUser(user);
 			if(!urList.isEmpty()){
@@ -252,17 +258,14 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			resultMap.put("success", false);
-			resultMap.put("error", e.getMessage());
 		}
-		
-		return resultMap;
+		mv.setViewName("redirect:toPageUserManage");
+		return mv;
 	}
 	
 	@RequestMapping("/updateUser")
-	@ResponseBody
-	public Map<String,Object> updateUser(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("user") User user){
-		Map<String,Object> resultMap = new HashMap<String,Object>();
+	public ModelAndView updateUser(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("user") User user){
+		ModelAndView mv = new ModelAndView();
 		User loginUser = (User)request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 		user.setModifiedId(loginUser.getId());
 		user.setModifiedDate(new Date());
@@ -292,7 +295,6 @@ public class UserController {
 			urList.add(ur);
 		}
 		
-		resultMap.put("success", true);
 		try {
 			userService.updateUser(user);
 			roleService.deleteUserRoleByUserId(user.getId());
@@ -301,11 +303,9 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			resultMap.put("success", false);
-			resultMap.put("error", e.getMessage());
 		}
-		
-		return resultMap;
+		mv.setViewName("redirect:toPageUserManage");
+		return mv;
 	}
 	
 	@RequestMapping("/deleteUser")

@@ -34,6 +34,7 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cips.constants.GlobalPara;
 import com.cips.page.PageContext;
 import com.cips.page.Pager;
 import com.cips.page.Query;
@@ -51,7 +52,7 @@ import com.cips.util.SystemUtil;
 public class PagerInterceptor implements Interceptor {
 
 	private final Logger logger = LoggerFactory.getLogger(PagerInterceptor.class);  
-	private String dialect = "mysql"; 
+	private String dialect = "MySQL"; 
 	private String mappingSqlId;
 
 	public void setMappingSqlId(String mappingSqlId) {
@@ -84,10 +85,10 @@ public class PagerInterceptor implements Interceptor {
 		// 查询参数对象 
 		Pager pager = null; 
 		// 查询条件Map   
-		pager = (Pager)sMap.get("pager");
+		pager = (Pager)sMap.get(GlobalPara.PAGER_SESSION);
 		
 		// 获取查询数来的总数目
-		String countSql = "SELECT COUNT(0) FROM (" + sql + ") ";
+		String countSql = "SELECT COUNT(0) FROM (" + sql + ") as atbale ";
 		PreparedStatement countStmt = connection.prepareStatement(countSql); 
 	    BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(),countSql, 
 				 boundSql.getParameterMappings(), parameterObject);
@@ -99,6 +100,7 @@ public class PagerInterceptor implements Interceptor {
 	    }
 	    rs.close();
 	    countStmt.close();
+	    
 	    // 设置总记录数 
 	    pager.setTotalResult(count);
 	    // 设置总页数
@@ -155,7 +157,7 @@ public class PagerInterceptor implements Interceptor {
 	private String generatePageSql(String sql, Pager page){ 
 		if (page != null && (dialect != null || !dialect.equals(""))){
 			StringBuffer pageSql = new StringBuffer();
-			if("mysql".equals(dialect)){
+			if("MySQL".equals(dialect)){
 				pageSql.append(sql);
 				pageSql.append(" LIMIT " + page.getCurrentResult() + "," + page.getShowCount());
 			}else if("oracle".equals(dialect)){ 

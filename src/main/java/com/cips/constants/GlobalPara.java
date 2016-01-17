@@ -31,4 +31,5 @@ public class GlobalPara {
 	public static final String RNAME_SUPER_ADMIN = "超级管理员";
 	public static final String RNAME_CN_OTHER_CUSTOMER = "国内其他客户";
 	
+	public static final String PAGER_SESSION = "pager";
 }
