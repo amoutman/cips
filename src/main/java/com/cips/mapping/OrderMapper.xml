@@ -6,7 +6,7 @@
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
     <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
     <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
-    <result column="poundage_ratio" property="poundageRatio" jdbcType="INTEGER" />
+    <result column="poundage_ratio" property="poundageRatio" jdbcType="DECIMAL" />
     <result column="exchange_rate_rmb" property="exchangeRateRmb" jdbcType="DECIMAL" />
     <result column="exchange_rate_usd" property="exchangeRateUsd" jdbcType="DECIMAL" />
     <result column="apply_id" property="applyId" jdbcType="CHAR" />
@@ -37,7 +37,7 @@
       status, modified_id, modified_date, 
       completed_date)
     values (#{id,jdbcType=CHAR}, #{orderNo,jdbcType=VARCHAR}, #{applyAmount,jdbcType=DECIMAL}, 
-      #{payAmount,jdbcType=DECIMAL}, #{poundageRatio,jdbcType=INTEGER}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
+      #{payAmount,jdbcType=DECIMAL}, #{poundageRatio,jdbcType=DECIMAL}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
       #{exchangeRateUsd,jdbcType=DECIMAL}, #{applyId,jdbcType=CHAR}, #{applyDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP}, 
       #{completedDate,jdbcType=TIMESTAMP})
@@ -99,7 +99,7 @@
         #{payAmount,jdbcType=DECIMAL},
       </if>
       <if test="poundageRatio != null" >
-        #{poundageRatio,jdbcType=INTEGER},
+        #{poundageRatio,jdbcType=DECIMAL},
       </if>
       <if test="exchangeRateRmb != null" >
         #{exchangeRateRmb,jdbcType=DECIMAL},
@@ -140,7 +140,7 @@
         pay_amount = #{payAmount,jdbcType=DECIMAL},
       </if>
       <if test="poundageRatio != null" >
-        poundage_ratio = #{poundageRatio,jdbcType=INTEGER},
+        poundage_ratio = #{poundageRatio,jdbcType=DECIMAL},
       </if>
       <if test="exchangeRateRmb != null" >
         exchange_rate_rmb = #{exchangeRateRmb,jdbcType=DECIMAL},
@@ -174,7 +174,7 @@
     set order_no = #{orderNo,jdbcType=VARCHAR},
       apply_amount = #{applyAmount,jdbcType=DECIMAL},
       pay_amount = #{payAmount,jdbcType=DECIMAL},
-      poundage_ratio = #{poundageRatio,jdbcType=INTEGER},
+      poundage_ratio = #{poundageRatio,jdbcType=DECIMAL},
       exchange_rate_rmb = #{exchangeRateRmb,jdbcType=DECIMAL},
       exchange_rate_usd = #{exchangeRateUsd,jdbcType=DECIMAL},
       apply_id = #{applyId,jdbcType=CHAR},
