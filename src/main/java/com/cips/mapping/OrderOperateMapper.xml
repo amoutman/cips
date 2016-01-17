@@ -4,13 +4,15 @@
   <resultMap id="BaseResultMap" type="com.cips.model.OrderOperate" >
     <id column="id" property="id" jdbcType="CHAR" />
     <result column="order_id" property="orderId" jdbcType="CHAR" />
+    <result column="task_id" property="taskId" jdbcType="CHAR" />
+    <result column="order_account_id" property="orderAccountId" jdbcType="CHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="operated_id" property="operatedId" jdbcType="CHAR" />
-    <result column="op_begin_time" property="opBeginTime" jdbcType="TIMESTAMP" />
     <result column="op_end_time" property="opEndTime" jdbcType="TIMESTAMP" />
+    <result column="op_sequence" property="opSequence" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, status, operated_id, op_begin_time, op_end_time
+    id, order_id, task_id, order_account_id, status, operated_id, op_end_time, op_sequence
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -23,12 +25,12 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.cips.model.OrderOperate" >
-    insert into tb_order_operate (id, order_id, status, 
-      operated_id, op_begin_time, op_end_time
-      )
-    values (#{id,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{status,jdbcType=INTEGER}, 
-      #{operatedId,jdbcType=CHAR}, #{opBeginTime,jdbcType=TIMESTAMP}, #{opEndTime,jdbcType=TIMESTAMP}
-      )
+    insert into tb_order_operate (id, order_id, task_id, order_account_id, 
+      status, operated_id, op_end_time, 
+      op_sequence)
+    values (#{id,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{taskId,jdbcType=CHAR}, #{orderAccountId,jdbcType=CHAR}, 
+      #{status,jdbcType=INTEGER}, #{operatedId,jdbcType=CHAR}, #{opEndTime,jdbcType=TIMESTAMP}, 
+      #{opSequence,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cips.model.OrderOperate" >
     insert into tb_order_operate
@@ -39,17 +41,23 @@
       <if test="orderId != null" >
         order_id,
       </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="orderAccountId != null" >
+        order_account_id,
+      </if>
       <if test="status != null" >
         status,
       </if>
       <if test="operatedId != null" >
         operated_id,
       </if>
-      <if test="opBeginTime != null" >
-        op_begin_time,
-      </if>
       <if test="opEndTime != null" >
         op_end_time,
+      </if>
+      <if test="opSequence != null" >
+        op_sequence,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -59,17 +67,23 @@
       <if test="orderId != null" >
         #{orderId,jdbcType=CHAR},
       </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=CHAR},
+      </if>
+      <if test="orderAccountId != null" >
+        #{orderAccountId,jdbcType=CHAR},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
       <if test="operatedId != null" >
         #{operatedId,jdbcType=CHAR},
       </if>
-      <if test="opBeginTime != null" >
-        #{opBeginTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="opEndTime != null" >
         #{opEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opSequence != null" >
+        #{opSequence,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -79,17 +93,23 @@
       <if test="orderId != null" >
         order_id = #{orderId,jdbcType=CHAR},
       </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=CHAR},
+      </if>
+      <if test="orderAccountId != null" >
+        order_account_id = #{orderAccountId,jdbcType=CHAR},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="operatedId != null" >
         operated_id = #{operatedId,jdbcType=CHAR},
       </if>
-      <if test="opBeginTime != null" >
-        op_begin_time = #{opBeginTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="opEndTime != null" >
         op_end_time = #{opEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opSequence != null" >
+        op_sequence = #{opSequence,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=CHAR}
@@ -97,10 +117,12 @@
   <update id="updateByPrimaryKey" parameterType="com.cips.model.OrderOperate" >
     update tb_order_operate
     set order_id = #{orderId,jdbcType=CHAR},
+      task_id = #{taskId,jdbcType=CHAR},
+      order_account_id = #{orderAccountId,jdbcType=CHAR},
       status = #{status,jdbcType=INTEGER},
       operated_id = #{operatedId,jdbcType=CHAR},
-      op_begin_time = #{opBeginTime,jdbcType=TIMESTAMP},
-      op_end_time = #{opEndTime,jdbcType=TIMESTAMP}
+      op_end_time = #{opEndTime,jdbcType=TIMESTAMP},
+      op_sequence = #{opSequence,jdbcType=INTEGER}
     where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>

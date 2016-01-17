@@ -10,17 +10,11 @@
   <sql id="Base_Column_List" >
     ID, CODE, NAME, VAL
   </sql>
-   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from tb_dictionary
     where ID = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="getDictionaryByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_dictionary
-    where CODE = #{code,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_dictionary

@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.cips.model.Task" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cips.model.Task" >
     update tb_task
     <set >
       <if test="orderId != null" >
@@ -137,20 +137,17 @@
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="toPageTaskListByParams" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_task t
- 	where t.roleId in 
- 	  <foreach item="roleId" index="index" collection="roleIds" open="(" separator="," close=")">
- 	  	#{roleId}
- 	  </foreach> 
- 	<if test="status != null">
-      	and t.status = #{status}
-    </if>
- 	<if test="userId != null">
-      	and (t.operated_id = #{userId} or t.operated_id = null)
-    </if>
- 	  and 
-   </select>
+  <update id="updateByPrimaryKey" parameterType="com.cips.model.Task" >
+    update tb_task
+    set order_id = #{orderId,jdbcType=CHAR},
+      role_id = #{roleId,jdbcType=CHAR},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      task_type = #{taskType,jdbcType=INTEGER},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      operated_id = #{operatedId,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
 </mapper>

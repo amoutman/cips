@@ -12,7 +12,7 @@ public class Order {
 
     private BigDecimal payAmount;
 
-    private BigDecimal poundageAmount;
+    private Integer poundageRatio;
 
     private BigDecimal exchangeRateRmb;
 
@@ -29,28 +29,8 @@ public class Order {
     private Date modifiedDate;
 
     private Date completedDate;
-    
-    private Date applyDateBegin;
-    
-    private Date applyDateEnd;
-    
-    public Date getApplyDateBegin() {
-		return applyDateBegin;
-	}
 
-	public void setApplyDateBegin(Date applyDateBegin) {
-		this.applyDateBegin = applyDateBegin;
-	}
-
-	public Date getApplyDateEnd() {
-		return applyDateEnd;
-	}
-
-	public void setApplyDateEnd(Date applyDateEnd) {
-		this.applyDateEnd = applyDateEnd;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -82,12 +62,12 @@ public class Order {
         this.payAmount = payAmount;
     }
 
-    public BigDecimal getPoundageAmount() {
-        return poundageAmount;
+    public Integer getPoundageRatio() {
+        return poundageRatio;
     }
 
-    public void setPoundageAmount(BigDecimal poundageAmount) {
-        this.poundageAmount = poundageAmount;
+    public void setPoundageRatio(Integer poundageRatio) {
+        this.poundageRatio = poundageRatio;
     }
 
     public BigDecimal getExchangeRateRmb() {

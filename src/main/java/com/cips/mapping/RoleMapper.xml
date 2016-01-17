@@ -11,23 +11,8 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, role_name, status, created_id, created_date
+    id, role_name, status, created_id, created_date, modified_id, modified_date
   </sql>
-  <select id="getRoleList" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from tb_role
-    where status=0
-  </select>
-  <select id="getRoleListByUserId" resultType="com.cips.model.Role" parameterType="java.lang.String">
-  	select 
-    	a.id id, 
-    	a.role_name roleName
-    from tb_role a,tb_user_role b
-    where a.id = b.role_id
-    and b.user_id = #{userId,jdbcType=CHAR}
-    and a.status=0
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -129,10 +114,4 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="selectRoleByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_role
-    where role_name = #{roleName,jdbcType=VARCHAR}
-  </select>
 </mapper>

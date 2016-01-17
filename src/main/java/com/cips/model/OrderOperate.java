@@ -7,13 +7,17 @@ public class OrderOperate {
 
     private String orderId;
 
+    private String taskId;
+
+    private String orderAccountId;
+
     private Integer status;
 
     private String operatedId;
 
-    private Date opBeginTime;
-
     private Date opEndTime;
+
+    private Integer opSequence;
 
     public String getId() {
         return id;
@@ -29,6 +33,22 @@ public class OrderOperate {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId == null ? null : orderId.trim();
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
+    }
+
+    public String getOrderAccountId() {
+        return orderAccountId;
+    }
+
+    public void setOrderAccountId(String orderAccountId) {
+        this.orderAccountId = orderAccountId == null ? null : orderAccountId.trim();
     }
 
     public Integer getStatus() {
@@ -47,19 +67,19 @@ public class OrderOperate {
         this.operatedId = operatedId == null ? null : operatedId.trim();
     }
 
-    public Date getOpBeginTime() {
-        return opBeginTime;
-    }
-
-    public void setOpBeginTime(Date opBeginTime) {
-        this.opBeginTime = opBeginTime;
-    }
-
     public Date getOpEndTime() {
         return opEndTime;
     }
 
     public void setOpEndTime(Date opEndTime) {
         this.opEndTime = opEndTime;
+    }
+
+    public Integer getOpSequence() {
+        return opSequence;
+    }
+
+    public void setOpSequence(Integer opSequence) {
+        this.opSequence = opSequence;
     }
 }

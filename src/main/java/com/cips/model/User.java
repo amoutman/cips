@@ -1,66 +1,35 @@
 package com.cips.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class User {
     private String id;
 
     private String userCode;
 
-    private String userName; 
+    private String userName;
 
     private String password;
 
     private String mobile;
 
-    private String email; 
+    private String email;
 
     private Integer status;
 
-    private Integer isFirstLogin;
-   
-	private String creditId;
+    private String creditId;
 
-	private String createdId;
+    private Integer isFirstLogin;
+
+    private String createdId;
 
     private Date createdDate;
 
     private String modifiedId;
 
     private Date modifiedDate;
-    
-    private List<Role> roleList;
-    
-    private String roleNames; //角色名称集合
-    
-    private String roleId;
-    
-    public String getRoleId() {
-		return roleId;
-	}
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleNames() {
-		return roleNames;
-	}
-
-	public void setRoleNames(String roleNames) {
-		this.roleNames = roleNames;
-	}
-
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 

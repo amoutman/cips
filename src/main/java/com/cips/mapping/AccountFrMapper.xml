@@ -3,19 +3,22 @@
 <mapper namespace="com.cips.dao.AccountFrMapper" >
   <resultMap id="BaseResultMap" type="com.cips.model.AccountFr" >
     <id column="id" property="id" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
     <result column="account_code" property="accountCode" jdbcType="VARCHAR" />
     <result column="account_name" property="accountName" jdbcType="VARCHAR" />
     <result column="account_bank" property="accountBank" jdbcType="VARCHAR" />
     <result column="account_tel" property="accountTel" jdbcType="VARCHAR" />
     <result column="account_email" property="accountEmail" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, account_code, account_name, account_bank, account_tel, account_email, created_id, 
-    created_date, modified_id, modified_date
+    id, user_id, account_code, account_name, account_bank, account_tel, account_email, 
+    account_type, status, created_id, created_date, modified_id, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -28,12 +31,14 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.cips.model.AccountFr" >
-    insert into tb_account_fr (id, account_code, account_name, 
-      account_bank, account_tel, account_email, 
+    insert into tb_account_fr (id, user_id, account_code, 
+      account_name, account_bank, account_tel, 
+      account_email, account_type, status, 
       created_id, created_date, modified_id, 
       modified_date)
-    values (#{id,jdbcType=CHAR}, #{accountCode,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
-      #{accountBank,jdbcType=VARCHAR}, #{accountTel,jdbcType=VARCHAR}, #{accountEmail,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{accountCode,jdbcType=VARCHAR}, 
+      #{accountName,jdbcType=VARCHAR}, #{accountBank,jdbcType=VARCHAR}, #{accountTel,jdbcType=VARCHAR}, 
+      #{accountEmail,jdbcType=VARCHAR}, #{accountType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=CHAR}, 
       #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
@@ -42,6 +47,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="accountCode != null" >
         account_code,
@@ -57,6 +65,12 @@
       </if>
       <if test="accountEmail != null" >
         account_email,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="createdId != null" >
         created_id,
@@ -75,6 +89,9 @@
       <if test="id != null" >
         #{id,jdbcType=CHAR},
       </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
       <if test="accountCode != null" >
         #{accountCode,jdbcType=VARCHAR},
       </if>
@@ -89,6 +106,12 @@
       </if>
       <if test="accountEmail != null" >
         #{accountEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="createdId != null" >
         #{createdId,jdbcType=CHAR},
@@ -107,6 +130,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.cips.model.AccountFr" >
     update tb_account_fr
     <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
       <if test="accountCode != null" >
         account_code = #{accountCode,jdbcType=VARCHAR},
       </if>
@@ -121,6 +147,12 @@
       </if>
       <if test="accountEmail != null" >
         account_email = #{accountEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="createdId != null" >
         created_id = #{createdId,jdbcType=CHAR},
@@ -139,11 +171,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cips.model.AccountFr" >
     update tb_account_fr
-    set account_code = #{accountCode,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=CHAR},
+      account_code = #{accountCode,jdbcType=VARCHAR},
       account_name = #{accountName,jdbcType=VARCHAR},
       account_bank = #{accountBank,jdbcType=VARCHAR},
       account_tel = #{accountTel,jdbcType=VARCHAR},
       account_email = #{accountEmail,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       created_id = #{createdId,jdbcType=CHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       modified_id = #{modifiedId,jdbcType=CHAR},

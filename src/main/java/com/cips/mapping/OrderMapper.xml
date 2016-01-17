@@ -6,7 +6,7 @@
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
     <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
     <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
-    <result column="poundage_amount" property="poundageAmount" jdbcType="DECIMAL" />
+    <result column="poundage_ratio" property="poundageRatio" jdbcType="INTEGER" />
     <result column="exchange_rate_rmb" property="exchangeRateRmb" jdbcType="DECIMAL" />
     <result column="exchange_rate_usd" property="exchangeRateUsd" jdbcType="DECIMAL" />
     <result column="apply_id" property="applyId" jdbcType="CHAR" />
@@ -17,7 +17,7 @@
     <result column="completed_date" property="completedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_no, apply_amount, pay_amount, poundage_amount, exchange_rate_rmb, exchange_rate_usd, 
+    id, order_no, apply_amount, pay_amount, poundage_ratio, exchange_rate_rmb, exchange_rate_usd, 
     apply_id, apply_date, status, modified_id, modified_date, completed_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -32,12 +32,12 @@
   </delete>
   <insert id="insert" parameterType="com.cips.model.Order" >
     insert into tb_order (id, order_no, apply_amount, 
-      pay_amount, poundage_amount, exchange_rate_rmb, 
+      pay_amount, poundage_ratio, exchange_rate_rmb, 
       exchange_rate_usd, apply_id, apply_date, 
       status, modified_id, modified_date, 
       completed_date)
     values (#{id,jdbcType=CHAR}, #{orderNo,jdbcType=VARCHAR}, #{applyAmount,jdbcType=DECIMAL}, 
-      #{payAmount,jdbcType=DECIMAL}, #{poundageAmount,jdbcType=DECIMAL}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
+      #{payAmount,jdbcType=DECIMAL}, #{poundageRatio,jdbcType=INTEGER}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
       #{exchangeRateUsd,jdbcType=DECIMAL}, #{applyId,jdbcType=CHAR}, #{applyDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP}, 
       #{completedDate,jdbcType=TIMESTAMP})
@@ -57,8 +57,8 @@
       <if test="payAmount != null" >
         pay_amount,
       </if>
-      <if test="poundageAmount != null" >
-        poundage_amount,
+      <if test="poundageRatio != null" >
+        poundage_ratio,
       </if>
       <if test="exchangeRateRmb != null" >
         exchange_rate_rmb,
@@ -98,8 +98,8 @@
       <if test="payAmount != null" >
         #{payAmount,jdbcType=DECIMAL},
       </if>
-      <if test="poundageAmount != null" >
-        #{poundageAmount,jdbcType=DECIMAL},
+      <if test="poundageRatio != null" >
+        #{poundageRatio,jdbcType=INTEGER},
       </if>
       <if test="exchangeRateRmb != null" >
         #{exchangeRateRmb,jdbcType=DECIMAL},
@@ -139,8 +139,8 @@
       <if test="payAmount != null" >
         pay_amount = #{payAmount,jdbcType=DECIMAL},
       </if>
-      <if test="poundageAmount != null" >
-        poundage_amount = #{poundageAmount,jdbcType=DECIMAL},
+      <if test="poundageRatio != null" >
+        poundage_ratio = #{poundageRatio,jdbcType=INTEGER},
       </if>
       <if test="exchangeRateRmb != null" >
         exchange_rate_rmb = #{exchangeRateRmb,jdbcType=DECIMAL},
@@ -174,7 +174,7 @@
     set order_no = #{orderNo,jdbcType=VARCHAR},
       apply_amount = #{applyAmount,jdbcType=DECIMAL},
       pay_amount = #{payAmount,jdbcType=DECIMAL},
-      poundage_amount = #{poundageAmount,jdbcType=DECIMAL},
+      poundage_ratio = #{poundageRatio,jdbcType=INTEGER},
       exchange_rate_rmb = #{exchangeRateRmb,jdbcType=DECIMAL},
       exchange_rate_usd = #{exchangeRateUsd,jdbcType=DECIMAL},
       apply_id = #{applyId,jdbcType=CHAR},
@@ -185,25 +185,4 @@
       completed_date = #{completedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
-	select
-    <include refid="Base_Column_List" />
-    from tb_order o
-	where 1=1
-    <if test="order.applyId != null">
- 		and o.apply_id = #{order.applyId}
-    </if>
- 	<if test="order.status != null">
- 		and o.status = #{order.status}
- 	</if>
- 	<if test="order.orderNo != null">
- 		and o.order_no = #{order.orderNo}
- 	</if>
- 	<if test="order.applyDateBegin != null">
- 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateBegin},'%Y-%m-%d')
- 	</if>
- 	<if test="order.applyDateEnd != null">
- 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateEnd},'%Y-%m-%d')
- 	</if>
-  </select>
 </mapper>

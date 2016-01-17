@@ -6,7 +6,7 @@ import java.util.Date;
 public class Poundage {
     private String id;
 
-    private BigDecimal poundageAmount;
+    private BigDecimal poundageRatio;
 
     private Integer status;
 
@@ -26,12 +26,12 @@ public class Poundage {
         this.id = id == null ? null : id.trim();
     }
 
-    public BigDecimal getPoundageAmount() {
-        return poundageAmount;
+    public BigDecimal getPoundageRatio() {
+        return poundageRatio;
     }
 
-    public void setPoundageAmount(BigDecimal poundageAmount) {
-        this.poundageAmount = poundageAmount;
+    public void setPoundageRatio(BigDecimal poundageRatio) {
+        this.poundageRatio = poundageRatio;
     }
 
     public Integer getStatus() {

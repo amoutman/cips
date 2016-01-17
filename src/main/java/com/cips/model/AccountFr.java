@@ -5,6 +5,8 @@ import java.util.Date;
 public class AccountFr {
     private String id;
 
+    private String userId;
+
     private String accountCode;
 
     private String accountName;
@@ -14,6 +16,10 @@ public class AccountFr {
     private String accountTel;
 
     private String accountEmail;
+
+    private Integer accountType;
+
+    private Integer status;
 
     private String createdId;
 
@@ -29,6 +35,14 @@ public class AccountFr {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getAccountCode() {
@@ -69,6 +83,22 @@ public class AccountFr {
 
     public void setAccountEmail(String accountEmail) {
         this.accountEmail = accountEmail == null ? null : accountEmail.trim();
+    }
+
+    public Integer getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getCreatedId() {

@@ -1,7 +1,6 @@
 package com.cips.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class Menu {
     private String id;
@@ -25,18 +24,8 @@ public class Menu {
     private String modifiedId;
 
     private Date modifiedDate;
-    
-    private List<Menu> children;
 
-    public List<Menu> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Menu> children) {
-		this.children = children;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 

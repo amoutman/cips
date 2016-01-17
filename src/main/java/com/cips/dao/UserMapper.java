@@ -1,8 +1,5 @@
 package com.cips.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import com.cips.model.User;
 
 public interface UserMapper {
@@ -17,10 +14,4 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
-    User loginUser(User user);
-    
-    List<User> toPageGetUserList(Map<String,Object> map);
-    
-    List<User> toPageSelectUserInfo(String userInfo);
 }

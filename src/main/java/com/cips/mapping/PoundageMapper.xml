@@ -3,7 +3,7 @@
 <mapper namespace="com.cips.dao.PoundageMapper" >
   <resultMap id="BaseResultMap" type="com.cips.model.Poundage" >
     <id column="id" property="id" jdbcType="CHAR" />
-    <result column="poundage_amount" property="poundageAmount" jdbcType="DECIMAL" />
+    <result column="poundage_ratio" property="poundageRatio" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
@@ -11,29 +11,8 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, poundage_amount, status, created_id, created_date, modified_id, modified_date
+    id, poundage_ratio, status, created_id, created_date, modified_id, modified_date
   </sql>
-  <select id="selectPoundageByStatus" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from tb_poundage
-    where status = 0
-  </select>
-  <update id="updatePoundageByStatus" parameterType="map">
-  	 update tb_poundage
-       <set >
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="modifiedId != null" >
-        modified_id = #{modifiedId,jdbcType=CHAR},
-      </if>
-      <if test="modifiedDate != null" >
-        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where status = 0
-  </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -45,10 +24,10 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.cips.model.Poundage" >
-    insert into tb_poundage (id, poundage_amount, status, 
+    insert into tb_poundage (id, poundage_ratio, status, 
       created_id, created_date, modified_id, 
       modified_date)
-    values (#{id,jdbcType=CHAR}, #{poundageAmount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=CHAR}, #{poundageRatio,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
       #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=CHAR}, 
       #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
@@ -58,8 +37,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="poundageAmount != null" >
-        poundage_amount,
+      <if test="poundageRatio != null" >
+        poundage_ratio,
       </if>
       <if test="status != null" >
         status,
@@ -81,8 +60,8 @@
       <if test="id != null" >
         #{id,jdbcType=CHAR},
       </if>
-      <if test="poundageAmount != null" >
-        #{poundageAmount,jdbcType=DECIMAL},
+      <if test="poundageRatio != null" >
+        #{poundageRatio,jdbcType=DECIMAL},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -104,8 +83,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.cips.model.Poundage" >
     update tb_poundage
     <set >
-      <if test="poundageAmount != null" >
-        poundage_amount = #{poundageAmount,jdbcType=DECIMAL},
+      <if test="poundageRatio != null" >
+        poundage_ratio = #{poundageRatio,jdbcType=DECIMAL},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -127,7 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cips.model.Poundage" >
     update tb_poundage
-    set poundage_amount = #{poundageAmount,jdbcType=DECIMAL},
+    set poundage_ratio = #{poundageRatio,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
       created_id = #{createdId,jdbcType=CHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
@@ -135,10 +114,4 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="getCurrPoundage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_poundage
-    where status = #{status,jdbcType=INTEGER}
-  </select>
 </mapper>

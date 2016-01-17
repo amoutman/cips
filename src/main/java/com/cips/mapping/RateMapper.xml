@@ -14,32 +14,9 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type, status, rate_high, rate_low, rate_diff, created_id, created_date
+    id, type, status, rate_high, rate_low, rate_diff, created_id, created_date, modified_id, 
+    modified_date
   </sql>
-  <select id="toPageGetRateList" resultMap="BaseResultMap" >
-  	select
-  	<include refid="Base_Column_List" />
-    from tb_rate
-    order by created_date,type,status
-  </select>
-  <update id="updateRateByStatus" parameterType="map">
-  	update tb_rate
-  	<set >
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="rateHigh != null" >
-        rate_high = #{rateHigh,jdbcType=DECIMAL},
-      </if>
-      <if test="modifiedId != null" >
-        modified_id = #{modifiedId,jdbcType=CHAR},
-      </if>
-      <if test="modifiedDate != null" >
-        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where status = 0 and type = #{type,jdbcType=INTEGER}
-  </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -173,11 +150,4 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="getCurrentRate" parameterType="Map" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_rate
-    where status = #{status}
-    and type = #{type}
-  </select>
 </mapper>

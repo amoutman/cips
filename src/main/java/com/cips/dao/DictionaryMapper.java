@@ -14,6 +14,4 @@ public interface DictionaryMapper {
     int updateByPrimaryKeySelective(Dictionary record);
 
     int updateByPrimaryKey(Dictionary record);
-    
-    Dictionary getDictionaryByCode(String code);
 }

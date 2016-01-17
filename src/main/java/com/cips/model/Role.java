@@ -17,17 +17,7 @@ public class Role {
 
     private Date modifiedDate;
 
-	private Integer isCheck; //是否选中，用作修改用户角色
-
-    public Integer getIsCheck() {
-		return isCheck;
-	}
-
-	public void setIsCheck(Integer isCheck) {
-		this.isCheck = isCheck;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 
