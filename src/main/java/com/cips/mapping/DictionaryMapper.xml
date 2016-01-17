@@ -79,4 +79,10 @@
       VAL = #{val,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="getDictionaryByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_dictionary
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
 </mapper>

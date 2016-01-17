@@ -185,4 +185,31 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="loginUser" resultMap="BaseResultMap" parameterType="map" >
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where user_name = #{userName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="toPageGetUserList" resultMap="BaseResultMap" parameterType="map">
+  	select 
+  	<include refid="Base_Column_List"></include>
+    from tb_user
+    where status = 0
+    <if test="userInfo !=null ">
+    	and 
+    	<trim prefix="(" suffix=")">
+    		user_name like '%${userInfo}%' or mobile like '%${userInfo}%' or credit_id like '%${userInfo}%' or email like '%${userInfo}%'
+		</trim>
+	</if>
+  </select>
+  <select id="toPageSelectUserInfo"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select 
+    <include refid="Base_Column_List"></include>
+    from tb_user
+   where 1=1
+    <if test="userInfo != null">
+    user_name like '%${userInfo}%' or mobile like '%${userInfo}%' or credit_id like '%${userInfo}%' or email like '%${userInfo}%'
+    </if>
+  </select>
 </mapper>

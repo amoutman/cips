@@ -161,4 +161,22 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="getMenuListByRoleId" resultType="com.cips.model.Menu" parameterType="map">
+  	select 
+    	a.id id,
+    	a.pid pid,
+    	a.menu_name menuName,
+    	a.menu_path menuPath,
+    	a.menu_type menuType
+    from tb_menu a,tb_right b
+    where a.id = b.menu_id
+      <if test="roleId != null">
+      	and b.role_id in
+      	 <foreach item="item" index="index" collection="roleId" open="(" separator="," close=")">  
+ 			 #{item}  
+ 		</foreach>
+      </if>
+      and a.pid = #{pid,jdbcType=VARCHAR}
+      and a.status = 0
+  </select>
 </mapper>

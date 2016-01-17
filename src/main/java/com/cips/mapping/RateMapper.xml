@@ -150,4 +150,35 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="toPageGetRateList" resultMap="BaseResultMap" >
+  	select
+  	<include refid="Base_Column_List" />
+    from tb_rate
+    order by created_date,type,status
+  </select>
+  <update id="updateRateByStatus" parameterType="map">
+  	update tb_rate
+  	<set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="rateHigh != null" >
+        rate_high = #{rateHigh,jdbcType=DECIMAL},
+      </if>
+      <if test="modifiedId != null" >
+        modified_id = #{modifiedId,jdbcType=CHAR},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where status = 0 and type = #{type,jdbcType=INTEGER}
+  </update>
+  <select id="getCurrentRate" parameterType="Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_rate
+    where status = #{status}
+    and type = #{type}
+  </select>
 </mapper>

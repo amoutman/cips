@@ -185,4 +185,25 @@
       completed_date = #{completedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
+	select
+    <include refid="Base_Column_List" />
+    from tb_order o
+	where 1=1
+    <if test="order.applyId != null">
+ 		and o.apply_id = #{order.applyId}
+    </if>
+ 	<if test="order.status != null">
+ 		and o.status = #{order.status}
+ 	</if>
+ 	<if test="order.orderNo != null">
+ 		and o.order_no = #{order.orderNo}
+ 	</if>
+ 	<if test="order.applyDateBegin != null">
+ 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateBegin},'%Y-%m-%d')
+ 	</if>
+ 	<if test="order.applyDateEnd != null">
+ 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateEnd},'%Y-%m-%d')
+ 	</if>
+  </select>
 </mapper>

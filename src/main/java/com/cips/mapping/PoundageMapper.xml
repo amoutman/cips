@@ -114,4 +114,31 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="selectPoundageByStatus" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_poundage
+    where status = 0
+  </select>
+  <update id="updatePoundageByStatus" parameterType="map">
+  	 update tb_poundage
+       <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedId != null" >
+        modified_id = #{modifiedId,jdbcType=CHAR},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where status = 0
+  </update>
+  <select id="getCurrPoundage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_poundage
+    where status = #{status,jdbcType=INTEGER}
+  </select>
 </mapper>
