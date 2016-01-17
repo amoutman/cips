@@ -25,4 +25,6 @@ public class GlobalPara {
 	public static final String DICTIONARY_ORDER_CODE = "ORDER_CODE";
 	
 	public static final String MENU_SESSION = "MenuSession";
+	
+	public static final String PAGER_SESSION = "pager";
 }

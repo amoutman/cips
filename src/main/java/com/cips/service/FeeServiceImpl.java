@@ -1,11 +1,14 @@
 package com.cips.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cips.dao.PoundageMapper;
 import com.cips.dao.RateMapper;
+import com.cips.model.Poundage;
 import com.cips.model.Rate;
 
 @Service("feeService")
@@ -13,6 +16,13 @@ public class FeeServiceImpl implements FeeService {
 
 	private RateMapper rateMapper;
 	
+	private PoundageMapper poundageMapper;
+	
+	@Autowired
+	public void setPoundageMapper(PoundageMapper poundageMapper) {
+		this.poundageMapper = poundageMapper;
+	}
+
 	@Autowired
 	public void setRateMapper(RateMapper rateMapper) {
 		this.rateMapper = rateMapper;
@@ -21,7 +31,27 @@ public class FeeServiceImpl implements FeeService {
 	@Override
 	public List<Rate> getRateList() {
 		// TODO Auto-generated method stub
-		return rateMapper.getRateList();
+		return rateMapper.toPageGetRateList();
 	}
+	
+	public void insertRate(Rate rate){
+		rateMapper.insertSelective(rate);
+	}
+
+	public void updateRateByStatus(Map<String,Object> map){
+		rateMapper.updateRateByStatus(map);
+	}
+	
+	public void insertPoundage(Poundage record){
+		poundageMapper.insertSelective(record);
+	}
+	
+	public Poundage selectPoundageByStatus(){
+		return poundageMapper.selectPoundageByStatus();
+	}
+    
+    public void updatePoundageByStatus(Map<String,Object> map){
+    	poundageMapper.updatePoundageByStatus(map);
+    }
 
 }

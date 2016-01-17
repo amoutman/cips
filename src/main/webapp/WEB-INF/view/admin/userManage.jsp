@@ -42,7 +42,11 @@
          <h2 class="icon-user">用户管理</h2>
          <div class="xlineb w430">
             <div class="searchbar">
-              <input type="text" name="userInfo" id="userInfo" class="input-txt"  placeholder="请输入用户名/电话/身份证/邮箱"/> <a href="" class="btnSearch">search</a>
+              <form action="user/toPageUserManage" id="searchUserForm" method="post">
+              	<input type="text" name="userInfo" id="userInfo" class="input-txt"  placeholder="请输入用户名/电话/身份证/邮箱"/>
+              	<input type="hidden" name="currentPage" id="currentPage"/>
+              </form>
+               <a href="javascript:void(0);" onClick="searchUser()" class="btnSearch">search</a>
             </div>
          </div>
      </div>
@@ -159,7 +163,8 @@
          </li>
          </c:forEach>
        </ul>
-       
+       <!-- 分页 -->
+       	<jsp:include page="../header/pager.jsp"></jsp:include>
      </div>
   </div>
   <!--右侧模块 end-->
@@ -314,7 +319,15 @@ $("input[type=checkbox]").change(function(){
 });
 	
 })
+function pageClick(currentPage){
+	$("#currentPage").val(currentPage);
+	$("#searchUserForm").submit();
+}
 
+function searchUser(){
+	$("#currentPage").val("1");
+	$("#searchUserForm").submit();
+}
 
 </script>
 </html>

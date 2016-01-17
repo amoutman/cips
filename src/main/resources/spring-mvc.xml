@@ -28,6 +28,9 @@
         <property name="interceptors">
          <list>
          <bean class="com.cips.interceptor.SysInterceptor">
+         	<property name="mappingUrl" value=".*/toPage.*"></property>
+         	<property name="page" value="1"></property>
+         	<property name="showCount" value="2"></property>
          </bean>
          </list>
          </property>
