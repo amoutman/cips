@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.xml.bind.PropertyException;
 
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import com.cips.constants.GlobalPara;
 import com.cips.page.PageContext;
 import com.cips.page.Pager;
-import com.cips.page.Query;
 import com.cips.util.SystemUtil;
 
 /** 

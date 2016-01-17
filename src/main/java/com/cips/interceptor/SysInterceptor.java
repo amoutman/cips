@@ -1,7 +1,5 @@
 package com.cips.interceptor;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.cips.constants.GlobalPara;
-import com.cips.model.Menu;
 import com.cips.model.User;
 import com.cips.page.Pager;
 
