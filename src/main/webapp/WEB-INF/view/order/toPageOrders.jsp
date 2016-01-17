@@ -10,10 +10,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../css/base.css" rel="stylesheet" type="text/css" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="../js/style.js"></script>
 <title>订单查询</title>
 </head>
 
@@ -28,7 +24,7 @@
      <div class="welcomeWord">
         <span class="avatar">
           <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="../images/head.gif" width="43" height="43" /></span>
+          <span class="avatar-img"><img src="${pageContext.request.contextPath}/resource/images/head.gif" width="43" height="43" /></span>
         </span>
         <span class="word">豆沙包欢迎您！</span>
      </div>
@@ -38,17 +34,7 @@
 
 <!--主题内容 start-->
 <div class="w1200">
-  <!--左侧栏目 start-->
-  <div class="part-left">
-    <ul class="menu">
-      <li class="menu1"><a href="待办事项.html">待办事项</a></li>
-      <li class="menu2"><a href="已办事项.html">已办事项</a></li>
-      <li class="menu3"><a href="订单申请.html">订单申请</a></li>
-      <li class="menu4 curr"><a href="订单查询.html">订单查询</a></li>
-      <li class="menu5"><a href="修改密码.html">修改密码</a></li>
-    </ul>
-  </div>
-  <!--左侧栏目 end-->
+<jsp:include page="../header/header.jsp"></jsp:include>
   <!--右侧模块 start-->
   <div class="part-right">
      <div class="r-tit">

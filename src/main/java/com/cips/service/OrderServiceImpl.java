@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.cips.dao.OrderMapper;
 import com.cips.dao.OrderOperateMapper;
+import com.cips.dao.TaskMapper;
 import com.cips.model.Order;
 import com.cips.model.OrderOperate;
+import com.cips.model.Task;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -26,6 +28,13 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	public void setOrderOperateMapper(OrderOperateMapper orderOperateMapper) {
 		this.orderOperateMapper = orderOperateMapper;
+	}
+	
+	private TaskMapper taskMapper;
+
+	@Autowired
+	public void setTaskMapper(TaskMapper taskMapper) {
+		this.taskMapper = taskMapper;
 	}
 
 	@Override
@@ -51,6 +60,17 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void saveOrderOperate(OrderOperate operate) throws Exception {
 		orderOperateMapper.insertSelective(operate);
+	}
+
+	@Override
+	public void createOrder(Order order, OrderOperate operate, Task task) throws Exception {
+		//订单保存
+		orderMapper.insert(order);
+		//操作日志保存
+		orderOperateMapper.insert(operate);
+		//生成新的待办任务
+		taskMapper.insert(task);
+		
 	}
 
 }

@@ -23,10 +23,12 @@ public class GlobalPara {
 	public static final String MENU_SESSION = "MenuSession";
 	
 	/**角色名称*/
-	public static final String RNAME_HW_ADMIN = "海外管理员";
-	public static final String RNAME_HW_AUDITOR = "海外审核员";
-	public static final String RNAME_CUSTOMER = "客户";
+	public static final String RNAME_HWJ_OPERATOR = "好望角操作员";
+	public static final String RNAME_HC_OPERATOR = "华创操作员";
+	public static final String RNAME_PL_OPERATOR = "平台操作员";
+	public static final String RNAME_PL_CHECKER = "平台审核员";
+	public static final String RNAME_HW_CUSTOMER = "海外用户";
+	public static final String RNAME_SUPER_ADMIN = "超级管理员";
+	public static final String RNAME_CN_OTHER_CUSTOMER = "国内其他客户";
 	
-	/**待办信息常量*/
-	public static final String TASK_ORDER_COMMIT = "此新订单已完成提交请开始撮合";
 }

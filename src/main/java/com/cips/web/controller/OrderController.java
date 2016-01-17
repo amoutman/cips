@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,8 +79,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/createOrder")
-	public Object createOrder(Order order, OrderDetails orderDetails, HttpServletRequest request){
-		Map<String,Object> map = new HashMap<String,Object>(); 
+	public ModelAndView createOrder(Order order, OrderDetails orderDetails, HttpServletRequest request){
 		try {
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
@@ -116,7 +114,7 @@ public class OrderController {
 			order.setModifiedDate(new Date());
 			
 			//订单保存
-			orderService.saveOrder(order);
+			//orderService.saveOrder(order);
 			
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
@@ -126,28 +124,26 @@ public class OrderController {
 			oOperate.setOperatedId(user.getId());
 			oOperate.setOpBeginTime(order.getApplyDate());
 			oOperate.setOpEndTime(order.getApplyDate());
-			orderService.saveOrderOperate(oOperate);
+			//orderService.saveOrderOperate(oOperate);
 			
-			/**向海外公司管理员发送待办*/
+			/**向平台操作员发送待办*/
 			Task task = new Task();
 			task.setId(PKIDUtils.getUuid());
 			task.setOrderId(order.getId());
-			Role role = roleService.selectRoleByName(GlobalPara.RNAME_HW_ADMIN);
+			Role role = roleService.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
 			task.setRoleId(role.getId());
 			task.setOrderStatus(order.getStatus());
 			task.setTaskType(BusConstants.TASK_TYPE_COMMIT);
 			task.setBeginTime(new Date());
 			task.setStatus(BusConstants.TASK_STATUS_NOT_PROCESS);
-			task.setRemark(GlobalPara.TASK_ORDER_COMMIT);
-			taskService.insertTask(task);
+			//taskService.insertTask(task);
 			
-			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
-			return map;
+			orderService.createOrder(order, oOperate, task);
+			
+			return new ModelAndView("redirect:/order/toPageOrders"); 
 		} catch (Exception e) {
 			e.printStackTrace();
-			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "订单提交失败，请重试！");
-			return map;
+			throw new RuntimeException("订单申请提交异常，请重试!");
 		}
 	}
 	
