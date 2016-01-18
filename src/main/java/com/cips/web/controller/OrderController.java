@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.remoting.caucho.BurlapServiceExporter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -113,31 +114,18 @@ public class OrderController {
 			//订单修改时间
 			order.setModifiedDate(new Date());
 			
-			//订单保存
-			//orderService.saveOrder(order);
-			
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
 			oOperate.setId(PKIDUtils.getUuid());
 			oOperate.setOrderId(order.getId());
 			oOperate.setStatus(order.getStatus());
 			oOperate.setOperatedId(user.getId());
-			//oOperate.setOpBeginTime(order.getApplyDate());
 			oOperate.setOpEndTime(order.getApplyDate());
-			//orderService.saveOrderOperate(oOperate);
 			
 			/**向平台操作员发送待办*/
-			Task task = new Task();
-			task.setId(PKIDUtils.getUuid());
-			task.setOrderId(order.getId());
-			Role role = roleService.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
-			task.setRoleId(role.getId());
-			task.setOrderStatus(order.getStatus());
-			task.setTaskType(BusConstants.TASK_TYPE_COMMIT);
-			task.setBeginTime(new Date());
-			task.setStatus(BusConstants.TASK_STATUS_NOT_PROCESS);
-			//taskService.insertTask(task);
+			Task task = taskService.initNewTask(order.getId(), BusConstants.TASK_TYPE_COMMIT);
 			
+			//订单生成
 			orderService.createOrder(order, oOperate, task);
 			
 			return new ModelAndView("redirect:/order/toPageOrders"); 

@@ -30,6 +30,8 @@ public class Order {
 
     private Date completedDate;
 
+    private String hwUserId;
+
     public String getId() {
         return id;
     }
@@ -132,5 +134,13 @@ public class Order {
 
     public void setCompletedDate(Date completedDate) {
         this.completedDate = completedDate;
+    }
+
+    public String getHwUserId() {
+        return hwUserId;
+    }
+
+    public void setHwUserId(String hwUserId) {
+        this.hwUserId = hwUserId == null ? null : hwUserId.trim();
     }
 }

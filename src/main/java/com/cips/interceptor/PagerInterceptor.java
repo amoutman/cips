@@ -1,5 +1,6 @@
 package com.cips.interceptor;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,6 +91,11 @@ public class PagerInterceptor implements Interceptor {
 		PreparedStatement countStmt = connection.prepareStatement(countSql); 
 	    BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(),countSql, 
 				 boundSql.getParameterMappings(), parameterObject);
+	    Field metaParamsField = SystemUtil.getFieldByFieldName(boundSql, "metaParameters");
+        if (metaParamsField != null) {
+            MetaObject mo = (MetaObject) SystemUtil.getValueByFieldName(boundSql, "metaParameters");
+            SystemUtil.setValueByFieldName(countBS, "metaParameters", mo);
+        }
 	    setParameters(countStmt, mappedStatement, countBS, parameterObject);   
 	    ResultSet rs = countStmt.executeQuery();
 	    int count = 0;

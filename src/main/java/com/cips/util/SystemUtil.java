@@ -44,7 +44,8 @@ public class SystemUtil {
 	 
 	 public static void setValueByFieldName(Object obj, String fieldName,
 			 Object value) throws SecurityException, NoSuchFieldException,IllegalArgumentException, IllegalAccessException {
-		 Field field = obj.getClass().getDeclaredField(fieldName);
+		 //Field field = obj.getClass().getDeclaredField(fieldName);
+		 Field field = getFieldByFieldName(obj, fieldName);
 		 if(field.isAccessible()){ 
 			 field.set(obj, value); 
 		 }else{ 

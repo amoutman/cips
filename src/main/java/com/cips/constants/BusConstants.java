@@ -124,7 +124,7 @@ public class BusConstants {
 	public static final String TASK_REMARK_FIRST_HWUSERPAY_CONFIRM = "海外用户已给华创海外账户第一次打款，请确认打款凭证信息";
 	//平台操作员审核海外用户第一次打款凭证有问题，则驳回至海外用户
 	public static final Integer TASK_TYPE_FIRST_HWUSERPAY_REJECT = 30; 
-	public static final String TASK_REMARK_FIRST_HWUSERPAY_REJECT = "第一次打款凭证有问题，请核实";
+	public static final String TASK_REMARK_FIRST_HWUSERPAY_REJECT = "第一次海外打款凭证有问题，请核实";
 	//平台操作员审核海外用户第一次打款凭证没有问题，则发送待办至平台审核员进行复核
 	//有问题则直接驳回至海外用户，注意：类型及信息同30
 	public static final Integer TASK_TYPE_FIRST_HWUSERPAY_RECHECK = 31; 
@@ -150,7 +150,7 @@ public class BusConstants {
 	public static final String TASK_REMARK_HC_HWPAY_CONFIRM = "华创用户已进行海外账户的打款，请核验打款凭证信息";
 	//平台操作员核实华创海外打款凭证有问题，则驳回
 	public static final Integer TASK_TYPE_HC_HWPAY_REJECT = 38; 
-	public static final String TASK_REMARK_HC_HWPAY_REJECT = "外账户打款凭证有问题，请核实";
+	public static final String TASK_REMARK_HC_HWPAY_REJECT = "国外账户打款凭证有问题，请核实";
 	//平台操作员核实华创海外打款凭证无误，则发送待办至平台审核员进行复核
 	//如果有问题则直接驳回至华创操作员 注意：类型及信息同38
 	public static final Integer TASK_TYPE_HC_HWPAY_RECHECK = 39; 

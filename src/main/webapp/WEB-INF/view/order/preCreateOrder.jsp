@@ -6,6 +6,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<base href="<%=basePath%>">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -24,7 +25,7 @@
      <div class="welcomeWord">
         <span class="avatar">
           <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="${pageContext.request.contextPath}/resource/images/head.gif" width="43" height="43" /></span>
+          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
         </span>
         <span class="word">豆沙包欢迎您！</span>
      </div>
@@ -35,7 +36,7 @@
 <!--主题内容 start-->
 <div class="w1200">
 <jsp:include page="../header/header.jsp"></jsp:include>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/jquery.validate.js"></script>
+<script type="text/javascript" src="resource/js/jquery.validate.js"></script>
   <!--右侧模块 start-->
   <div class="part-right">
      <div class="r-tit">
@@ -43,9 +44,9 @@
      </div>
      <div class="content">
        <ul class="s-form">
-       		<form action="${pageContext.request.contextPath}/order/createOrder" id="orderForm" method="post">
+       		<form action="order/createOrder" id="orderForm" method="post">
 			     <input type="hidden" name="rate" id="rate" value="${rate.rateHigh}" />
-			     <input type="hidden" name="poundage" id="poundage" value="${poundage.poundageAmount}" />
+			     <input type="hidden" name="poundage" id="poundage" value="${poundage.poundageRatio}" />
 	    
                  <li><label>申请金额：</label><input type="text" class="input-txt" id="applyAmount" name="applyAmount" value="" ><span class="left hbf">美元</span>
                  </li>

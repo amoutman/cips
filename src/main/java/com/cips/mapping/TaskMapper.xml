@@ -150,20 +150,23 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="toPageTaskListByParams" resultMap="BaseResultMap">
+  <select id="toPageTaskListByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_task t
- 	where t.roleId in 
+ 	where 1=1
+ 	<if test="roleIds != null">
+ 	 and t.role_id in 
  	  <foreach item="roleId" index="index" collection="roleIds" open="(" separator="," close=")">
- 	  	#{roleId}
+ 	  	#{roleId,jdbcType=CHAR}
  	  </foreach> 
+ 	 </if>
  	<if test="status != null">
-      	and t.status = #{status}
+      	and t.status = #{status,jdbcType=INTEGER}
     </if>
  	<if test="userId != null">
-      	and (t.operated_id = #{userId} or t.operated_id = null)
+      	and (t.operated_id = #{userId,jdbcType=CHAR} or t.operated_id IS NULL)
     </if>
- 	  and 
+    order by t.end_time,t.begin_time
    </select>
 </mapper>

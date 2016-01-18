@@ -6,6 +6,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<base href="<%=basePath%>">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -24,7 +25,7 @@
      <div class="welcomeWord">
         <span class="avatar">
           <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="${pageContext.request.contextPath}/resource/images/head.gif" width="43" height="43" /></span>
+          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
         </span>
         <span class="word">豆沙包欢迎您！</span>
      </div>
