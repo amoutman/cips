@@ -63,7 +63,7 @@
          <li>
            <div class="role-img"><img src="resource/images/role-tx1.gif" width="51" height="51" /></div>
            <div class="role-name">角色名称：${role.roleName }</div>
-           <div class="role-date">创建时间：${role.createdDate }</div>
+           <div class="role-date">创建时间：<fmt:formatDate value="${role.createdDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></div>
            <div class="role-deal">
               <div class="ck-deal"><a onclick="deleteRole(${role.id })" href="javascript:vote(0)" id="btnDelete" class="btnOrage btnck">修改</a> <a href="" class="btnGrey">删除</a></div>
              <!--弹窗start-->

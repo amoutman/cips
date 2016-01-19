@@ -180,42 +180,6 @@ public class UserController {
 		return mv;
 	}
 	
-	@RequestMapping("/toPageSelectUserInfo")
-	public ModelAndView selectUserInfo(HttpServletRequest request,HttpServletResponse response,@RequestParam("userInfo") String userInfo){
-		ModelAndView mv = new ModelAndView();
-		List<User> userList = userService.selectUserInfo(userInfo);
-		List<User> nUserList = new ArrayList<User>();
-		if(!userList.isEmpty()){
-			for(User user:userList){
-				String userId = user.getId();
-				//查询用户的角色
-				List<Role> urList = roleService.getRoleListByUserId(userId);
-				String roleName = "";
-				for(Role r:urList){
-					if(roleName.equals("")){
-						roleName = r.getRoleName();
-					}else{
-						roleName = roleName + ","+r.getRoleName();
-					}
-				}
-				if(roleName!=""){
-					user.setRoleNames(roleName);
-				}
-				user.setRoleList(urList);
-				nUserList.add(user);
-			}
-			mv.addObject("userList", nUserList);
-		}
-		
-		//查询系统中所有角色
-		List<Role> roleList = roleService.getRoleList();
-		if(!roleList.isEmpty()){
-			mv.addObject("roleList", roleList);
-		}	
-		mv.setViewName("admin/userManage");
-		return mv;
-	}
-	
 	@RequestMapping("/insertUser")
 	public ModelAndView insertUser(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("user") User user){
 		ModelAndView mv = new ModelAndView();

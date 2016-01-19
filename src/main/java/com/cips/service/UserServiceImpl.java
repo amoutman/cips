@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
 		return userMapper.toPageGetUserList(map);
 	}
 	
-	public List<User> selectUserInfo(String userInfo){
-		return userMapper.toPageSelectUserInfo(userInfo);
+	public List<User> toPageGetFrUserList(Map<String,Object> map){
+		return userMapper.toPageGetFrUserList(map);
 	}
 
 }

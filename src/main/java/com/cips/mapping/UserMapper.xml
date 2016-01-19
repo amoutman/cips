@@ -203,13 +203,23 @@
 		</trim>
 	</if>
   </select>
-  <select id="toPageSelectUserInfo"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="toPageGetFrUserList"  resultType="com.cips.model.User" parameterType="map" >
   	select 
-    <include refid="Base_Column_List"></include>
-    from tb_user
-   where 1=1
-    <if test="userInfo != null">
-    user_name like '%${userInfo}%' or mobile like '%${userInfo}%' or credit_id like '%${userInfo}%' or email like '%${userInfo}%'
-    </if>
+  		a.id,
+  		a.user_name userName, 
+  		a.credit_id creditId,
+  		a.mobile mobile,
+  		a.email email
+    from tb_user a,tb_user_role b,tb_role c
+    where a.id = b.user_id 
+    	and b.role_id = c.id
+    	and c.role_name like '%${roleName}%'
+    	and a.status = 0
+   		<if test="userInfo != null ">
+    		and 
+    		<trim prefix="(" suffix=")">
+    			a.user_name like '%${userInfo}%' or a.mobile like '%${userInfo}%' or a.credit_id like '%${userInfo}%' or a.email like '%${userInfo}%'
+			</trim>
+		</if>
   </select>
 </mapper>

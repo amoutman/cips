@@ -9,11 +9,11 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
-<link href="${pageContext.request.contextPath}/resource/css/base.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resource/css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/style.js"></script>
+<base href="<%=basePath%>">
+<link href="resource/css/base.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resource/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="resource/js/style.js"></script>
 <!--左侧栏目 start-->
   <div class="part-left">
   	<ul class="menu">

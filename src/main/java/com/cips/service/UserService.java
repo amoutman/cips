@@ -16,5 +16,5 @@ public interface UserService {
 	
 	public List<User> getUserList(Map<String,Object> map);
 	
-	public List<User> selectUserInfo(String userInfo);
+	public List<User> toPageGetFrUserList(Map<String,Object> map);
 }

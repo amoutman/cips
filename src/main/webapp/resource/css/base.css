@@ -55,6 +55,8 @@ input:focus,textarea:focus {border-color:#7ecef4;-webkit-box-shadow:0 0 6px #7ec
 .color_888{color:#888;}
 .color_666{ color:#666;}
 .mt10{ margin-top:10px;}
+.mr50{ margin-right:35px;}
+.btp0{ border-top:0 !important; padding-top:0 !important;}
 
 
 /* 分页 */
