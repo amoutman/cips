@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.remoting.caucho.BurlapServiceExporter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,6 @@ import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
 import com.cips.model.Poundage;
 import com.cips.model.Rate;
-import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.service.DictionaryService;
@@ -114,6 +112,11 @@ public class OrderController {
 			//订单修改时间
 			order.setModifiedDate(new Date());
 			
+			//OrderDetail表
+			orderDetails.setId(PKIDUtils.getUuid());
+			orderDetails.setOrderId(order.getId());
+			orderDetails.setType(BusConstants.TASK_TYPE_COMMIT);
+			
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
 			oOperate.setId(PKIDUtils.getUuid());
@@ -123,10 +126,10 @@ public class OrderController {
 			oOperate.setOpEndTime(order.getApplyDate());
 			
 			/**向平台操作员发送待办*/
-			Task task = taskService.initNewTask(order.getId(), BusConstants.TASK_TYPE_COMMIT);
+			Task task = taskService.initNewTask(order.getOrderNo(), BusConstants.TASK_TYPE_COMMIT);
 			
 			//订单生成
-			orderService.createOrder(order, oOperate, task);
+			orderService.createOrder(order, orderDetails, oOperate, task);
 			
 			return new ModelAndView("redirect:/order/toPageOrders"); 
 		} catch (Exception e) {

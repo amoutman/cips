@@ -47,7 +47,7 @@
          <c:forEach items="${tasks}" var="task">
 	         <li>
 	           <div class="wt-lf"><span class="wt-border"></span></div>
-	           <div class="wt-num">订单号：${task.orderId}</div>
+	           <div class="wt-num">订单号：${task.orderNo}</div>
 	           <div class="wt-event">${task.msg}</div>
 	           <div class="wt-deal"><a href="javascript:void(0);" class="btnBlue"  onclick="processingTask('${task.id}')">处理</a></div>
 	         </li>

@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.toPageSelectUserInfo(userInfo);
 	}
 
+	@Override
+	public User getUserByUserId(String userId) {
+		return userMapper.selectByPrimaryKey(userId);
+	}
+
 }

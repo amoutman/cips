@@ -150,11 +150,14 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="toPageTaskListByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="toPageTaskListByParams" parameterType="java.util.Map" resultType="com.cips.model.Task">
     select 
-    <include refid="Base_Column_List" />
-    from tb_task t
- 	where 1=1
+       t.id id, t.order_id orderId, t.role_id roleId, t.order_status orderStatus, 
+       t.task_type taskType, t.begin_time beginTime, t.end_time endTime, t.status status, 
+       t.operated_id operatedId, t.remark remark, o.order_no orderNo
+    from tb_task t,
+    tb_order o
+ 	where t.order_id = o.id
  	<if test="roleIds != null">
  	 and t.role_id in 
  	  <foreach item="roleId" index="index" collection="roleIds" open="(" separator="," close=")">

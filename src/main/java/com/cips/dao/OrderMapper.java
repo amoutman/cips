@@ -19,4 +19,6 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
     
     List<Order> toPageOrderListByParams(Map<String,Object> paramMap);
+    
+    Order getOrderByOrderNo(String orderNo);
 }

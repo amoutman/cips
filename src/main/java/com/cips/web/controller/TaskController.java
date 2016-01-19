@@ -17,13 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cips.constants.BusConstants;
+import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
+import com.cips.model.Order;
+import com.cips.model.OrderDetails;
 import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.page.Pager;
+import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
+import com.cips.service.UserService;
 
 @Controller
 @RequestMapping("/task")
@@ -36,6 +41,12 @@ public class TaskController {
 	
 	@Resource(name="roleService")
 	private RoleService roleService;
+	
+	@Resource(name="userService")
+	private UserService userService;
+	
+	@Resource(name="orderService")
+	private OrderService orderService;
 	
 	/**
 	 * 待办管理
@@ -108,7 +119,19 @@ public class TaskController {
 			//根据类型选择视图及参数
 			switch (task.getTaskType()) {
 			case 1:
-				
+				//查询订单信息
+				Order order = orderService.getOrderById(task.getOrderId());
+				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+				User user = userService.getUserByUserId(order.getApplyId());
+				//获取海外账户信息
+				Map<String,Object> paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("taskType", task.getTaskType());
+				OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				mv.addObject("order", order);
+				mv.addObject("user", user);
+				mv.addObject("hwAcc", hwAcc);
+				mv.setViewName("task/plpProTaskT2");
 				break;
 			case 2:
 

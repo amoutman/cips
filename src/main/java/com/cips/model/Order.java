@@ -23,8 +23,10 @@ public class Order {
     private Date applyDate;
 
     private Integer status;
+    
+    private String statusDesc;
 
-    private String modifiedId;
+	private String modifiedId;
 
     private Date modifiedDate;
 
@@ -143,4 +145,12 @@ public class Order {
     public void setHwUserId(String hwUserId) {
         this.hwUserId = hwUserId == null ? null : hwUserId.trim();
     }
+    
+    public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
+	}
 }

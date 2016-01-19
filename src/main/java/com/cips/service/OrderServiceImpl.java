@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cips.dao.OrderDetailsMapper;
 import com.cips.dao.OrderMapper;
 import com.cips.dao.OrderOperateMapper;
 import com.cips.dao.TaskMapper;
 import com.cips.model.Order;
+import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
 import com.cips.model.Task;
 
@@ -35,6 +37,13 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	public void setTaskMapper(TaskMapper taskMapper) {
 		this.taskMapper = taskMapper;
+	}
+	
+	private OrderDetailsMapper orderDetailsMapper;
+
+	@Autowired
+	public void setOrderDetailsMapper(OrderDetailsMapper orderDetailsMapper) {
+		this.orderDetailsMapper = orderDetailsMapper;
 	}
 
 	@Override
@@ -63,14 +72,26 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void createOrder(Order order, OrderOperate operate, Task task) throws Exception {
+	public void createOrder(Order order, OrderDetails orderDetails, OrderOperate operate, Task task) throws Exception {
 		//订单保存
 		orderMapper.insert(order);
+		//订单账户
+		orderDetailsMapper.insertSelective(orderDetails);
 		//操作日志保存
 		orderOperateMapper.insert(operate);
 		//生成新的待办任务
 		taskMapper.insert(task);
 		
+	}
+
+	@Override
+	public OrderDetails getOrderDetailsByParams(Map<String, Object> paramMap) {
+		return orderDetailsMapper.getOrderDetailsByParams(paramMap);
+	}
+
+	@Override
+	public Order getOrderByOrderNo(String orderNo) throws Exception {
+		return orderMapper.getOrderByOrderNo(orderNo);
 	}
 
 }
