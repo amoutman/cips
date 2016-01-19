@@ -49,8 +49,14 @@ public class UserServiceImpl implements UserService {
 		return userMapper.toPageGetUserList(map);
 	}
 	
+	@Override
 	public List<User> toPageGetFrUserList(Map<String,Object> map){
 		return userMapper.toPageGetFrUserList(map);
+	}
+
+	@Override
+	public User getUserByUserId(String userId) {
+		return userMapper.selectByPrimaryKey(userId);
 	}
 
 }

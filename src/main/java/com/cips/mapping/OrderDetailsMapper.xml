@@ -125,4 +125,16 @@
       account_tel = #{accountTel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="getOrderDetailsByParams" parameterType="Map" resultMap="BaseResultMap">
+	select
+    <include refid="Base_Column_List" />
+    from tb_order_details o
+	where 1=1
+    <if test="orderId != null">
+ 		and o.order_id = #{orderId}
+    </if>
+ 	<if test="taskType != null">
+ 		and o.type = #{taskType}
+ 	</if>
+  </select>
 </mapper>

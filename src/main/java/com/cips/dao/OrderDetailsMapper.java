@@ -1,5 +1,7 @@
 package com.cips.dao;
 
+import java.util.Map;
+
 import com.cips.model.OrderDetails;
 
 public interface OrderDetailsMapper {
@@ -14,4 +16,6 @@ public interface OrderDetailsMapper {
     int updateByPrimaryKeySelective(OrderDetails record);
 
     int updateByPrimaryKey(OrderDetails record);
+    
+    OrderDetails getOrderDetailsByParams(Map<String, Object> paramMap);
 }

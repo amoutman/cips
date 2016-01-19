@@ -15,10 +15,11 @@
     <result column="modified_id" property="modifiedId" jdbcType="CHAR" />
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
     <result column="completed_date" property="completedDate" jdbcType="TIMESTAMP" />
+    <result column="hw_user_id" property="hwUserId" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_no, apply_amount, pay_amount, poundage_ratio, exchange_rate_rmb, exchange_rate_usd, 
-    apply_id, apply_date, status, modified_id, modified_date, completed_date
+    apply_id, apply_date, status, modified_id, modified_date, completed_date, hw_user_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -35,12 +36,12 @@
       pay_amount, poundage_ratio, exchange_rate_rmb, 
       exchange_rate_usd, apply_id, apply_date, 
       status, modified_id, modified_date, 
-      completed_date)
+      completed_date, hw_user_id)
     values (#{id,jdbcType=CHAR}, #{orderNo,jdbcType=VARCHAR}, #{applyAmount,jdbcType=DECIMAL}, 
       #{payAmount,jdbcType=DECIMAL}, #{poundageRatio,jdbcType=DECIMAL}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
       #{exchangeRateUsd,jdbcType=DECIMAL}, #{applyId,jdbcType=CHAR}, #{applyDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP}, 
-      #{completedDate,jdbcType=TIMESTAMP})
+      #{completedDate,jdbcType=TIMESTAMP}, #{hwUserId,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cips.model.Order" >
     insert into tb_order
@@ -84,6 +85,9 @@
       <if test="completedDate != null" >
         completed_date,
       </if>
+      <if test="hwUserId != null" >
+        hw_user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -124,6 +128,9 @@
       </if>
       <if test="completedDate != null" >
         #{completedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hwUserId != null" >
+        #{hwUserId,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +173,9 @@
       <if test="completedDate != null" >
         completed_date = #{completedDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="hwUserId != null" >
+        hw_user_id = #{hwUserId,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
@@ -182,7 +192,8 @@
       status = #{status,jdbcType=INTEGER},
       modified_id = #{modifiedId,jdbcType=CHAR},
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
-      completed_date = #{completedDate,jdbcType=TIMESTAMP}
+      completed_date = #{completedDate,jdbcType=TIMESTAMP},
+      hw_user_id = #{hwUserId,jdbcType=CHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
   <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
@@ -205,5 +216,11 @@
  	<if test="order.applyDateEnd != null">
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateEnd},'%Y-%m-%d')
  	</if>
+  </select>
+  <select id="getOrderByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order
+    where order_no = #{orderNo}
   </select>
 </mapper>

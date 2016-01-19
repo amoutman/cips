@@ -22,6 +22,10 @@ public class Task {
     private String operatedId;
 
     private String remark;
+    
+	private String msg;
+	
+	private String orderNo;
 
     public String getId() {
         return id;
@@ -102,4 +106,20 @@ public class Task {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+    
+    public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
 }

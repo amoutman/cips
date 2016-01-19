@@ -23,7 +23,6 @@ import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
 import com.cips.model.Poundage;
 import com.cips.model.Rate;
-import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.service.DictionaryService;
@@ -113,8 +112,10 @@ public class OrderController {
 			//订单修改时间
 			order.setModifiedDate(new Date());
 			
-			//订单保存
-			//orderService.saveOrder(order);
+			//OrderDetail表
+			orderDetails.setId(PKIDUtils.getUuid());
+			orderDetails.setOrderId(order.getId());
+			orderDetails.setType(BusConstants.TASK_TYPE_COMMIT);
 			
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
@@ -122,23 +123,13 @@ public class OrderController {
 			oOperate.setOrderId(order.getId());
 			oOperate.setStatus(order.getStatus());
 			oOperate.setOperatedId(user.getId());
-			//oOperate.setOpBeginTime(order.getApplyDate());
 			oOperate.setOpEndTime(order.getApplyDate());
-			//orderService.saveOrderOperate(oOperate);
 			
 			/**向平台操作员发送待办*/
-			Task task = new Task();
-			task.setId(PKIDUtils.getUuid());
-			task.setOrderId(order.getId());
-			Role role = roleService.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
-			task.setRoleId(role.getId());
-			task.setOrderStatus(order.getStatus());
-			task.setTaskType(BusConstants.TASK_TYPE_COMMIT);
-			task.setBeginTime(new Date());
-			task.setStatus(BusConstants.TASK_STATUS_NOT_PROCESS);
-			//taskService.insertTask(task);
+			Task task = taskService.initNewTask(order.getOrderNo(), BusConstants.TASK_TYPE_COMMIT);
 			
-			orderService.createOrder(order, oOperate, task);
+			//订单生成
+			orderService.createOrder(order, orderDetails, oOperate, task);
 			
 			return new ModelAndView("redirect:/order/toPageOrders"); 
 		} catch (Exception e) {
