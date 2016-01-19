@@ -19,4 +19,6 @@ public interface TaskMapper {
     int updateByPrimaryKey(Task record);
     
     List<Task> toPageTaskListByParams(Map<String,Object> params);
+    
+    Task getTaskByParams(Map<String, Object> params) throws Exception;
 }

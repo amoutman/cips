@@ -64,17 +64,19 @@
                  </div>
                </div>
                
+               <h2>海外用户账户信息</h2>
                <div class="wtbox mt10">
  			   <div class="wt_skzh clearFix">
- 					 <div class="wt-t">海外用户账户信息</div>
 	                 <div class="clearFix">
-	                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-	                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-	                     <div class="w235"><label>开户行：</label> <span>doushabao</span> </div>
+	                     <div class="w235"><label>收款人姓名： </label> <span>${hwUserAcc.accountName}</span> </div>
+	                     <div class="w235"><label>收款人账号：</label> <span>${hwUserAcc.accountCode}</span> </div>
+	                     <div class="w235"><label>开户行：</label> <span>${hwUserAcc.accountBank}</span> </div>
 	                 </div>
                </div>
                </div>
-               <div class="btnDiv tac"><a href="" class="btnGrey">返回</a><a href="" class="btnOrage">确认</a> <a href="" class="btnOrage">驳回</a></div>
+               <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
+               <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${taskId}');">确认</a> 
+               <a href="javascript:vote(0)" class="btnOrage" onclick="taskRejected('${taskId}');">驳回</a></div>
            </div>
      </div>
   </div>
@@ -85,4 +87,43 @@
 <div class="bg"></div>
 
 </body>
+<script type="text/javascript">
+function taskConfirm(taskId){
+	$.post(
+			"task/plcProTaskConfirm",
+			{
+				"taskId":taskId
+			},
+			function(data){
+				if (data.msg == "1") {
+					//访问
+					window.location.href = "task/preProTask?taskId="+taskId;
+				} else {
+					// 失败了
+					alert(data.msg);
+				}
+			},
+			"json"	
+	);
+}
+
+function taskRejected(taskId){
+	$.post(
+			"task/processingTask",
+			{
+				"taskId":taskId
+			},
+			function(data){
+				if (data.msg == "1") {
+					//访问
+					window.location.href = "task/preProTask?taskId="+taskId;
+				} else {
+					// 失败了
+					alert(data.msg);
+				}
+			},
+			"json"	
+	);
+}
+</script>
 </html>

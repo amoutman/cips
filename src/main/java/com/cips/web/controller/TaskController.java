@@ -1,6 +1,7 @@
 package com.cips.web.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +23,17 @@ import com.cips.constants.GlobalPara;
 import com.cips.model.AccountFr;
 import com.cips.model.Order;
 import com.cips.model.OrderDetails;
+import com.cips.model.OrderOperate;
 import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.page.Pager;
+import com.cips.service.AccountFrService;
 import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
 import com.cips.service.UserService;
+import com.cips.util.PKIDUtils;
 
 @Controller
 @RequestMapping("/task")
@@ -48,6 +52,9 @@ public class TaskController {
 	
 	@Resource(name="orderService")
 	private OrderService orderService;
+	
+	@Resource(name="accountFrService")
+	private AccountFrService accountFrService;
 	
 	/**
 	 * 待办管理
@@ -120,7 +127,9 @@ public class TaskController {
 			//根据类型选择视图及参数
 			Order order = null;
 			User user = null;
-			Map<String,Object> paramMap =  new HashMap<String,Object>();
+			OrderDetails hwAcc = null;
+			OrderDetails hwUserAcc = null;
+			Map<String,Object> paramMap =  null;
 			switch (task.getTaskType()) {
 			case 1:
 				//查询订单信息
@@ -128,18 +137,38 @@ public class TaskController {
 				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
 				user = userService.getUserByUserId(order.getApplyId());
 				//获取海外账户信息
+				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
-				OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				mv.addObject("order", order);
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("taskId", taskId);
 				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 2:
 				//查询订单信息
 				order = orderService.getOrderById(task.getOrderId());
 				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+				user = userService.getUserByUserId(order.getApplyId());
+				//获取海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("order", order);
+				mv.addObject("user", user);
+				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("taskId", taskId);
+				mv.setViewName("task/plcProTaskT2");
 				break;
 			case 3:
 
@@ -299,19 +328,207 @@ public class TaskController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/plpProTaskT1")
-	public Map<String, Object> plpProTaskT1(AccountFr accountFr){
+	public Map<String, Object> plpProTaskT1(HttpServletRequest request, String taskId, AccountFr accountFr){
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			orderService.getOrderDetailsByParams(orderDetails.get)
+			//验证海外用户真实性
+			accountFr = accountFrService.getAccountFrById(accountFr.getId());
+			if(accountFr == null){
+				map.put(GlobalPara.AJAX_KEY, "你选择的海外用户系统不存在");
+				return map;
+			}
+			
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-			//根据ID修改任务所属人为当前用户及修改该任务状态为处理中
-			String msg = taskService.processingTaskById(taskId, user.getId());
-			if(msg != null){
-				map.put(GlobalPara.AJAX_KEY, msg);
+			
+			//获取当前待办
+			Task curTask = taskService.getTaskById(taskId);
+			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
+			curTask.setEndTime(new Date());
+			
+			if(BusConstants.TASK_TYPE_HWUSERINFO_REJECT.equals(curTask.getTaskType())){
+				Map<String,Object> paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				OrderDetails orderDetails = orderService.getOrderDetailsByParams(paramMap);
+				orderDetails.setAccountBank(accountFr.getAccountBank());
+				orderDetails.setAccountName(accountFr.getAccountName());
+				orderDetails.setAccountCode(accountFr.getAccountCode());
+				orderDetails.setOrderId(curTask.getOrderId());
+				orderDetails.setTaskType(curTask.getTaskType());
+				orderDetails.setType(BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				
+				//生成新的待办任务
+				Task newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSERINFO);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				
+				//生成操作步骤
+				OrderOperate oOperate = new OrderOperate();
+				oOperate.setId(PKIDUtils.getUuid());
+				oOperate.setOrderId(curTask.getOrderId());
+				oOperate.setStatus(curTask.getOrderStatus());
+				oOperate.setOperatedId(user.getId());
+				oOperate.setOpEndTime(new Date());
+				oOperate.setOpSequence(curTask.getTaskType());
+				oOperate.setTaskId(curTask.getId());
+				oOperate.setOrderAccountId(orderDetails.getId());
+				
+				taskService.processTask(null, orderDetails, oOperate, curTask, newTask);
 			}else{
-				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+				//生成新的订单账户
+				OrderDetails orderDetails = new OrderDetails();
+				orderDetails.setId(PKIDUtils.getUuid());
+				orderDetails.setAccountBank(accountFr.getAccountBank());
+				orderDetails.setAccountName(accountFr.getAccountName());
+				orderDetails.setAccountCode(accountFr.getAccountCode());
+				orderDetails.setOrderId(curTask.getOrderId());
+				orderDetails.setTaskType(curTask.getTaskType());
+				orderDetails.setType(BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				
+				//查询当前订单信息 修改其状态为处理中
+				Order order = orderService.getOrderById(curTask.getOrderId());
+				order.setStatus(BusConstants.ORDER_STATUS_PROCESSING);
+				
+				//生成新的待办任务
+				Task newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSERINFO);
+				newTask.setOrderStatus(order.getStatus());
+				
+				//生成操作步骤
+				OrderOperate oOperate = new OrderOperate();
+				oOperate.setId(PKIDUtils.getUuid());
+				oOperate.setOrderId(curTask.getOrderId());
+				oOperate.setStatus(curTask.getOrderStatus());
+				oOperate.setOperatedId(user.getId());
+				oOperate.setOpEndTime(new Date());
+				oOperate.setOpSequence(curTask.getTaskType());
+				oOperate.setTaskId(curTask.getId());
+				oOperate.setOrderAccountId(orderDetails.getId());
+				
+				taskService.processTask(order, orderDetails, oOperate, curTask, newTask);
 			}
+			
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			map = new HashMap<String,Object>();
+			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
+			return map;
+		}
+	}
+	
+	/**
+	 *  平台审核员审核通过
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/plcProTaskConfirm")
+	public Object plcProTaskConfirm(HttpServletRequest request, @RequestParam("taskId")String taskId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//获取当前待办
+			Task curTask = taskService.getTaskById(taskId);
+			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
+			curTask.setEndTime(new Date());
+			
+			//生成下一环节待办
+			Task newTask = null;
+			String applyId = null;
+			List<Role> roles = null;
+			switch (curTask.getTaskType()) {
+			case 2:
+				applyId = orderService.getOrderById(curTask.getOrderId()).getApplyId();
+				roles = roleService.getRoleListByUserId(applyId);
+				for (Role role : roles) {
+					if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
+						newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCPAY);
+					}
+					if(GlobalPara.RNAME_CN_OTHER_CUSTOMER.equals(role.getRoleName())){
+						newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY);
+					}
+				}
+				break;
+			case 3:
+				applyId = orderService.getOrderById(curTask.getOrderId()).getApplyId();
+				roles = roleService.getRoleListByUserId(applyId);
+				for (Role role : roles) {
+					if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
+						newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCPAY);
+					}
+					if(GlobalPara.RNAME_CN_OTHER_CUSTOMER.equals(role.getRoleName())){
+						newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY);
+					}
+				}
+				break;
+			default:
+				break;
+			}
+			 
+			//生成操作步骤
+			OrderOperate oOperate = new OrderOperate();
+			oOperate.setId(PKIDUtils.getUuid());
+			oOperate.setOrderId(curTask.getOrderId());
+			oOperate.setStatus(curTask.getOrderStatus());
+			oOperate.setOperatedId(user.getId());
+			oOperate.setOpEndTime(new Date());
+			oOperate.setOpSequence(curTask.getTaskType());
+			oOperate.setTaskId(curTask.getId());
+			
+			taskService.processTask(null, null, oOperate, curTask, newTask);
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			map = new HashMap<String,Object>();
+			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
+			return map;
+		}
+	}
+	
+	/**
+	 *  平台审核员审核驳回
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/plcProTaskRejected")
+	public Object plcProTaskRejected(HttpServletRequest request, @RequestParam("taskId")String taskId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//获取当前待办
+			Task curTask = taskService.getTaskById(taskId);
+			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
+			curTask.setEndTime(new Date());
+			
+			//生成上一环节待办
+			Task newTask = null;
+			Map<String,Object> paramMap = null;
+			Task upTask = null;
+			switch (curTask.getTaskType()) {
+			case 2:
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSERINFO_REJECT);
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.ORDER_STATUS_COMMIT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				taskService.saveNewTask(newTask);
+				break;
+			case 3:
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSERINFO_REJECT);
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.ORDER_STATUS_COMMIT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				taskService.saveNewTask(newTask);
+				break;
+			default:
+				break;
+			}
+			 
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();

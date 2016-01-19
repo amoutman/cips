@@ -202,7 +202,57 @@ public class BusConstants {
 	public static final String TASK_REMARK_SECOND_HCRECEIPT_RECHECK = "华创用户xxx的海外账户已收到第2次来款，已上传收款凭证，请复核";
 	//平台审核员核验华创2次收款凭证，没有问题，则点击订单完成，并修改相应状态
 	
-	
-	
-	
+	/**
+	 * 普通业务流程
+	 */
+	//在第二步或第三步平台审核员审核完成后，发送待办至角色为其他客户 
+	public static final Integer TASK_TYPE_CUSTOMER_PAY = 52; 
+	public static final String TASK_REMARK_CUSTOMER_PAY = "请根据订单信息进行打款";
+	//其他用户打款上传凭证后，发送待办平台操作员进行信息核实
+	public static final Integer TASK_TYPE_CUSTOMER_PAY_CONFIRM = 53; 
+	public static final String TASK_REMARK_CUSTOMER_PAY_CONFIRM = "已完成向海外用户打款，请核验打款凭证信息";
+	//打款凭证有问题则驳回至其他客户
+	public static final Integer TASK_TYPE_CUSTOMER_PAY_REJECT = 54; 
+	public static final String TASK_REMARK_CUSTOMER_PAY_REJECT = "打款凭证有误，请核实";
+	//打款凭证没有问题则发待办至平台审核员进行复核
+	//有问题则直接驳回至其他客户 注意：类型及信息同54
+	public static final Integer TASK_TYPE_CUSTOMER_PAY_RECHECK = 55; 
+	public static final String TASK_REMARK_CUSTOMER_PAY_RECHECK = "已给海外用户打款，请复核打款凭证信息";
+	//平台审核员复核打款凭证没有问题 则发送待办至海外用户进行收款确认
+	public static final Integer TASK_TYPE_HWUSER_RECEIPT = 56; 
+	public static final String TASK_REMARK_HWUSER_RECEIPT = "已向您的国内账户打款，请确认收款";
+	//海外用户上传凭证，发送待办至平台操作员进行收款凭证信息核实
+	public static final Integer TASK_TYPE_HWUSER_RECEIPT_CONFIRM = 57; 
+	public static final String TASK_REMARK_HWUSER_RECEIPT_CONFIRM = "海外用户已确认收款，请核实收款凭证信息";
+	//平台操作员核实收款凭证信息有误 则驳回
+	public static final Integer TASK_TYPE_HWUSER_RECEIPT_REJECT = 58; 
+	public static final String TASK_REMARK_HWUSER_RECEIPT_REJECT = "收款凭证有误，请核实";
+	//如果没有问题，则发送待办至平台审核员进行审核 如果有问题则直接驳回至海外用户 类型及信息同58
+	public static final Integer TASK_TYPE_HWUSER_RECEIPT_RECHECK = 59; 
+	public static final String TASK_REMARK_HWUSER_RECEIPT_RECHECK = "海外用户已确认收款，请复核收款凭证信息";
+	//如果复核收款信息没有问题，则发送待办至海外用户进行海外打款
+	public static final Integer TASK_TYPE_HWUSER_PAY = 60; 
+	public static final String TASK_REMARK_HWUSER_PAY = "请根据订单信息进行海外打款";
+	//海外用户上传打款凭证，发送待办至平台操作员进行信息核实
+	public static final Integer TASK_TYPE_HWUSER_PAY_CONFIRM = 61; 
+	public static final String TASK_REMARK_HWUSER_PAY_CONFIRM = "海外用户已完成海外打款，请核验打款凭证信息";
+	//如果有问题 则驳回
+	public static final Integer TASK_TYPE_HWUSER_PAY_REJECT = 62; 
+	public static final String TASK_REMARK_HWUSER_PAY_REJECT = "打款凭证有误，请核实";
+	//如果没有问题。则发送待办至平台审核员进行复核 如果有问题则直接驳回至海外用户 类型及信息同62
+	public static final Integer TASK_TYPE_HWUSER_PAY_RECHECK = 63; 
+	public static final String TASK_REMARK_HWUSER_PAY_RECHECK = "海外用户已完成海外打款，请复核打款凭证信息";
+	//如果复核没有问题，则发送待办至其他客户进行收款确认
+	public static final Integer TASK_TYPE_CUSTOMER_RECEIPT = 64; 
+	public static final String TASK_REMARK_CUSTOMER_RECEIPT = "已完成海外打款，请确认收款";
+	//其他客户上传收款凭证，发送待办至平台操作员进行收款信息核实
+	public static final Integer TASK_TYPE_CUSTOMER_RECEIPT_CONFIRM = 65; 
+	public static final String TASK_REMARK_CUSTOMER_RECEIPT_CONFIRM = "客户已经完成海外收款确认，请核实收款凭证信息";
+	//核实有问题 则驳回
+	public static final Integer TASK_TYPE_CUSTOMER_RECEIPT_REJECT = 66; 
+	public static final String TASK_REMARK_CUSTOMER_RECEIPT_REJECT = "收款凭证有误，请核实";
+	//如果没问题则发送待办至审核员进行复核 有问题则直接驳回至其他客户 类型及信息同66
+	public static final Integer TASK_TYPE_CUSTOMER_RECEIPT_RECHECK = 67; 
+	public static final String TASK_REMARK_CUSTOMER_RECEIPT_RECHECK = "客户已经完成海外收款确认，请复核收款凭证信息";
+	//审核员审核收款凭证无误 则修改订单状态为已完成
 }

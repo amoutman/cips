@@ -9,8 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.cips.constants.BusConstants;
 import com.cips.constants.GlobalPara;
+import com.cips.dao.OrderDetailsMapper;
+import com.cips.dao.OrderMapper;
+import com.cips.dao.OrderOperateMapper;
 import com.cips.dao.RoleMapper;
 import com.cips.dao.TaskMapper;
+import com.cips.model.Order;
+import com.cips.model.OrderDetails;
+import com.cips.model.OrderOperate;
 import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.util.PKIDUtils;
@@ -30,6 +36,27 @@ public class TaskServiceImpl implements TaskService {
 	@Autowired
 	public void setRoleMapper(RoleMapper roleMapper) {
 		this.roleMapper = roleMapper;
+	}
+	
+	private OrderMapper orderMapper;
+
+	@Autowired
+	public void setOrderMapper(OrderMapper orderMapper) {
+		this.orderMapper = orderMapper;
+	}
+
+	private OrderDetailsMapper orderDetailsMapper;
+	
+	@Autowired
+	public void setOrderDetailsMapper(OrderDetailsMapper orderDetailsMapper) {
+		this.orderDetailsMapper = orderDetailsMapper;
+	}
+	
+	private OrderOperateMapper orderOperateMapper;
+	
+	@Autowired
+	public void setOrderOperateMapper(OrderOperateMapper orderOperateMapper) {
+		this.orderOperateMapper = orderOperateMapper;
 	}
 
 	@Override
@@ -324,7 +351,85 @@ public class TaskServiceImpl implements TaskService {
 			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_CHECKER);
 			task.setRoleId(role.getId());
 			break;
-		default:
+		case 52:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_CN_OTHER_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 53:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY_CONFIRM);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
+			task.setRoleId(role.getId());
+			break;
+		case 54:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY_REJECT);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_CN_OTHER_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 55:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY_RECHECK);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_CHECKER);
+			task.setRoleId(role.getId());
+			break;
+		case 56:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_HW_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 57:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT_CONFIRM);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
+			task.setRoleId(role.getId());
+			break;
+		case 58:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT_REJECT);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_HW_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 59:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT_RECHECK);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_CHECKER);
+			task.setRoleId(role.getId());
+			break;
+		case 60:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_HW_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 61:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY_CONFIRM);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
+			task.setRoleId(role.getId());
+			break;
+		case 62:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY_REJECT);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_HW_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 63:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY_RECHECK);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_CHECKER);
+			task.setRoleId(role.getId());
+			break;
+		case 64:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_CN_OTHER_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 65:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT_CONFIRM);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
+			task.setRoleId(role.getId());
+			break;
+		case 66:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT_REJECT);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_CN_OTHER_CUSTOMER);
+			task.setRoleId(role.getId());
+			break;
+		case 67:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT_RECHECK);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_CHECKER);
+			task.setRoleId(role.getId());
 			break;
 		}
 
@@ -492,9 +597,98 @@ public class TaskServiceImpl implements TaskService {
 		case 51:
 			task.setMsg(BusConstants.TASK_REMARK_SECOND_HCRECEIPT_RECHECK);
 			break;
-		default:
+		case 52:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY);
+			break;
+		case 53:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY_CONFIRM);
+			break;
+		case 54:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY_REJECT);
+			break;
+		case 55:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_PAY_RECHECK);
+			break;
+		case 56:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT);
+			break;
+		case 57:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT_CONFIRM);
+			break;
+		case 58:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT_REJECT);
+			break;
+		case 59:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_RECEIPT_RECHECK);
+			break;
+		case 60:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY);
+			break;
+		case 61:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY_CONFIRM);
+			break;
+		case 62:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY_REJECT);
+			break;
+		case 63:
+			task.setMsg(BusConstants.TASK_REMARK_HWUSER_PAY_RECHECK);
+			break;
+		case 64:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT);
+			break;
+		case 65:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT_CONFIRM);
+			break;
+		case 66:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT_REJECT);
+			break;
+		case 67:
+			task.setMsg(BusConstants.TASK_REMARK_CUSTOMER_RECEIPT_RECHECK);
 			break;
 		}
 		return task;
 	}
+
+	@Override
+	public void processTask(Order order, OrderDetails orderDetails,OrderOperate orderOperate, Task curTask, Task newTask) throws Exception {
+		if(order != null){
+			//更新订单状态
+			orderMapper.updateByPrimaryKeySelective(order);
+		}
+		if(orderDetails != null){
+			switch (curTask.getTaskType()) {
+			case 3:
+				//更新订单明细（海外用户账户信息）
+				orderDetailsMapper.updateByPrimaryKeySelective(orderDetails);
+				break;
+			default:
+				//新增订单明细（海外用户账户信息）
+				orderDetailsMapper.insertSelective(orderDetails);
+				break;
+			}
+		}
+		if(orderOperate != null){
+			//新增订单日志
+			orderOperateMapper.insertSelective(orderOperate);
+		}
+		if(curTask != null){
+			//更新当前待办状态
+			taskMapper.updateByPrimaryKeySelective(curTask);
+		}
+		if(newTask != null){
+			//新增待办至下个流程
+			taskMapper.insertSelective(newTask);
+		}
+	}
+
+	@Override
+	public Task getTaskByParams(Map<String, Object> params) throws Exception {
+		return taskMapper.getTaskByParams(params);
+	}
+
+	@Override
+	public void saveNewTask(Task newTask) throws Exception {
+		taskMapper.insertSelective(newTask);
+	}
+
 }

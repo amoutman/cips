@@ -125,9 +125,11 @@ public class OrderController {
 			oOperate.setStatus(order.getStatus());
 			oOperate.setOperatedId(user.getId());
 			oOperate.setOpEndTime(order.getApplyDate());
+			oOperate.setOpSequence(0);
 			
 			/**向平台操作员发送待办*/
-			Task task = taskService.initNewTask(order.getOrderNo(), BusConstants.TASK_TYPE_COMMIT);
+			Task task = taskService.initNewTask(order.getId(), BusConstants.TASK_TYPE_COMMIT);
+			task.setOrderStatus(order.getStatus());
 			
 			//订单生成
 			orderService.createOrder(order, orderDetails, oOperate, task);

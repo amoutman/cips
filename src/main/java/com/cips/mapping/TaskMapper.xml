@@ -172,4 +172,19 @@
     </if>
     order by t.end_time,t.begin_time
    </select>
+   <select id="getTaskByParams" parameterType="Map" resultMap="com.cips.model.Task">
+	select
+       t.id id, t.order_id orderId, t.role_id roleId, t.order_status orderStatus, 
+       t.task_type taskType, t.begin_time beginTime, t.end_time endTime, t.status status, 
+       t.operated_id operatedId, t.remark remark, o.order_no orderNo
+    from tb_task t,
+    tb_order o
+ 	where t.order_id = o.id
+    <if test="orderId != null">
+ 		and o.order_id = #{orderId}
+    </if>
+ 	<if test="taskType != null">
+ 		and o.task_type = #{taskType}
+ 	</if>
+  </select>
 </mapper>
