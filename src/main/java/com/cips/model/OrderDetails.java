@@ -15,6 +15,8 @@ public class OrderDetails {
 
     private Integer type;
 
+    private Integer taskType;
+
     private BigDecimal amount;
 
     private String accountTel;
@@ -65,6 +67,14 @@ public class OrderDetails {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(Integer taskType) {
+        this.taskType = taskType;
     }
 
     public BigDecimal getAmount() {

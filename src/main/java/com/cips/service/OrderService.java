@@ -19,5 +19,6 @@ public interface OrderService {
 	
 	public OrderDetails getOrderDetailsByParams(Map<String,Object> paramMap);
 	public Order getOrderByOrderNo(String orderNo) throws Exception;
+	public OrderDetails getOrderDetailsById(String orderDetailsId);
 	
 }

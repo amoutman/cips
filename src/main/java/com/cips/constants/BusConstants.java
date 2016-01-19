@@ -16,6 +16,12 @@ public class BusConstants {
 	public static final Integer ORDER_STATUS_COMPLETED = 2;
 	public static final Integer ORDER_STATUS_DELETE = 3;
 
+	/**订单明细账户类型 1：用户申请时填写的海外账户信息  2：海外用户国内账户信息  3：华创国内账户  4：华创海外账户*/
+	public static final Integer ORDERDETAILS_TYPE_CUSTOMER_HWACC = 1;
+	public static final Integer ORDERDETAILS_TYPE_HWUSER_LOCACC = 2;
+	public static final Integer ORDERDETAILS_TYPE_HC_LOCACC = 3;
+	public static final Integer ORDERDETAILS_TYPE_HC_HWACC = 4;
+	
 	/**汇率状态 0：正常  1：作废*/
 	public static final Integer RATE_STATUS_YES = 0;
 	public static final Integer RATE_STATUS_NO = 1;

@@ -115,7 +115,8 @@ public class OrderController {
 			//OrderDetail表
 			orderDetails.setId(PKIDUtils.getUuid());
 			orderDetails.setOrderId(order.getId());
-			orderDetails.setType(BusConstants.TASK_TYPE_COMMIT);
+			orderDetails.setType(BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+			orderDetails.setTaskType(BusConstants.TASK_TYPE_COMMIT);
 			
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();

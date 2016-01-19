@@ -8,11 +8,13 @@
     <result column="account_name" property="accountName" jdbcType="VARCHAR" />
     <result column="account_bank" property="accountBank" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="task_type" property="taskType" jdbcType="INTEGER" />
     <result column="amount" property="amount" jdbcType="DECIMAL" />
     <result column="account_tel" property="accountTel" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, account_code, account_name, account_bank, type, amount, account_tel
+    id, order_id, account_code, account_name, account_bank, type, task_type, amount, 
+    account_tel
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -27,10 +29,12 @@
   <insert id="insert" parameterType="com.cips.model.OrderDetails" >
     insert into tb_order_details (id, order_id, account_code, 
       account_name, account_bank, type, 
-      amount, account_tel)
+      task_type, amount, account_tel
+      )
     values (#{id,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{accountCode,jdbcType=VARCHAR}, 
       #{accountName,jdbcType=VARCHAR}, #{accountBank,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{amount,jdbcType=DECIMAL}, #{accountTel,jdbcType=VARCHAR})
+      #{taskType,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{accountTel,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.cips.model.OrderDetails" >
     insert into tb_order_details
@@ -52,6 +56,9 @@
       </if>
       <if test="type != null" >
         type,
+      </if>
+      <if test="taskType != null" >
+        task_type,
       </if>
       <if test="amount != null" >
         amount,
@@ -79,6 +86,9 @@
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
       </if>
+      <if test="taskType != null" >
+        #{taskType,jdbcType=INTEGER},
+      </if>
       <if test="amount != null" >
         #{amount,jdbcType=DECIMAL},
       </if>
@@ -105,6 +115,9 @@
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
+      <if test="taskType != null" >
+        task_type = #{taskType,jdbcType=INTEGER},
+      </if>
       <if test="amount != null" >
         amount = #{amount,jdbcType=DECIMAL},
       </if>
@@ -121,6 +134,7 @@
       account_name = #{accountName,jdbcType=VARCHAR},
       account_bank = #{accountBank,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
+      task_type = #{taskType,jdbcType=INTEGER},
       amount = #{amount,jdbcType=DECIMAL},
       account_tel = #{accountTel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
@@ -134,7 +148,10 @@
  		and o.order_id = #{orderId}
     </if>
  	<if test="taskType != null">
- 		and o.type = #{taskType}
+ 		and o.task_type = #{taskType}
+ 	</if>
+ 	<if test="type != null">
+ 		and o.type = #{type}
  	</if>
   </select>
 </mapper>

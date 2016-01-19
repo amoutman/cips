@@ -94,4 +94,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderMapper.getOrderByOrderNo(orderNo);
 	}
 
+	@Override
+	public OrderDetails getOrderDetailsById(String orderDetailsId) {
+		return orderDetailsMapper.selectByPrimaryKey(orderDetailsId);
+	}
+
 }

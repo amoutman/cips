@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cips.constants.BusConstants;
 import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
+import com.cips.model.AccountFr;
 import com.cips.model.Order;
 import com.cips.model.OrderDetails;
 import com.cips.model.Role;
@@ -117,24 +118,28 @@ public class TaskController {
 			//查询当前要处理的待办
 			Task task = taskService.getTaskById(taskId);
 			//根据类型选择视图及参数
+			Order order = null;
+			User user = null;
+			Map<String,Object> paramMap =  new HashMap<String,Object>();
 			switch (task.getTaskType()) {
 			case 1:
 				//查询订单信息
-				Order order = orderService.getOrderById(task.getOrderId());
+				order = orderService.getOrderById(task.getOrderId());
 				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
-				User user = userService.getUserByUserId(order.getApplyId());
+				user = userService.getUserByUserId(order.getApplyId());
 				//获取海外账户信息
-				Map<String,Object> paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
-				paramMap.put("taskType", task.getTaskType());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 				OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				mv.addObject("order", order);
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
-				mv.setViewName("task/plpProTaskT2");
+				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 2:
-
+				//查询订单信息
+				order = orderService.getOrderById(task.getOrderId());
+				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
 				break;
 			case 3:
 
@@ -293,499 +298,19 @@ public class TaskController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/proTaskUpload")
-	public Object processTaskUpload(HttpServletRequest request, @RequestParam("taskId")String taskId){
+	@RequestMapping(value = "/plpProTaskT1")
+	public Map<String, Object> plpProTaskT1(AccountFr accountFr){
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			//查询当前要处理的待办
-			Task task = taskService.getTaskById(taskId);
-			
-			switch (task.getTaskType()) {
-			case 4:
-
-				break;
-			case 5:
-				
-				break;
-			case 6:
-
-				break;
-			case 7:
-
-				break;
-			case 8:
-
-				break;
-			case 9:
-
-				break;
-			case 10:
-
-				break;
-			case 11:
-
-				break;
-			case 12:
-
-				break;
-			case 13:
-
-				break;
-			case 14:
-
-				break;
-			case 15:
-
-				break;
-			case 16:
-
-				break;
-			case 17:
-
-				break;
-			case 18:
-
-				break;
-			case 19:
-
-				break;
-			case 20:
-	
-				break;
-			case 21:
-
-				break;
-			case 22:
-
-				break;
-			case 23:
-
-				break;
-			case 24:
-
-				break;
-			case 25:
-
-				break;
-			case 26:
-
-				break;
-			case 27:
-
-				break;
-			case 28:
-
-				break;
-			case 29:
-
-				break;
-			case 30:
-
-				break;
-			case 31:
-
-				break;
-			case 32:
-
-				break;
-			case 33:
-
-				break;
-			case 34:
-
-				break;
-			case 35:
-
-				break;
-			case 36:
-
-				break;
-			case 37:
-
-				break;
-			case 38:
-
-				break;
-			case 39:
-
-				break;
-			case 40:
-
-				break;
-			case 41:
-
-				break;
-			case 42:
-
-				break;
-			case 43:
-
-				break;
-			case 44:
-
-				break;
-			case 45:
-
-				break;
-			case 46:
-
-				break;
-			case 47:
-
-				break;
-			case 48:
-
-				break;
-			case 49:
-
-				break;
-			case 50:
-
-				break;
-			case 51:
-
-				break;
-			}
-			return map;
-		} catch (Exception e) {
-			e.printStackTrace();
-			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
-			return map;
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/proTaskStatus")
-	public Object processTaskStatus(HttpServletRequest request, @RequestParam("taskId")String taskId){
-		Map<String,Object> map = new HashMap<String,Object>();
-		try {
-			//查询当前要处理的待办
-			Task task = taskService.getTaskById(taskId);
-			
-			switch (task.getTaskType()) {
-			case 2:
-
-				break;
-			case 3:
-
-				break;
-			case 4:
-
-				break;
-			case 5:
-				
-				break;
-			case 6:
-
-				break;
-			case 7:
-
-				break;
-			case 8:
-
-				break;
-			case 9:
-
-				break;
-			case 10:
-
-				break;
-			case 11:
-
-				break;
-			case 12:
-
-				break;
-			case 13:
-
-				break;
-			case 14:
-
-				break;
-			case 15:
-
-				break;
-			case 16:
-
-				break;
-			case 17:
-
-				break;
-			case 18:
-
-				break;
-			case 19:
-
-				break;
-			case 20:
-	
-				break;
-			case 21:
-
-				break;
-			case 22:
-
-				break;
-			case 23:
-
-				break;
-			case 24:
-
-				break;
-			case 25:
-
-				break;
-			case 26:
-
-				break;
-			case 27:
-
-				break;
-			case 28:
-
-				break;
-			case 29:
-
-				break;
-			case 30:
-
-				break;
-			case 31:
-
-				break;
-			case 32:
-
-				break;
-			case 33:
-
-				break;
-			case 34:
-
-				break;
-			case 35:
-
-				break;
-			case 36:
-
-				break;
-			case 37:
-
-				break;
-			case 38:
-
-				break;
-			case 39:
-
-				break;
-			case 40:
-
-				break;
-			case 41:
-
-				break;
-			case 42:
-
-				break;
-			case 43:
-
-				break;
-			case 44:
-
-				break;
-			case 45:
-
-				break;
-			case 46:
-
-				break;
-			case 47:
-
-				break;
-			case 48:
-
-				break;
-			case 49:
-
-				break;
-			case 50:
-
-				break;
-			case 51:
-
-				break;
-			}
-			return map;
-		} catch (Exception e) {
-			e.printStackTrace();
-			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
-			return map;
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/proTaskAcc")
-	public Object processTaskAccount(HttpServletRequest request, @RequestParam("taskId")String taskId){
-		Map<String,Object> map = new HashMap<String,Object>();
-		try {
-			//查询当前要处理的待办
-			Task task = taskService.getTaskById(taskId);
-			
-			switch (task.getTaskType()) {
-			case 1:
-				
-				break;
-			case 2:
-
-				break;
-			case 3:
-
-				break;
-			case 4:
-
-				break;
-			case 5:
-				
-				break;
-			case 6:
-
-				break;
-			case 7:
-
-				break;
-			case 8:
-
-				break;
-			case 9:
-
-				break;
-			case 10:
-
-				break;
-			case 11:
-
-				break;
-			case 12:
-
-				break;
-			case 13:
-
-				break;
-			case 14:
-
-				break;
-			case 15:
-
-				break;
-			case 16:
-
-				break;
-			case 17:
-
-				break;
-			case 18:
-
-				break;
-			case 19:
-
-				break;
-			case 20:
-	
-				break;
-			case 21:
-
-				break;
-			case 22:
-
-				break;
-			case 23:
-
-				break;
-			case 24:
-
-				break;
-			case 25:
-
-				break;
-			case 26:
-
-				break;
-			case 27:
-
-				break;
-			case 28:
-
-				break;
-			case 29:
-
-				break;
-			case 30:
-
-				break;
-			case 31:
-
-				break;
-			case 32:
-
-				break;
-			case 33:
-
-				break;
-			case 34:
-
-				break;
-			case 35:
-
-				break;
-			case 36:
-
-				break;
-			case 37:
-
-				break;
-			case 38:
-
-				break;
-			case 39:
-
-				break;
-			case 40:
-
-				break;
-			case 41:
-
-				break;
-			case 42:
-
-				break;
-			case 43:
-
-				break;
-			case 44:
-
-				break;
-			case 45:
-
-				break;
-			case 46:
-
-				break;
-			case 47:
-
-				break;
-			case 48:
-
-				break;
-			case 49:
-
-				break;
-			case 50:
-
-				break;
-			case 51:
-
-				break;
+			orderService.getOrderDetailsByParams(orderDetails.get)
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//根据ID修改任务所属人为当前用户及修改该任务状态为处理中
+			String msg = taskService.processingTaskById(taskId, user.getId());
+			if(msg != null){
+				map.put(GlobalPara.AJAX_KEY, msg);
+			}else{
+				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			}
 			return map;
 		} catch (Exception e) {
