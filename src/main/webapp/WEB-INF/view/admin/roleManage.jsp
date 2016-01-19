@@ -156,7 +156,7 @@ function getAccountInfo(){
 		function(data){
 			//var jsonObj=eval("("+data+")");
 			var showHtml = "";
-			alert(data.afList);
+			var selectBtn = "<a href='' onClick />"
 			$.each(data.afList, function (i, item) {  
 				if(showHtml == ""){
 					showHtml = "<tr><td><label>"+item.userName+"</label></td><td><label>"+item.userName+"</label></td><td><label>"+
