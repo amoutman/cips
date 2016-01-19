@@ -72,7 +72,7 @@ public class AccountFrController {
 		for(Field field:fields){
 			field.setAccessible(true); // 设置些属性是可以访问的
 			Object val = field.get(accountFr);
-			if(val == null){
+			if(val == null || val == ""){
 				continue;
 			}
 			paraMap.put(field.getName(), val);

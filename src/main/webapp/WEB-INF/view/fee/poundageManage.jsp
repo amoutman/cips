@@ -13,21 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <!--header start-->
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--header end-->
 <!--主题内容 start-->
 <div class="w1200">
@@ -43,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <dd class="pt">
             <input type="text" name="poundageAmount" id="poundageAmount" class="input-txt"  placeholder="请输入配置比例"/>
           </dd>
-          <dd class="label"><span class="color_888">汇率</span> <span class="colorGreen font24 blod">4.90%</span></dd>
+          <dd class="label"><span class="color_888">汇率</span> <span class="colorGreen font24 blod">${currentRate }</span></dd>
           <dd> <a href="javascript:void(0);" onClick="addPoundage()" class="btnOrage">确认配置</a></dd>
         </dl>
  
@@ -65,10 +51,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		//}
 		$.post(
-			"fee/insertPoundage",
+			"fee/insertPoundage", 
 			{
 				pRatio:poundageAmount
-			}
+			},
 			function(data){
 				if(data['success']){
 					alert("添加成功");

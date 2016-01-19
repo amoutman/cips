@@ -154,7 +154,7 @@
   	select
   	<include refid="Base_Column_List" />
     from tb_rate
-    order by created_date,type,status
+    order by created_date desc
   </select>
   <update id="updateRateByStatus" parameterType="map">
   	update tb_rate

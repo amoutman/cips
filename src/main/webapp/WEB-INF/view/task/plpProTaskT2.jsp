@@ -16,21 +16,7 @@
 
 <body>
 <!--header start-->
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--header end-->
 
 <!--主题内容 start-->
@@ -75,9 +61,12 @@
 	               <div class="tcbox">
 	                  <div class="searchBox clearFix">
 	                   <div class="searchbar">
-	                          <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入用户名"/> 
-	                          <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入开户行"/>
-	                          <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入身份证号"/> <a href="" class="btnSearch">search</a>
+	                   <form id="searchAccountForm">
+	                   	      <input type="text" name="userName" id="userName" class="input-txt"  placeholder="请输入用户名"/> 
+	                          <input type="text" name="accountCode" id="accountCode" class="input-txt"  placeholder="请输入账户号"/>
+	                          <input type="text" name="creditId" id="creditId" class="input-txt"  placeholder="请输入身份证号"/>
+	                   </form>
+	                   <a href="javascript:void(0)" onClick="getAccountInfo()" class="btnSearch">search</a>
 	                   </div>
 	                  </div>
 	                  <table width="100%" class="xzzh_table">
@@ -90,63 +79,25 @@
 	                    </tr>
 	                    <tbody id="accountInfo">
 	                    </tbody>
-	                    <tr>
-	                      <td><label>ddd</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>hhh</label> </td>
-	                      <td>hhh</td>
-	                    </tr>
-	                    <tr>
-	                      <td><label>ddd</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>hhh</label> </td>
-	                      <td>hhh</td>
-	                    </tr>
-	                    <tr>
-	                      <td><label>ddd</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>hhh</label> </td>
-	                      <td>hhh</td>
-	                    </tr>
-	                    <tr>
-	                      <td><label>ddd</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>hhh</label> </td>
-	                      <td>hhh</td>
-	                    </tr>
-	                    <tr>
-	                      <td><label>ddd</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>hhh</label> </td>
-	                      <td>hhh</td>
-	                    </tr>
-	                    <tr>
-	                      <td><label>ddd</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>ggg</label> </td>
-	                      <td><label>hhh</label> </td>
-	                      <td>hhh</td>
-	                    </tr>
 	                  </table>
-		               <!--分页 start-->
-				       <div class="page"><a href="">&lt;</a><a href="">1</a><a href="">2</a><a href="" class="active">3</a><a href="">4</a><a href="">5</a>...<a href="">9</a><a href="">&gt;</a></div>
-				       <!--分页 end-->
 	               </div>
 	           </div>
 	             <!--弹窗end-->
 	                 <div class="clearFix">
-	                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-	                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-	                     <div class="w235"><label>开户行：</label> <span>doushabao</span> </div>
+	                     <div class="w235"><label>收款人姓名： </label> <span id="accountNameSpan"></span> </div>
+	                     <div class="w235"><label>收款人账号：</label> <span id="accountCodeSpan"></span> </div>
+	                     <div class="w235"><label>开户行：</label> <span id="accountBankSpan"></span> </div>
+	                     <form action="" method="post" id="insertOrderAccountForm">
+	                     	<input type="hidden" name="userId" id="userId" />
+	                     	<input type="hidden" name="id" id="id" />
+	                     	<input type="hidden" name="accountName" id="accountName" />
+	                     	<input type="hidden" name="accountBank" id="accountBank" />
+	                     	<input type="hidden" name="accountCode" id="accountCode" />
+	                     </form>
 	                 </div>
                </div>
                </div>
-               <div class="btnDiv tac"><a href="" class="btnGrey">返回</a><a href="" class="btnOrage">确认</a></div>
+               <div class="btnDiv tac"><a href="javascript:void(0)" class="btnGrey">返回</a><a href="javascript:void(0)" class="btnOrage" onClick="confirmOrder()" >确认</a></div>
            </div>
      </div>
   </div>
@@ -158,6 +109,63 @@
 
 </body>
 <script type="text/javascript">
-$()
+function getAccountInfo(){
+	var userName = $("#searchAccountForm").find("#userName").val();
+	var accountCode = $("#searchAccountForm").find("#accountCode").val();
+	var creditId = $("#searchAccountForm").find("#creditId").val();
+	
+	if(userName == "" && accountCode == "" && creditId == ""){
+		alert("请输入任一条件进行精确查找");
+		return false;
+	}
+	
+	$("#accountInfo").html("");
+	var data = $("#searchAccountForm").serializeArray();
+	$.post(
+		"accountFr/toPageAccountFrMap",
+        data,
+		function(data){
+			//var jsonObj=eval("("+data+")");
+			var showHtml = "";
+			//var selectBtn = "<a href='javascripr:void(0)' onClick='selectAccount(this)' />"
+			$.each(data.afList, function (i, item) {  
+				if(showHtml == ""){
+					showHtml = "<tr><td><label>"+item.userName+"</label><input type='hidden' id='userIdl' value='"+item.userId+"''/></td><td><label id='accountNamel'>"
+												+item.accountName+"</label><input type='hidden' id='idl' value='"+item.id+"''/></td><td><label id='accountCodel'>"
+												+item.accountCode+"</label></td><td><label id='accountBankl'>"
+												+item.accountBank+"</label></td><td><a href='javascript:void(0)' onClick='selectAccount(this)'>选择</a></td></tr>";
+				}else{
+					showHtml = showHtml + 
+					"<tr><td><label>"+item.userName+"<input type='hidden' id='userIdl' value='"+item.userId+"''/></label></td><td><label id='accountNamel'>"
+					+item.accountName+"<input type='hidden' id='idl' value='"+item.id+"''/></label></td><td><label id='accountCodel'>"
+					+item.accountCode+"</label></td><td><label id='accountBankl'>"
+					+item.accountBank+"</label></td><td><a href='javascript:void(0)' onClick='selectAccount(this)'>选择</a></td></tr>";
+				}          
+			});  
+			$("#accountInfo").html(showHtml);
+		},
+		"json"
+	);
+}
+
+function selectAccount(obj){
+	var userId = $(obj).parent().parent().find("#userIdl").val();
+	var accountId = $(obj).parent().parent().find("#idl").val();
+	var accountName = $(obj).parent().parent().find("#accountNamel").html();
+	var accountCode = $(obj).parent().parent().find("#accountCodel").html();
+	var accountBank = $(obj).parent().parent().find("#accountBankl").html();
+	
+	$("#accountNameSpan").html(accountName);
+	$("#accountCodeSpan").html(accountCode);
+	$("#accountBankSpan").html(accountBank);
+	
+	$("#insertOrderAccountForm").find("#userId").val(userId);
+	$("#insertOrderAccountForm").find("#id").val(accountId);
+	$("#insertOrderAccountForm").find("#accountName").val(accountName);
+	$("#insertOrderAccountForm").find("#accountCode").val(accountCode);
+	$("#insertOrderAccountForm").find("#accountBank").val(accountBank);
+	$(".tcDiv").fadeOut(300);
+	$('div.bg').fadeOut(200);
+}
 </script>
 </html>

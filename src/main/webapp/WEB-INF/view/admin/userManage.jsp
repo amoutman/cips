@@ -16,21 +16,7 @@
 </head>
 <body>
 	<!--header start-->
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--header end-->
 <!--主题内容 start-->
 <div class="w1200">
@@ -251,43 +237,90 @@ $("[id='btnUpdateUser']").click(function(){
 });
 
 $('#addUserForm').validate({
+	onfocusout: function(element){
+        $(element).valid();
+ 	},
 	success:function(label){
 		label.remove();
 	},
 	rules:{
 		"userName":{
-			required:true
+			required:true,
+			remote:{
+				 type:"post",
+				 data:{
+					 userInx:"userName",
+					 userInfo:function(){
+						 			return $("#addUserForm").find("#userName").val();
+					 			 }
+				 },
+		 		 url:"user/validate" 
+			 }
 		},
 		"roleId":{
 			required:true
 		},
 		"mobile":{
-			required:true
+			required:true,
+			remote:{
+				 type:"post",
+				 data:{
+					 userInx:"mobile",
+					 userInfo:function(){
+						 			return $("#addUserForm").find("#mobile").val();
+					 			 }
+				 },
+		 		 url:"user/validate" 
+			 }
 		},
 		"creditId":{
-			required:true
+			required:true,
+			remote:{
+				 type:"post",
+				 data:{
+					 userInx:"creditId",
+					 userInfo:function(){
+						 			return $("#addUserForm").find("#creditId").val();
+					 			 }
+				 },
+		 		 url:"user/validate" 
+			 }
 		},
 		"email":{
 			required:true,
-			email:true
+			email:true,
+			remote:{
+				 type:"post",
+				 data:{
+					 userInx:"email",
+					 userInfo:function(){
+						 			return $("#addUserForm").find("#email").val();
+					 			 }
+				 },
+		 		 url:"user/validate" 
+			 }
 		}	
 	},
 	messages:{
 		"userName":{
-			required:"用户名不能为空"
+			required:"用户名不能为空",
+			remote:"用户名已注册"
 		},
 		"roleId":{
 			required:"至少选择一个角色"
 		},
 		"mobile":{
-			required:"电话号码不能为空"
+			required:"电话号码不能为空",
+			remote:"电话已注册"
 		},
 		"creditId":{
-			required:"身份证号不能为空"
+			required:"身份证号不能为空",
+			remote:"身份证已注册"
 		},
 		"email":{
 			required:"邮件不能为空",
-			email:"请输入正确的邮箱地址"
+			email:"请输入正确的邮箱地址",
+			remote:"邮箱已注册"
 		}
 	},
 	errorPlacement: function(error, element) {

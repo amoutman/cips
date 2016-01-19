@@ -81,11 +81,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		<fmt:formatDate  value="${rate.createdDate }" type="both" pattern="HH:mm:ss" />
             	</td>
             	<td><span class="colorGreen font18">${rate.rateHigh }</span></td>
-            	<td><c:if test="${rate.status == 0 }">启用</c:if><c:if test="${rate.status == 0 }">禁用</c:if></td>
+            	<td><c:if test="${rate.status == 0 }">启用</c:if><c:if test="${rate.status == 1 }">禁用</c:if></td>
           	</tr>
           </c:forEach>
           </tbody>
        </table>
+        <!-- 分页 -->
+       	<jsp:include page="../header/pager.jsp"></jsp:include>
        
      </div>
   </div>
@@ -112,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				function(data){
 					if(data["success"]){
 						alert("添加成功");
-						window.location.href="fee/toRateManage";
+						window.location.href="fee/toPageRateManage";
 					}else{
 						alert("添加失败");
 					}
@@ -124,5 +126,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 </script>
 </body>
-
+<script type="text/javascript">
+function pageClick(currentPage){
+	window.location.href="fee/toPageRateManage?currentPage="+currentPage;
+}
+</script>
 </html>

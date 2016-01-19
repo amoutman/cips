@@ -29,8 +29,8 @@ public class FeeServiceImpl implements FeeService {
 	}
 
 	@Override
-	public List<Rate> getRateList() {
-		return rateMapper.toPageGetRateList();
+	public List<Rate> getRateList(Map<String,Object> paramMap) {
+		return rateMapper.toPageGetRateList(paramMap);
 	}
 	
 	public void insertRate(Rate rate){
