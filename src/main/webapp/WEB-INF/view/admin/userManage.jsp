@@ -98,13 +98,9 @@
      <div class="content">
       
       <ul class="rolebox role-user">
-      	<c:forEach var="user" items="${userList }">
+      	<c:forEach var="user" items="${userList }" varStatus="vs">
          <li>
            <div class="role-img"><img src="resource/images/role-tx1.gif" width="51" height="51" /></div>
-           <div class="role-name">
-               <p>用户名</</p>
-               <p class="colorBlue">ID:${user.userCode }</p>
-           </div>
            <div class="role-date">
               <p><span class="color_888">姓名：</span> <span class="color_666">${user.userName }</span></p>
               <p><span class="color_888">角色：</span> <span class="color_666">${user.roleNames }</span></p>
@@ -113,21 +109,21 @@
            <div class="role-deal">
               <p><span class="color_888">身份证号码：</span> <span class="color_666">${user.creditId }</span></p>
               <p><span class="color_888">邮箱：</span> <span class="color_666">${user.email }</span></p>
-              <div class="ck-deal"> <input type="hidden" name="userId" id="userId" value="${user.id }"/> <a href="javascript:void(0);" id="btnDeleteUser" onClick="return deleteUser()" class="btnGrey">删除</a></div>
+              <div class="ck-deal"> <input type="hidden" name="userId" id="userId" value="${user.id }"/><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnOrage btnck">修改</a>  <a href="javascript:void(0);" id="btnDeleteUser" onClick="return deleteUser()" class="btnGrey">删除</a></div>
              <!--弹窗start-->
              <div class="tcDiv">
                <span class="close"></span>
                <h2>修改用户</h2>
                <div class="tcbox">
                     <ul>
-                    <form action="user/updateUser" method="post" id="updateUserForm">
+                    <form action="user/updateUser" method="post" id="updateUserForm${vs.index + 1 }">
                      <li class="li_user">
                       <label>用户名</label>
                       <input type="hidden" name="id" id="id" value="${user.id }"/>
                       <input type="text" name="userName" id="userName" class="input-txt" value="${user.userName }"/>
                     </li>
                     <li class="li_sex">
-                     <label>角色<input type="input" name="roleId" id="roleId" value="${user.roleId }"/></label>
+                     <label>角色<input type="hidden" name="roleId" id="roleId" value="${user.roleId }"/></label>
                       <ul class="jsSelect clearFix">
                       		<c:forEach var="role" items="${user.roleList }">
 								<c:if test="${role.isCheck == 1 }">
@@ -201,7 +197,7 @@ $(document).ready(function() {
 		}
 	})
 	
-	$("#updateUserForm").validate({
+	$("[id^='updateUserForm']").validate({
 		success:function(label){
 			label.remove();
 		},
@@ -241,10 +237,14 @@ $(document).ready(function() {
 		}
 	});
 
-$("[id='btnUpdateUser']").click(function(e){
+$("[id='btnUpdateUser']").click(function(){
 	//var validForm = $(this).parents(".tcbox").find("#updateUserForm");
-	if($(this).parents(".tcbox").find("#updateUserForm").valid()){
-		$(this).parents(".tcbox").find("#updateUserForm").submit();
+	//var index = $(this).parents(".tcbox").find("#index").val();
+	//alert(index);
+	//var obj = "updateUserForm" + index;
+	//var validForm = $(this).parents(".tcbox").find("form[id^='updateUserForm']");
+	if( $(this).parents(".tcbox").find("[id^='updateUserForm']").valid()){
+		 $(this).parents(".tcbox").find("[id^='updateUserForm']").submit();
 	}else{
 		alert("验证失败");
 	}

@@ -185,4 +185,37 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="toPageGetAccountFrList" resultType="com.cips.model.AccountFr" parameterType="map">
+  	select 
+  		a.id id,
+  		b.user_name userName,
+  		b.credit_id creditId,
+  		a.account_name accountName,
+  		a.account_code accountCode,
+  		a.account_bank accountBank,
+  		a.account_type accountType
+  	from tb_account_fr a,tb_user b
+  	where a.user_id = b.id
+  	<if test="userName != null">
+  		and b.user_name like '%${userName}%'
+  	</if>
+  	<if test="accountName !=null">
+  		and a.account_name = #{accountName,jdbcType=VARCHAR}
+  	</if>
+  	<if test="accountCode != null">
+  		and a.account_code = #{accountCode,jdbcType=VARCHAR}
+  	</if>
+  	<if test="accountBank != null">
+  		and a.account_bank = #{accountBank,jdbcType=VARCHAR}
+  	</if>
+  	<if test="accountType != null">
+  		and a.account_type = #{accountType,jdbcType=INTEGER}
+  	</if>
+  </select>
+    <select id="getAccountFrByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_account_fr
+    where account_code = #{accountCode,jdbcType=VARCHAR}
+  </select>
 </mapper>

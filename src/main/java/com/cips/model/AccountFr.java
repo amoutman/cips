@@ -28,6 +28,26 @@ public class AccountFr {
     private String modifiedId;
 
     private Date modifiedDate;
+    
+    private String userName;
+    
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getCreditId() {
+		return creditId;
+	}
+
+	public void setCreditId(String creditId) {
+		this.creditId = creditId;
+	}
+
+	private String creditId;
 
     public String getId() {
         return id;

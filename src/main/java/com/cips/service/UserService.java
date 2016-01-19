@@ -12,11 +12,12 @@ public interface UserService {
 	
 	public void deleteUser(String userId);
 	
-	public void insertUser(User user);
+	public void insertUser(User user); 
 	
 	public List<User> getUserList(Map<String,Object> map);
 	
-	public List<User> selectUserInfo(String userInfo);
+	public List<User> toPageGetFrUserList(Map<String,Object> map);
 	
-	public User getUserByUserId(String userId);
+	public User getUserByUserId(String userId);  
+
 }

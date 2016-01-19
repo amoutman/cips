@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-.menu li a,.r-tit h2,.tcDiv .close,.exchangeBox .changeRate,.addbar .btnAdd,.searchbar .btnSearch,.addbar .li_sex dd,.role-user .li_sex dd{ background-image:url(../images/icon.png); background-repeat:no-repeat;}
+.menu li a,.r-tit h2,.tcDiv .close,.exchangeBox .changeRate,.addbar .btnAdd,.role-user .btnAdd,.searchbar .btnSearch,.addbar .li_sex dd,.role-user .li_sex dd{ background-image:url(../images/icon.png); background-repeat:no-repeat;}
 
 .btnBlue{ color:#fff; background-color:#009ce5; text-align:center; display:inline-block;width:62px; height:26px; line-height:26px;border-radius:3px;}
 .btnBlue:hover{color:#fff;}
@@ -12,6 +12,7 @@
 .btnUpload:hover{color:#fff;}
 
 .inpt1{width:120px; height:38px; line-height:20px; padding:0 10px; border:1px solid #cecece;}
+.inpt2{width:100px; height:20px; line-height:20px; padding:0 10px; border:1px solid #cecece;}
 .bg{ position:fixed;width:100%; height:100%; z-index:9998; background-color:#000; opacity:.5; display:none;}
 
 .header{ height:80px; background-color:#00415f;}
@@ -152,6 +153,7 @@
 .middleman li .md-wid{ float:left;width:160px; padding-left:20px; height:25px; line-height:25px; font-size:12px;}
 .middleman li .md-wid label{ color:#777;}
 .middleman .selectMan{ border:0;width:362px;height:62px; box-shadow:3px 3px 3px #ccc; background:url(../images/selectBg.gif) no-repeat;}
+.wt_skzh .btnBlue{width:130px; margin-bottom:10px;}
 
 .tcDiv{width:525px;  padding:10px 35px 30px; background-color:#f6f6f6;border:1px solid #dcdcdc;  display:none; position:absolute;z-index:9999;}
 .tcDiv h2{ line-height:44px; color:#009ce5; text-align:left;}
@@ -192,7 +194,7 @@
 .exchangeBox .exRate dt{width:8px; height:48px; position:relative;}
 .exchangeBox .exRate dt .wt-border{ display:block;width:9px; height:50px; position:absolute; left:-1px; top:-1px;}
 .exchangeBox .exRate .label{ height:48px;width:65px;  border-right:1px solid #dcdcdc; text-align:center;}
-.exchangeBox .exRate .input-txt{width:160px; padding:0 10px; text-align:center; height:48px; line-height:48px; border:0; background:none;}
+.exchangeBox .exRate .input-txt{width:160px; padding:0 10px; text-align:center; height:45px; line-height:45px; border:0; background:none;}
 .exchangeBox .changeRate{display:block;width:33px; height:33px; background-position:0 -1683px; cursor:pointer; float:left; margin:8px 30px 0;}
 .exchangeBox .myRate dt .wt-border{ background-color:#009ce5;}
 .exchangeBox .chainRate dt .wt-border{ background-color:#ff245d;}
@@ -229,20 +231,47 @@
 .role-user .role-deal{width:340px; padding-top:0;}
 .role-user .ck-deal{ margin-top:20px; padding-left:190px;}
 
-.role-zh li{ height:80px;}
+.role-zh li{ height:80px; padding-top:0 !important;}
 .role-zh .role-img{padding:0px 20px 0px;}
 .role-user .role-name2{width:120px; padding-left:20px; line-height:35px; float:left;}
 .role-user .role-date2{width:195px; float:left;}
 .role-user .role-deal2{width:150px;float:right; padding-top:0;}
 .role-user .role-deal2 .ck-deal{ padding-left:0;}
 .role-user .role-deal2 .btnOrage{margin-right:10px;}
+.role-user .role-info{width:650px; float:left; line-height:75px;}
+.role-user .role-info p{ padding-left:20px;}
+.role-zh2 .role-date{ padding-left:20px;}
+.role-zh2 li{padding-top:20px !important;}
+.role-zh2 .role-deal2 .ck-deal{ margin-top:10px;}
+.role-zh2 li li{ padding-top:0 !important;}
 
-.tc_zh .tcDiv{width:560px;}
+.tc_zh .tcDiv{}
 .tc_zh .tcDiv .tcbox ul{width:260px; padding:0 10px; float:left;}
 .tc_zh .tcDiv .tcbox ul .btnOrage{ margin-top:42px;}
+.role-user .btnAdd{ display:block; height:30px; line-height:30px;background-color:#fff;width:65px;  padding-left:25px; padding-right:5px; text-align:center;border:1px solid #00a0e9; color:#00a0e9;background-position:0px -1839px; border-radius:4px;}
+
+.m-calculator-con{border: 1px solid #dcdcdc;height: 45px;line-height: 45px;text-align: center; width: 120px; position:relative; background-color:#fff;}
+.m-calculator-con .calculator-tit { display:block;height: 44px;line-height: 44px;text-align: center; width: 95px; position:absolute; left:5px; top:1px;}
+.m-calculator-con .calculator-rect{ display:block;width:12px; height:8px;background:url(../images/icon_down.png) no-repeat;  position:absolute; right:8px; top:15px;}
+.m-calculator-con .calculator-dis{ position:absolute; left:-1px; top:45px; background-color:#fff;width: 120px;border: 1px solid #dcdcdc; border-top:1px solid #fff;}
+
 
 /*上传*/
 .imgShow{ padding-top:10px;}
 .imgShow img{ margin-right:10px; margin-bottom:10px; float:left;}
+.jsSelect{ background-color:#ebe9e9; padding:10px 0;}
+.jsSelect li{ float:left;width:47%; padding-left:3%; color:#777;}
+.jsSelect li input{ margin-right:5px;}
 
+.exchangeBox  .label .m-calculator-con{ border:0;width:100%;height: 48px;line-height: 48px;}
+.exchangeBox  .label .m-calculator-con .calculator-tit{width:100%; left:0; top:0;height: 48px;line-height: 48px;}
+.exchangeBox  .label .m-calculator-con .calculator-dis{ top:48px;width:65px; border-top-color:#ddd; line-height:28px; color:#666; padding:10px 0}
+
+.searchBox{ padding-left:65px;}
+.searchBox .searchbar{width:100%;  border:0;}
+.searchBox .searchbar .input-txt{width:130px;border: 1px solid #d2d2d2;
+    border-radius: 4px; float:left; margin-left:10px;}
+.tcbox .searchBox{ padding-left:0; padding-bottom:10px;}
+.tcbox .searchBox .searchbar .input-txt{width:105px;}
+.select-txt{width:120px; height:30px;margin-left:5px;border:1px solid #d2d2d2}
 

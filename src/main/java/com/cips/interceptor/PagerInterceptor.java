@@ -31,6 +31,7 @@ import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.apache.tools.ant.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ import com.cips.constants.GlobalPara;
 import com.cips.page.PageContext;
 import com.cips.page.Pager;
 import com.cips.util.SystemUtil;
+
 
 /** 
   * 查询分页拦截器，用户拦截SQL，并加上分页的参数和高级查询条件 

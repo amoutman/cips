@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							window.location.href="user/toPageUserManage";
 						}
 					}else{
-						alert("ssss");
+						alert("登录失败");
 					}
 				},
 				"json"
