@@ -7,7 +7,7 @@ import com.cips.model.Poundage;
 import com.cips.model.Rate;
 
 public interface FeeService {
-	public List<Rate> getRateList();
+	public List<Rate> getRateList(Map<String,Object> paramMap);
 	
 	public Rate getCurrentRate(Map<String,Object> paramMap) throws Exception;
 	

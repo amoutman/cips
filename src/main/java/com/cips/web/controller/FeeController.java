@@ -20,6 +20,7 @@ import com.cips.constants.GlobalPara;
 import com.cips.model.Poundage;
 import com.cips.model.Rate;
 import com.cips.model.User;
+import com.cips.page.Pager;
 import com.cips.service.FeeService;
 import com.cips.util.PKIDUtils;
 
@@ -33,7 +34,12 @@ public class FeeController {
 	@RequestMapping("/toPageRateManage")
 	public ModelAndView toRateManage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
-		List<Rate> rateList = feeService.getRateList();
+		Map<String,Object> paraMap = new HashMap<String,Object>();
+		//分页条件
+		Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
+		paraMap.put(GlobalPara.PAGER_SESSION, pager);
+		List<Rate> rateList = feeService.getRateList(paraMap);
+		mv.addObject(GlobalPara.PAGER_SESSION,pager);
 		mv.addObject("rateList", rateList);
 		mv.setViewName("fee/rateManage");
 		return mv;
@@ -60,7 +66,7 @@ public class FeeController {
 		uMap.put("modifiedDate", new Date());
 		
 		try {
-			feeService.updatePoundageByStatus(uMap);
+			feeService.updateRateByStatus(uMap);
 			feeService.insertRate(rate);
 			resultMap.put("success", true);
 		} catch (Exception e) {
@@ -73,9 +79,15 @@ public class FeeController {
 	}
 	
 	@RequestMapping("/toPoundageManage")
-	public ModelAndView toPoundageManage(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView toPoundageManage(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		//当前汇率
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("status", 0);
+		param.put("type", 2);
+		Rate rate = feeService.getCurrentRate(param);
+		BigDecimal currentRate = rate.getRateHigh();
+		mv.addObject("currentRate", currentRate);
 		mv.setViewName("fee/poundageManage");
 		return mv;
 	}

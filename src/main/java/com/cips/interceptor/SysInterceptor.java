@@ -32,7 +32,7 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 		String url = request.getRequestURL().toString();
-		if (!url.matches(".*login.*")) {
+		if (!(url.matches(".*login.*") || url.matches(".*toLogin.*") || url.matches(".*toIndexPage.*"))) {
 
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 			if (user == null) {
@@ -67,6 +67,7 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 		//List<Menu> menuList = (List<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
 		if(mv!=null){
 			mv.addObject("menuList", request.getSession().getAttribute(GlobalPara.MENU_SESSION));
+			mv.addObject("user", request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN));
 		}
 	}
 

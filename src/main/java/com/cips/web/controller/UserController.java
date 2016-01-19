@@ -1,5 +1,7 @@
 package com.cips.web.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,10 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.druid.util.StringUtils;
 import com.cips.constants.GlobalPara;
 import com.cips.model.Menu;
+import com.cips.model.Rate;
 import com.cips.model.Role;
 import com.cips.model.User;
 import com.cips.model.UserRole;
 import com.cips.page.Pager;
+import com.cips.service.FeeService;
 import com.cips.service.MenuService;
 import com.cips.service.RoleService;
 import com.cips.service.UserService;
@@ -41,6 +46,8 @@ public class UserController {
 	private RoleService roleService;
 	@Resource(name="menuService")
 	private MenuService menuService;
+	@Resource
+	private FeeService feeService;
 	
 	@RequestMapping("/toIndexPage")
 	public ModelAndView toIndexPage(HttpServletRequest request,HttpServletResponse response){
@@ -55,8 +62,14 @@ public class UserController {
 	}
 	
 	@RequestMapping("/toLogin")
-	public ModelAndView toLogin(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView toLogin(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("status", 0);
+		param.put("type", 2);
+		Rate rate = feeService.getCurrentRate(param);
+		BigDecimal currentRate = rate.getRateHigh();
+		mv.addObject("currentRate", currentRate);
 		mv.setViewName("admin/login");
 		return mv;
 	}
@@ -180,6 +193,18 @@ public class UserController {
 		return mv;
 	}
 	
+	@RequestMapping("/signOut")
+	public ModelAndView signOut(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute(GlobalPara.USER_SESSION_TOKEN);
+		if (user != null) {
+			session.removeAttribute(GlobalPara.USER_SESSION_TOKEN);
+		}
+		mv.setViewName("redirect:toLogin");
+		return mv;
+	}
+	
 	@RequestMapping("/insertUser")
 	public ModelAndView insertUser(HttpServletRequest request,HttpServletResponse response,@ModelAttribute("user") User user){
 		ModelAndView mv = new ModelAndView();
@@ -225,6 +250,26 @@ public class UserController {
 		}
 		mv.setViewName("redirect:toPageUserManage");
 		return mv;
+	}
+	
+	@RequestMapping(value = "/validate")
+	public void validate(HttpServletResponse resp, @RequestParam("userInx") String userInx, @RequestParam("userInfo") String userInfo) throws IOException {
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (userInx.equals("userName")) {
+			param.put("userName", userInfo);
+		} else if (userInx.equals("email")) {
+			param.put("email", userInfo);
+		} else if (userInx.equals("mobile")) {
+			param.put("mobile", userInfo);
+		} else if (userInx.equals("creditId")) {
+			param.put("creditId", userInfo);
+		}
+		User user = userService.getUserByUserInfo(param);
+		if (user != null) {
+			resp.getWriter().print(false);
+		} else {
+			resp.getWriter().print(true);
+		}
 	}
 	
 	@RequestMapping("/updateUser")

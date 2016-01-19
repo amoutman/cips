@@ -59,4 +59,7 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectByPrimaryKey(userId);
 	}
 
+	public User getUserByUserInfo(Map<String,Object> map){
+		return userMapper.getUserByUserInfo(map);
+	}
 }

@@ -14,21 +14,7 @@
 </head>
 <body>
 <!--header start-->
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--header end-->
 
 <!--主题内容 start-->
@@ -82,40 +68,6 @@
          </c:forEach>
        </ul>
      </div>
-     <div class="wtbox mt10">
-   <div class="wt_skzh clearFix">
-  <h2 class="ck-deal"><a onclick="getAccountInfo()" href="javascript:vote(0)" class="btnBlue btnck">选择收款账户信息</a></h2>
-	                <!--弹窗start-->
-	               <div class="tcDiv xzzh_tc">
-	               <span class="close"></span>
-	               <h2>选择收款账户信息</h2>
-	               <div class="tcbox">
-	                  <div class="searchBox clearFix">
-	                   <div class="searchbar">
-	                          <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入用户名"/> 
-	                          <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入开户行"/>
-	                          <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入身份证号"/> <a href="" class="btnSearch">search</a>
-	                   </div>
-	                  </div>
-	                  <table width="100%" class="xzzh_table">
-	                    <tr>
-	                      <th><label>用户名</label> </th>
-	                      <th><label>开户行</label> </th>
-	                      <th><label>账户名</label> </th>
-	                      <th><label>账户号</label> </th>
-	                      <th>操作</td>
-	                    </tr>
-	                    <tbody id="accountInfo">
-	                    </tbody>
-	                  </table>
-		               <!--分页 start-->
-				       <div class="page"><a href="">&lt;</a><a href="">1</a><a href="">2</a><a href="" class="active">3</a><a href="">4</a><a href="">5</a>...<a href="">9</a><a href="">&gt;</a></div>
-				       <!--分页 end-->
-	               </div>
-	           </div>
-	             <!--弹窗end-->
-	             </div>
-	             </div>
   </div>
   
   <!--右侧模块 end-->
@@ -145,29 +97,6 @@ function addRole(){
 			}else{
 				alert("添加失败");
 			}
-		},
-		"json"
-	);
-}
-
-function getAccountInfo(){
-	$.post(
-		"accountFr/toPageAccountFrMap",
-		function(data){
-			//var jsonObj=eval("("+data+")");
-			var showHtml = "";
-			var selectBtn = "<a href='' onClick />"
-			$.each(data.afList, function (i, item) {  
-				if(showHtml == ""){
-					showHtml = "<tr><td><label>"+item.userName+"</label></td><td><label>"+item.userName+"</label></td><td><label>"+
-					item.accountName+"</label></td><td><label>"+item.accountCode+"</label></td><td><label>"+item.accountBank+"</label></td><td><label>";
-				}else{
-					showHtml = showHtml + "<tr><td><label>"+item.userName+"</label></td><td><label>"+item.userName+"</label></td><td><label>"+
-					item.accountName+"</label></td><td><label>"+item.accountCode+"</label></td><td><label>"+item.accountBank+"</label></td><td><label>";
-				}          
-			});  
-			$("#accountInfo").html(showHtml);
-			showDiv();
 		},
 		"json"
 	);

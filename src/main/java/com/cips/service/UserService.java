@@ -19,5 +19,7 @@ public interface UserService {
 	public List<User> toPageGetFrUserList(Map<String,Object> map);
 	
 	public User getUserByUserId(String userId);  
+	
+	public User getUserByUserInfo(Map<String,Object> map);
 
 }

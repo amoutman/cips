@@ -110,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <h2><img src="resource/images/login-txt.png" width="338" height="109" /></h2>
                   <p>Low Cost Low fees displayed up-front.FastFastTransfer to many countries.TrustedTrustedIndustry-leading payment security.</p>
                   <div class="todayEx">
-                    <span class="exnum">今日汇率：5.3535</span>
+                    <span class="exnum">今日汇率：${currentRate }</span>
                     <span class="exbg"></span>
                   </div>
               </div>

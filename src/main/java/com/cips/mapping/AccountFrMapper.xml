@@ -188,6 +188,7 @@
   <select id="toPageGetAccountFrList" resultType="com.cips.model.AccountFr" parameterType="map">
   	select 
   		a.id id,
+  		b.id userId,
   		b.user_name userName,
   		b.credit_id creditId,
   		a.account_name accountName,
@@ -197,12 +198,15 @@
   	from tb_account_fr a,tb_user b
   	where a.user_id = b.id
   	<if test="userName != null">
-  		and b.user_name like '%${userName}%'
+  		and b.user_name = #{userName,jdbcType=VARCHAR}
+  	</if>
+  	<if test="creditId != null">
+  		and b.credit_id = #{creditId,jdbcType=VARCHAR}
   	</if>
   	<if test="accountName !=null">
   		and a.account_name = #{accountName,jdbcType=VARCHAR}
   	</if>
-  	<if test="accountCode != null">
+  	<if test="accountCode != null ">
   		and a.account_code = #{accountCode,jdbcType=VARCHAR}
   	</if>
   	<if test="accountBank != null">

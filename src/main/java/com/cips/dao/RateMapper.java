@@ -22,7 +22,7 @@ public interface RateMapper {
     
     Rate getCurrentRate(Map<String,Object> paramMap);
 
-    List<Rate> toPageGetRateList();
+    List<Rate> toPageGetRateList(Map<String,Object> paramMap);
     
     void updateRateByStatus(Map<String,Object> map);
 }

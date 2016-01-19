@@ -23,4 +23,6 @@ public interface UserMapper {
     List<User> toPageGetUserList(Map<String,Object> map);
     
     List<User> toPageGetFrUserList(Map<String,Object> map);
+    
+    User getUserByUserInfo(Map<String,Object> map);
 }
