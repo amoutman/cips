@@ -1,5 +1,6 @@
 package com.cips.web.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,17 +126,16 @@ public class TaskController {
 			//查询当前要处理的待办
 			Task task = taskService.getTaskById(taskId);
 			//根据类型选择视图及参数
-			Order order = null;
-			User user = null;
+			//查询订单信息
+			Order order = orderService.getOrderById(task.getOrderId());
+			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+			User user = userService.getUserByUserId(order.getApplyId());
+			
 			OrderDetails hwAcc = null;
 			OrderDetails hwUserAcc = null;
 			Map<String,Object> paramMap =  null;
 			switch (task.getTaskType()) {
 			case 1:
-				//查询订单信息
-				order = orderService.getOrderById(task.getOrderId());
-				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
-				user = userService.getUserByUserId(order.getApplyId());
 				//获取海外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -148,10 +148,6 @@ public class TaskController {
 				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 2:
-				//查询订单信息
-				order = orderService.getOrderById(task.getOrderId());
-				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
-				user = userService.getUserByUserId(order.getApplyId());
 				//获取海外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -171,10 +167,6 @@ public class TaskController {
 				mv.setViewName("task/plcProTaskT2");
 				break;
 			case 3:
-				//查询订单信息
-				order = orderService.getOrderById(task.getOrderId());
-				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
-				user = userService.getUserByUserId(order.getApplyId());
 				//获取海外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -194,13 +186,15 @@ public class TaskController {
 				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 4:
+				//操作员选择的海外用户
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 5:
 				

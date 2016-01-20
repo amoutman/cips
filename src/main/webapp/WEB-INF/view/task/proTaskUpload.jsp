@@ -50,21 +50,23 @@
                  <div class="clearFix">
                  <div class="wt-t btp0">收款人账户信息</div>
                  <div class="clearFix">
-                     <div class="w235"><label>收款人姓名：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>应付金额：</label> <span class="color_orange font18">58000￥</span> </div>
+                     <div class="w235"><label>收款人姓名：</label> <span>${hwUserAcc.accountName}</span> </div>
+                     <div class="w235"><label>收款人账号：</label> <span>${hwUserAcc.accountCode}</span> </div>
+                     <div class="w235"><label>开户行：</label> <span>${hwUserAcc.accountBank}</span> </div>
+                     <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${payMoney}</span> </div>
                  </div>
                  </div>
                </div>
+               <c:if test="${task.remark != null}">
                <div class="wtbox mt10">
                  <div class="clearFix">
                  <div class="wt-t btp0">驳回原因</div>
                  <div class="clearFix">
-                     <div class="w470">没有匹配的额度！</div>
+                     <div class="w470">${task.remark}</div>
                  </div>
                  </div>
                </div>
+               </c:if>
                <div class="wtbox mt10">
                  <ul>
                     <li><a href="javascript:void(0);" class="btnUpload">上传</a></li>
