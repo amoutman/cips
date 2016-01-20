@@ -691,4 +691,46 @@ public class TaskServiceImpl implements TaskService {
 		taskMapper.insertSelective(newTask);
 	}
 
+	@Override
+	public void hcFirstPayConfirm(OrderDetails hcAccT3, OrderDetails hcAccT4, OrderOperate orderOperate, Task curTask,
+			Task newTask) throws Exception {
+		if(hcAccT3 != null){
+			switch (curTask.getTaskType()) {
+			case 6:
+				//更新订单明细（海外用户账户信息）
+				orderDetailsMapper.updateByPrimaryKeySelective(hcAccT3);
+				break;
+			default:
+				//新增订单明细（海外用户账户信息）
+				orderDetailsMapper.insertSelective(hcAccT3);
+				break;
+			}
+		}
+		if(hcAccT4 != null){
+			switch (curTask.getTaskType()) {
+			case 6:
+				//更新订单明细（海外用户账户信息）
+				orderDetailsMapper.updateByPrimaryKeySelective(hcAccT4);
+				break;
+			default:
+				//新增订单明细（海外用户账户信息）
+				orderDetailsMapper.insertSelective(hcAccT4);
+				break;
+			}
+		}
+		if(orderOperate != null){
+			//新增订单日志
+			orderOperateMapper.insertSelective(orderOperate);
+		}
+		if(curTask != null){
+			//更新当前待办状态
+			taskMapper.updateByPrimaryKeySelective(curTask);
+		}
+		if(newTask != null){
+			//新增待办至下个流程
+			taskMapper.insertSelective(newTask);
+		}
+		
+	}
+
 }

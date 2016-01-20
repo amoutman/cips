@@ -76,7 +76,19 @@
                </div>
                <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
                <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${taskId}');">确认</a> 
-               <a href="javascript:vote(0)" class="btnOrage" onclick="taskRejected('${taskId}');">驳回</a></div>
+               <a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnOrage btnck">驳回</a></div>
+               <!--弹窗start-->
+               <div class="tcDiv back_tc" style="width:260px;">
+	               <span class="close"></span>
+	               <h2>驳回原因</h2>
+	               <div class="tcbox">
+	                  <ul class="s-form" style="padding-top:20px;">
+	                   <li><textarea name="textarea" id="remark" class="area" onkeyup="this.value = this.value.substring(0, 30)"></textarea> </li>
+	                  </ul>
+	                 <a href="javascript:void(0)" class="btnOrage" onclick="taskRejected('${taskId}')">提交</a>
+	                </div>
+	           	</div>
+	            <!--弹窗end-->
            </div>
      </div>
   </div>
@@ -96,8 +108,8 @@ function taskConfirm(taskId){
 			},
 			function(data){
 				if (data.msg == "1") {
-					//访问
-					//window.location.href = "task/preProTask?taskId="+taskId;
+					//访问待办
+					window.location.href = "task/toPageTaskMage";
 				} else {
 					// 失败了
 					alert(data.msg);
@@ -108,16 +120,18 @@ function taskConfirm(taskId){
 }
 
 function taskRejected(taskId){
+	var remark = $("#remark").val();
+	
 	$.post(
 			"task/plcProTaskRejected",
 			{
-				"taskId":taskId
+				"taskId":taskId,
+				"remark":remark
 			},
 			function(data){
 				if (data.msg == "1") {
-					//访问
-					//window.location.href = "task/preProTask?taskId="+taskId;
-					alert("suc");
+					//访问待办
+					window.location.href = "task/toPageTaskMage";
 				} else {
 					// 失败了
 					alert(data.msg);

@@ -44,4 +44,25 @@ $(document).ready(function () {
           $(this).addClass("selectOn").siblings().removeClass("selectOn");
 			})
 			
+	//点击弹出
+	 $('.m-calculator-con').click(function () {
+        $(this).children('.calculator-dis').show();
+        $(this).siblings('.m-calculator-con').children('.calculator-dis').hide()
+    })
+	 //筛选
+    $('.calculator-dis li').click(function () {
+        var this_text = $(this).text()
+        $(this).parents('.m-calculator-con').children('.calculator-tit').text(this_text);
+        $(this).parents('.calculator-dis').fadeOut('fast');
+
+    })
+
+    //点击以外的区域子 弹窗隐藏
+    $(document).bind("click", function (e) {
+        var target = $(e.target);
+        if (target.closest(".m-calculator-con").length == 0) {
+            $(".calculator-dis").fadeOut('fast');
+        }
+    })
+			
 })

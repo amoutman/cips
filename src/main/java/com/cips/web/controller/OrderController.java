@@ -182,6 +182,34 @@ public class OrderController {
 				map.put(GlobalPara.AJAX_KEY, "订单已受理无法删除！");
 			}
 			
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			map = new HashMap<String,Object>();
+			map.put(GlobalPara.AJAX_KEY, "订单删除失败，请重试！");
+			return map;
+		}
+	}
+	
+	/**
+	 * 查看订单
+	 * @param orderId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/viewOrder")
+	public Object viewOrder(@RequestParam("orderId")String orderId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			Order order = orderService.getOrderById(orderId);
+			if(BusConstants.ORDER_STATUS_COMMIT.equals(order.getStatus())){
+				order.setStatus(BusConstants.ORDER_STATUS_DELETE);
+				orderService.updateOrderById(order);
+				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			}else{
+				map.put(GlobalPara.AJAX_KEY, "订单已受理无法删除！");
+			}
+			
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
