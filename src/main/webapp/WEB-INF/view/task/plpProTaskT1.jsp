@@ -84,16 +84,10 @@
 	           </div>
 	             <!--弹窗end-->
 	                 <div class="clearFix">
-	                     <div class="w235"><label>收款人姓名： </label> <span id="accountNameSpan"></span> </div>
+	                 	 <input type="hidden" name="taskId" id="taskId" value="${task.id }"/>
+	                     <div class="w235"><label>收款人姓名： </label> <span id="accountNameSpan"></span><input type="hidden" name="accountId" id="accountId" /> </div>
 	                     <div class="w235"><label>收款人账号：</label> <span id="accountCodeSpan"></span> </div>
 	                     <div class="w235"><label>开户行：</label> <span id="accountBankSpan"></span> </div>
-	                     <form action="" method="post" id="insertOrderAccountForm">
-	                     	<input type="hidden" name="userId" id="userId" />
-	                     	<input type="hidden" name="id" id="id" />
-	                     	<input type="hidden" name="accountName" id="accountName" />
-	                     	<input type="hidden" name="accountBank" id="accountBank" />
-	                     	<input type="hidden" name="accountCode" id="accountCode" />
-	                     </form>
 	                 </div>
                </div>
                </div>
@@ -158,14 +152,37 @@ function selectAccount(obj){
 	$("#accountNameSpan").html(accountName);
 	$("#accountCodeSpan").html(accountCode);
 	$("#accountBankSpan").html(accountBank);
+	$("#accountId").val(accountId);
 	
-	$("#insertOrderAccountForm").find("#userId").val(userId);
-	$("#insertOrderAccountForm").find("#id").val(accountId);
-	$("#insertOrderAccountForm").find("#accountName").val(accountName);
-	$("#insertOrderAccountForm").find("#accountCode").val(accountCode);
-	$("#insertOrderAccountForm").find("#accountBank").val(accountBank);
 	$(".tcDiv").fadeOut(300);
 	$('div.bg').fadeOut(200);
+}
+
+function confirmOrder(){
+	var accountId = $("#accountId").val();
+	var taskId = $("#taskId").val();
+	if(accountId == ""){
+		alert("请选择海外用户账户");
+		return false;
+	}else{
+		$.post(
+			"task/plpProTaskT1",
+			{
+				taskId:taskId,
+				accountId:accountId
+			},
+			function(data){
+				if(data.msg == "1"){
+					alert("提交成功");
+					window.location.href="task/toPageTaskMage";
+				}else{
+					alert(data.msg);
+				}
+			},
+			"json"
+			
+		)
+	}
 }
 </script>
 </html>
