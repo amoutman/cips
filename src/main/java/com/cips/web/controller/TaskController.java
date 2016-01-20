@@ -144,7 +144,7 @@ public class TaskController {
 				mv.addObject("order", order);
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
-				mv.addObject("taskId", taskId);
+				mv.addObject("task", task);
 				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 2:
@@ -167,14 +167,40 @@ public class TaskController {
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
 				mv.addObject("hwUserAcc", hwUserAcc);
-				mv.addObject("taskId", taskId);
+				mv.addObject("task", task);
 				mv.setViewName("task/plcProTaskT2");
 				break;
 			case 3:
-
+				//查询订单信息
+				order = orderService.getOrderById(task.getOrderId());
+				order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+				user = userService.getUserByUserId(order.getApplyId());
+				//获取海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				//操作员选择的海外用户
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("order", order);
+				mv.addObject("user", user);
+				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("task", task);
+				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 4:
-
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("task", task);
+				mv.setViewName("task/");
 				break;
 			case 5:
 				
@@ -328,11 +354,11 @@ public class TaskController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/plpProTaskT1")
-	public Map<String, Object> plpProTaskT1(HttpServletRequest request, String taskId, AccountFr accountFr){
+	public Map<String, Object> plpProTaskT1(HttpServletRequest request, String taskId, String accountId){
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			//验证海外用户真实性
-			accountFr = accountFrService.getAccountFrById(accountFr.getId());
+			AccountFr accountFr = accountFrService.getAccountFrById(accountId);
 			if(accountFr == null){
 				map.put(GlobalPara.AJAX_KEY, "你选择的海外用户系统不存在");
 				return map;
@@ -510,7 +536,7 @@ public class TaskController {
 				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSERINFO_REJECT);
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", curTask.getOrderId());
-				paramMap.put("taskType", BusConstants.ORDER_STATUS_COMMIT);
+				paramMap.put("taskType", BusConstants.TASK_TYPE_COMMIT);
 				upTask = taskService.getTaskByParams(paramMap);
 				newTask.setOperatedId(upTask.getOperatedId());
 				taskService.saveNewTask(newTask);

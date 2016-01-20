@@ -97,7 +97,7 @@ function taskConfirm(taskId){
 			function(data){
 				if (data.msg == "1") {
 					//访问
-					window.location.href = "task/preProTask?taskId="+taskId;
+					//window.location.href = "task/preProTask?taskId="+taskId;
 				} else {
 					// 失败了
 					alert(data.msg);
@@ -109,14 +109,15 @@ function taskConfirm(taskId){
 
 function taskRejected(taskId){
 	$.post(
-			"task/processingTask",
+			"task/plcProTaskRejected",
 			{
 				"taskId":taskId
 			},
 			function(data){
 				if (data.msg == "1") {
 					//访问
-					window.location.href = "task/preProTask?taskId="+taskId;
+					//window.location.href = "task/preProTask?taskId="+taskId;
+					alert("suc");
 				} else {
 					// 失败了
 					alert(data.msg);

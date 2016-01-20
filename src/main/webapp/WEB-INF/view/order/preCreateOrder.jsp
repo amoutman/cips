@@ -32,14 +32,15 @@
        <ul class="s-form">
        		<form action="order/createOrder" id="orderForm" method="post">
 			     <input type="hidden" name="rate" id="rate" value="${rate.rateHigh}" />
-			     <input type="hidden" name="poundage" id="poundage" value="${poundage.poundageRatio}" />
 	    
                  <li><label>申请金额：</label><input type="text" class="input-txt" id="applyAmount" name="applyAmount" value="" ><span class="left hbf">美元</span>
                  </li>
                  <li><label>应付金额：</label><input type="text" class="input-txt" id="payAmount" name="payAmount" value="" readonly="readonly"> <span class="left hbf">元</span>
                  </li>
+                 <!--  
                  <li><label>应付手续费：</label><input type="text" class="input-txt" id="poundageAmount" name="poundageAmount" value="" readonly="readonly"><span class="left hbf">元</span>
                  </li>
+                 -->
                  <li><label>收款人姓名：</label><input type="text" class="input-txt" id="accountName" name="accountName" value="">
                  </li>
                  <li><label>收款人账号：</label><input type="text" class="input-txt" id="accountCode" name="accountCode" value="">
@@ -105,11 +106,8 @@ $(document).ready(function() {
 	$("#applyAmount").blur( function () {
 		var applyAmount = $("#applyAmount").val();
 		var rate = $("#rate").val();
-		var poundage = $("#poundage").val();
-		var payAmount = applyAmount * rate;
+		var payAmount = applyAmount * rate/100;
 		$("#payAmount").val(payAmount); 
-		var poundageAmount = payAmount * poundage;
-		$("#poundageAmount").val(poundageAmount); 
 	});
 })
 </script>

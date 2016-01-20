@@ -1,5 +1,6 @@
 package com.cips.web.controller;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,7 +22,6 @@ import com.cips.model.Dictionary;
 import com.cips.model.Order;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
-import com.cips.model.Poundage;
 import com.cips.model.Rate;
 import com.cips.model.Task;
 import com.cips.model.User;
@@ -66,9 +66,9 @@ public class OrderController {
 			paramMap.put("type", BusConstants.RATE_TYPE_US_TO_RMB);
 			Rate rate = feeService.getCurrentRate(paramMap);
 			//获取手续费收费标准
-			Poundage poundage = feeService.getCurrPoundage(BusConstants.POUNDAGE_STATUS_YES);
+			//Poundage poundage = feeService.getCurrPoundage(BusConstants.POUNDAGE_STATUS_YES);
 			mv.addObject("rate", rate);
-			mv.addObject("poundage", poundage);
+			//mv.addObject("poundage", poundage);
 			mv.setViewName("order/preCreateOrder");
 			return mv;
 		} catch (Exception e) {
@@ -97,10 +97,10 @@ public class OrderController {
 			order.setExchangeRateRmb(curRToURate.getRateHigh());
 			order.setExchangeRateUsd(curUToRRate.getRateHigh());
 			//订单应付金额 先获取汇率再进行计算
-			order.setPayAmount(order.getApplyAmount().multiply(curUToRRate.getRateHigh()));
+			order.setPayAmount(order.getApplyAmount().multiply(curUToRRate.getRateHigh()).divide(new BigDecimal(100), 2));
 			//手续费 先获取收费标准再进行计算
-			Poundage curPoundage = feeService.getCurrPoundage(BusConstants.POUNDAGE_STATUS_YES);
-			order.setPoundageRatio(order.getApplyAmount().multiply(curPoundage.getPoundageRatio()));
+			//Poundage curPoundage = feeService.getCurrPoundage(BusConstants.POUNDAGE_STATUS_YES);
+			//order.setPoundageRatio(order.getApplyAmount().multiply(curPoundage.getPoundageRatio()));
 			//订单提交人
 			order.setApplyId(user.getId());
 			//订单提交时间

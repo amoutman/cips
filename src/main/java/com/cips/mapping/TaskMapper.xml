@@ -181,10 +181,10 @@
     tb_order o
  	where t.order_id = o.id
     <if test="orderId != null">
- 		and o.order_id = #{orderId}
+ 		and t.order_id = #{orderId}
     </if>
  	<if test="taskType != null">
- 		and o.task_type = #{taskType}
+ 		and t.task_type = #{taskType}
  	</if>
   </select>
 </mapper>
