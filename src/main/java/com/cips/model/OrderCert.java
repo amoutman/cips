@@ -11,7 +11,7 @@ public class OrderCert {
 
     private String orderAccountId;
 
-    private Integer certType;
+    private Integer taskType;
 
     private Integer status;
 
@@ -57,12 +57,12 @@ public class OrderCert {
         this.orderAccountId = orderAccountId == null ? null : orderAccountId.trim();
     }
 
-    public Integer getCertType() {
-        return certType;
+    public Integer getTaskType() {
+        return taskType;
     }
 
-    public void setCertType(Integer certType) {
-        this.certType = certType;
+    public void setTaskType(Integer taskType) {
+        this.taskType = taskType;
     }
 
     public Integer getStatus() {

@@ -1,6 +1,9 @@
 package com.cips.web.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,14 +12,22 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.util.FileCopyUtils;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cips.constants.BusConstants;
@@ -24,6 +35,7 @@ import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
 import com.cips.model.AccountFr;
 import com.cips.model.Order;
+import com.cips.model.OrderCert;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
 import com.cips.model.Role;
@@ -31,6 +43,7 @@ import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.page.Pager;
 import com.cips.service.AccountFrService;
+import com.cips.service.OrderCertService;
 import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
@@ -57,6 +70,9 @@ public class TaskController {
 	
 	@Resource(name="accountFrService")
 	private AccountFrService accountFrService;
+	
+	@Resource(name="orderCertService")
+	private OrderCertService orderCertService;
 	
 	/**
 	 * 待办管理
@@ -1264,130 +1280,148 @@ public class TaskController {
 	//上传点击确定
 	@ResponseBody
 	@RequestMapping(value = "/uploadConfirm")
-	public Map<String, Object> uploadConfirm(HttpServletRequest request, String taskId){
+	public Map<String, Object> uploadConfirm(HttpServletRequest request, String taskId) {
 		Map<String,Object> map = new HashMap<String,Object>();
+		boolean isUpLoad = true;
 		try {
-			//获取客户用户名userId
-			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-			
-			//获取当前待办
-			Task curTask = taskService.getTaskById(taskId);
-			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
-			curTask.setEndTime(new Date());
-			
-			Task newTask = null;
-			switch (curTask.getTaskType()) {
-			case 4:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CONFIRM_FIRST_HCPAY);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 6:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CONFIRM_FIRST_HCPAY);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 8:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT_VOUCHER);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 10:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT_VOUCHER);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 12:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 16:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_VOUCHER);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 20:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 24:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_VOUCHER);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 28:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HWUSERPAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 32:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCRECEIPT_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 36:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HC_HWPAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 40:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJ_HWRECEIPT_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 44:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HWUSERPAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 48:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCRECEIPT_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 52:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 56:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_RECEIPT_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 60:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_PAY_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
-			case 64:
-				//生成新的待办任务至平台操作员
-				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_RECEIPT_CONFIRM);
-				newTask.setOrderStatus(curTask.getOrderStatus());
-				break;
+			isUpLoad = uploadImg(request,taskId);
+			if(!isUpLoad){
+				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_FALSE);
+				map.put(GlobalPara.AJAX_KEY, "上传凭证失败，请重试！");
 			}
-
-			//生成操作步骤
-			OrderOperate oOperate = new OrderOperate();
-			oOperate.setId(PKIDUtils.getUuid());
-			oOperate.setOrderId(curTask.getOrderId());
-			oOperate.setStatus(curTask.getOrderStatus());
-			oOperate.setOperatedId(user.getId());
-			oOperate.setOpEndTime(new Date());
-			oOperate.setOpSequence(curTask.getTaskType());
-			oOperate.setTaskId(curTask.getId());
-			
-			taskService.processTask(null, null, oOperate, curTask, newTask);
-			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
-			return map;
 		} catch (Exception e) {
-			e.printStackTrace();
-			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "平台操作员待办处理异常，请重试！");
-			return map;
+			// TODO: handle exception
+			isUpLoad = false;
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_FALSE);
+			map.put(GlobalPara.AJAX_KEY, "上传凭证失败，请重试！");
 		}
+		//判断凭证是否已经上传成功
+		if(isUpLoad){
+			try {
+				//获取客户用户名userId
+				User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+				
+				//获取当前待办
+				Task curTask = taskService.getTaskById(taskId);
+				curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
+				curTask.setEndTime(new Date());
+				
+				Task newTask = null;
+				switch (curTask.getTaskType()) {
+				case 4:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CONFIRM_FIRST_HCPAY);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 6:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CONFIRM_FIRST_HCPAY);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 8:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT_VOUCHER);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 10:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT_VOUCHER);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 12:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 16:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_VOUCHER);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 20:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 24:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_VOUCHER);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 28:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HWUSERPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 32:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCRECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 36:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HC_HWPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 40:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJ_HWRECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 44:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HWUSERPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 48:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCRECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 52:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 56:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_RECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 60:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_PAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 64:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_RECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				}
+
+				//生成操作步骤
+				OrderOperate oOperate = new OrderOperate();
+				oOperate.setId(PKIDUtils.getUuid());
+				oOperate.setOrderId(curTask.getOrderId());
+				oOperate.setStatus(curTask.getOrderStatus());
+				oOperate.setOperatedId(user.getId());
+				oOperate.setOpEndTime(new Date());
+				oOperate.setOpSequence(curTask.getTaskType());
+				oOperate.setTaskId(curTask.getId());
+				
+				taskService.processTask(null, null, oOperate, curTask, newTask);
+				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			} catch (Exception e) {
+				e.printStackTrace();
+				map = new HashMap<String,Object>();
+				map.put(GlobalPara.AJAX_KEY, "平台操作员待办处理异常，请重试！");
+				
+			}
+		}
+		
+		return map;
+		
 	}
 	
 	//平台操作员点击确定
@@ -2122,5 +2156,93 @@ public class TaskController {
 			e.printStackTrace();
 			throw new RuntimeException("已办管理模块异常!");
 		}
+	}
+	
+	private boolean uploadImg(HttpServletRequest request,String taskId) throws Exception{
+		boolean isUpload = true;
+		//获取客户用户名userId
+		User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+		//获取当前待办
+		Task curTask = taskService.getTaskById(taskId);
+		
+		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
+		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"uploadImgFiles";
+		
+		//查询订单信息
+		Order order = orderService.getOrderById(curTask.getOrderId());
+		String orderNo = order.getOrderNo();
+		Integer taskType = curTask.getTaskType();
+		String taskPath = "task_type"+ taskType.toString();
+		
+		String finalPath = ctxPath  + File.separator + orderNo + File.separator + taskPath + File.separator;
+        
+		//凭证存储的相对路径
+		String certPath = orderNo + File.separator + taskPath + File.separator;
+				
+		File file = new File(finalPath);
+		
+		//如果该文件夹存在，标示驳回重新上传，先删除之前的凭证
+		if(file.exists()){
+			file.delete();
+		}
+		
+		file.mkdirs();
+		
+		List<OrderCert> orderCertList = new ArrayList<OrderCert>();
+		//String fileName = null;
+		String certName = null;
+		OrderCert oCert = null;
+		int fileIndex = 1;
+		boolean isSuccess = true;
+		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
+			MultipartFile mf = entity.getValue();
+			//fileName = mf.getOriginalFilename();
+			certName = "cert" + fileIndex;
+			fileIndex = fileIndex + 1;
+			//生成凭证存储List
+			oCert = new OrderCert();
+			oCert.setId(PKIDUtils.getUuid());
+			oCert.setTaskType(taskType);
+			oCert.setOrderId(order.getId());
+			oCert.setCertPic(certPath + certName);
+			oCert.setCreatedId(user.getId());
+			oCert.setCreatedDate(new Date());
+			
+			File uploadFile = new File(finalPath + certName);
+			try {
+				FileCopyUtils.copy(mf.getBytes(), uploadFile);
+				orderCertList.add(oCert);
+				isSuccess = true;
+			} catch (IOException e) {
+				// TODO: handle exception
+				isSuccess = false;
+			}
+		}
+		
+		if(isSuccess){
+			if(orderCertList.size()>0){
+				try {
+					//删除相同的凭证
+					Map<String,Object> param = new HashMap<String,Object>();
+					param.put("orderId", curTask.getId());
+					param.put("taskType", curTask.getTaskType());
+					
+					orderCertService.deleteOrderCertByParam(param);
+					
+					orderCertService.insertOrderCertList(orderCertList);
+					isUpload = true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					isUpload = false;
+				}
+			}else{
+				isUpload = false;
+			}
+		}else{
+			isUpload = false;
+		}
+		
+		return isUpload;
 	}
 }

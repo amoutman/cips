@@ -96,7 +96,7 @@
     from tb_user_role
     where user_id = #{userId,jdbcType=CHAR}
   </select>
-  <insert id="insertUserRoleList" parameterType="java.lang.String">
+  <insert id="insertUserRoleList" parameterType="list">
   	 insert into tb_user_role (id, user_id, role_id, created_id, 
       created_date)
     values

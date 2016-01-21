@@ -1,7 +1,9 @@
 package com.cips.web.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,11 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.druid.util.StringUtils;
@@ -462,6 +467,48 @@ public class UserController {
 		return resultMap;
 	}
 	
+	@RequestMapping(value="/uploadUserImg",method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadUserImg(HttpServletRequest request,HttpServletResponse response){
+		String responseStr = "";
+
+		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
+		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"uploadImgFiles";
+		//后期替换为订单号
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+		String ymd = sdf.format(new Date());
+		String finalPath = ctxPath  + File.separator + ymd + File.separator;
+
+		File file = new File(finalPath);
+		
+		if(!file.exists()){
+			file.mkdirs();
+		}
+		
+		String fileName = null;
+		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
+			MultipartFile mf = entity.getValue();
+			fileName = mf.getOriginalFilename();
+			
+			File uploadFile = new File(finalPath + fileName);
+			try {
+				FileCopyUtils.copy(mf.getBytes(), uploadFile);
+				responseStr = "上传成功";
+			} catch (IOException e) {
+				// TODO: handle exception
+				responseStr = "上传失败";
+			}
+		}
+		
+		return responseStr;
+	}
+	
+	@RequestMapping("/upload")
+	public void upload(){
+		System.out.println("--------------------------------------------------------");
+	}
+	
 	private List<Menu> getMenuListByRoleId(String[] roleId){
 		Map<String,Object> paraMap = new HashMap<String,Object>();
 		paraMap.put("roleId", roleId);
@@ -483,4 +530,6 @@ public class UserController {
 		
 		return menuList;
 	}
+	
+	
 }

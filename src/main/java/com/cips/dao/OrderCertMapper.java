@@ -1,5 +1,8 @@
 package com.cips.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cips.model.OrderCert;
 
 public interface OrderCertMapper {
@@ -14,4 +17,11 @@ public interface OrderCertMapper {
     int updateByPrimaryKeySelective(OrderCert record);
 
     int updateByPrimaryKey(OrderCert record);
+    
+    int insertOrderCertList(List<OrderCert> ocList);
+    
+    int deleteOrderCertByParam(Map<String,Object> param);
+    
+    List<OrderCert> getOrderCertList(Map<String,Object> param);
+    
 }
