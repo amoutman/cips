@@ -11,26 +11,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="resource/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
 <title>代办事项</title>
 </head>
 
 <body>
 <!--header start-->
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="../images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp" /></jsp:include>
 <!--header end-->
 
 <!--主题内容 start-->
@@ -69,11 +56,13 @@
                </c:if>
                <div class="wtbox mt10">
                  <ul>
-                    <li><a href="javascript:void(0);" class="btnUpload">上传</a></li>
+                    <li>
+                    	<input type="file" name="uploadimg" id="uploadimg"/>
+                    	<!--a href="javascript:void(0);"  class="btnUpload">上传</a>  -->
+                    	<a href="javascript:$('#uploadimg').uploadify('upload','*')" class="btnUpload">上传</a>&nbsp;&nbsp;
+                    	<a href="javascript:$('#uploadimg').uploadify('cancel','*')" class="btnUpload">取消</a>
+                    </li>
                  </ul>
-                 <div id="ImgPr" class="imgShow clearFix">
-                    <img id="imgShow_WU_FILE_0" src="../images/head.gif" width="100" height="100" /> <img id="imgShow_WU_FILE_0" src="../images/head.gif" width="100" height="100" /> <img id="imgShow_WU_FILE_0" src="../images/head.gif" width="100" height="100" />
-                 </div>
                </div>
                <div class="btnDiv tac"><a href="" class="btnGrey">返回</a><a href="" class="btnOrage">确认</a></div>
            </div>
@@ -86,4 +75,25 @@
 <div class="bg"></div>
 
 </body>
+<script type="text/javascript" src="resource/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#uploadimg").uploadify({
+		'uploader':'uploadUserImg;jsessionid=<%=session.getId()%>',
+		'swf':'resource/uploadify/uploadify.swf',
+		'cancelImg':'resource/uploadify/uploadify-cancel.png',
+		'buttonText':'上传凭证',
+		'removeCompleted':false,
+		'auto':false,
+		'fileTypeExts':'*.jpg; *.png; *.gif',
+		'uploadLimit':5,
+		'fileObjectName':'file',
+		'mult':true,
+		'onUploadSeccess':function(file,data,response){
+			alert(file.name + "上传成功");
+		}
+	});
+
+});
+</script>
 </html>

@@ -1,6 +1,9 @@
 package com.cips.web.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,13 +12,18 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cips.constants.BusConstants;
@@ -23,6 +31,7 @@ import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
 import com.cips.model.AccountFr;
 import com.cips.model.Order;
+import com.cips.model.OrderCert;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
 import com.cips.model.Role;
@@ -30,6 +39,7 @@ import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.page.Pager;
 import com.cips.service.AccountFrService;
+import com.cips.service.OrderCertService;
 import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
@@ -56,6 +66,9 @@ public class TaskController {
 	
 	@Resource(name="accountFrService")
 	private AccountFrService accountFrService;
+	
+	@Resource(name="orderCertService")
+	private OrderCertService orderCertService;
 	
 	/**
 	 * 待办管理
@@ -592,5 +605,93 @@ public class TaskController {
 			e.printStackTrace();
 			throw new RuntimeException("已办管理模块异常!");
 		}
+	}
+	
+	private boolean uploadImg(HttpServletRequest request,String taskId) throws Exception{
+		boolean isUpload = true;
+		//获取客户用户名userId
+		User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+		//获取当前待办
+		Task curTask = taskService.getTaskById(taskId);
+		
+		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
+		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"uploadImgFiles";
+		
+		//查询订单信息
+		Order order = orderService.getOrderById(curTask.getOrderId());
+		String orderNo = order.getOrderNo();
+		Integer taskType = curTask.getTaskType();
+		String taskPath = "task_type"+ taskType.toString();
+		
+		String finalPath = ctxPath  + File.separator + orderNo + File.separator + taskPath + File.separator;
+        
+		//凭证存储的相对路径
+		String certPath = orderNo + File.separator + taskPath + File.separator;
+				
+		File file = new File(finalPath);
+		
+		//如果该文件夹存在，标示驳回重新上传，先删除之前的凭证
+		if(file.exists()){
+			file.delete();
+		}
+		
+		file.mkdirs();
+		
+		List<OrderCert> orderCertList = new ArrayList<OrderCert>();
+		//String fileName = null;
+		String certName = null;
+		OrderCert oCert = null;
+		int fileIndex = 1;
+		boolean isSuccess = true;
+		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
+			MultipartFile mf = entity.getValue();
+			//fileName = mf.getOriginalFilename();
+			certName = "cert" + fileIndex;
+			fileIndex = fileIndex + 1;
+			//生成凭证存储List
+			oCert = new OrderCert();
+			oCert.setId(PKIDUtils.getUuid());
+			oCert.setTaskType(taskType);
+			oCert.setOrderId(order.getId());
+			oCert.setCertPic(certPath + certName);
+			oCert.setCreatedId(user.getId());
+			oCert.setCreatedDate(new Date());
+			
+			File uploadFile = new File(finalPath + certName);
+			try {
+				FileCopyUtils.copy(mf.getBytes(), uploadFile);
+				orderCertList.add(oCert);
+				isSuccess = true;
+			} catch (IOException e) {
+				// TODO: handle exception
+				isSuccess = false;
+			}
+		}
+		
+		if(isSuccess){
+			if(orderCertList.size()>0){
+				try {
+					//删除相同的凭证
+					Map<String,Object> param = new HashMap<String,Object>();
+					param.put("orderId", curTask.getId());
+					param.put("taskType", curTask.getTaskType());
+					
+					orderCertService.deleteOrderCertByParam(param);
+					
+					orderCertService.insertOrderCertList(orderCertList);
+					isUpload = true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					isUpload = false;
+				}
+			}else{
+				isUpload = false;
+			}
+		}else{
+			isUpload = false;
+		}
+		
+		return isUpload;
 	}
 }

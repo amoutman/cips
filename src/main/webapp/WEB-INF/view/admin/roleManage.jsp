@@ -5,11 +5,13 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String sessionid = session.getId();
 %>
 <html>
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="resource/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
 <title>角色管理</title>
 </head>
 <body>
@@ -68,6 +70,23 @@
          </c:forEach>
        </ul>
      </div>
+     <!-- 上传图片测试 -->
+     <div class="wtbox mt10">
+     <input type="file" name="uploadimg" id="uploadimg"/>
+                 <ul>
+                    <li>
+                    	
+                    	<!--a href="javascript:void(0);"  class="btnUpload">上传</a>  -->
+                    	<a href="javascript:$('#uploadimg').uploadify('upload')" class="btnUpload">上传</a>&nbsp;&nbsp;
+                    	<a href="javascript:$('#uploadimg').uploadify('cancel')" class="btnUpload">取消</a>&nbsp;&nbsp;
+                    	<a href="javascript:$('#uploadimg').uploadify('upload','*')" class="btnUpload">上传所有文件</a>&nbsp;&nbsp;
+                    	<a href="javascript:$('#uploadimg').uploadify('cancel','*')" class="btnUpload">取消上传所有文件</a>
+                    </li>
+                 </ul>
+                 <div id="ImgPr" class="imgShow clearFix">
+                 </div>
+               </div>
+               <!-- 上传图片测试 -->
   </div>
   
   <!--右侧模块 end-->
@@ -77,8 +96,28 @@
 <div class="bg"></div>
 
 </body>
-<script type="text/javascript" src="resource/page/role.js"></script>
+<script type="text/javascript" src="resource/uploadify/jquery.uploadify.js"></script>
+
 <script type="text/javascript">
+$(document).ready(function(){
+	$("#uploadimg").uploadify({
+		'uploader':'uploadUserImg;jsessionid=<%=session.getId()%>',
+		'swf':'resource/uploadify/uploadify.swf',
+		'cancelImg':'resource/uploadify/uploadify-cancel.png',
+		'buttonText':'上传凭证',
+		'removeCompleted':false,
+		'auto':false,
+		'fileTypeExts':'*.jpg; *.png; *.gif',
+		'uploadLimit':5,
+		'fileObjectName':'file',
+		'mult':true,
+		'onUploadSeccess':function(file,data,response){
+			alert(file.name + "上传成功");
+		}
+	});
+
+});
+
 function addRole(){
 	
 	var roleName = $("#newRoleName").val();
