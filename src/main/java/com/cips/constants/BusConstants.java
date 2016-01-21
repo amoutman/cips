@@ -124,7 +124,7 @@ public class BusConstants {
 	public static final String TASK_REMARK_SECOND_HCPAY_RECEIPT_VOUCHER_RECHECK = "海外用户已确认第2次收款，请核实收款凭证信息";
 	//平台审核员复核海外用户二次收款凭证及华创海外账户信息没有问题，则发送待办至海外用户进行第一次海外打款
 	public static final Integer TASK_TYPE_FIRST_HWUSERPAY = 28; 
-	public static final String TASK_REMARK_FIRST_HWUSERPAY = "请进行第1次海外转账";
+	public static final String TASK_REMARK_FIRST_HWUSERPAY = "请进行第1次海外打款";
 	//海外用户第一次打款完成并上传打款凭证，则发送待办至平台操作员进行打款信息核实
 	public static final Integer TASK_TYPE_FIRST_HWUSERPAY_CONFIRM = 29; 
 	public static final String TASK_REMARK_FIRST_HWUSERPAY_CONFIRM = "海外用户已给华创海外账户第一次打款，请确认打款凭证信息";
@@ -163,43 +163,43 @@ public class BusConstants {
 	public static final String TASK_REMARK_HC_HWPAY_RECHECK = "华创用户已进行海外账户的打款，请复核打款凭证信息";
 	//平台复核员如果审核无误，则发送待办至好望角操作员进行收款确认
 	public static final Integer TASK_TYPE_HWJ_HWRECEIPT = 40; 
-	public static final String TASK_REMARK_HWJ_HWRECEIPT = "已给客户xxx海外账户打款，请确认收款";
+	public static final String TASK_REMARK_HWJ_HWRECEIPT = "已完成海外账户打款，请确认收款";
 	//好望角操作员确认收款并上传收款凭证，发送待办至平台操作员进行凭证核实
 	public static final Integer TASK_TYPE_HWJ_HWRECEIPT_CONFIRM = 41; 
-	public static final String TASK_REMARK_HWJ_HWRECEIPT_CONFIRM = "好望角用户xxx已经确认海外账户收款，请核验收款凭证";
+	public static final String TASK_REMARK_HWJ_HWRECEIPT_CONFIRM = "好望角已完成确认海外账户收款，请核验收款凭证";
 	//平台操作员审核好望角客户收款凭证，存在问题则驳回
 	public static final Integer TASK_TYPE_HWJ_HWRECEIPT_REJECT = 42; 
-	public static final String TASK_REMARK_HWJ_HWRECEIPT_REJECT = "xxx用户海外账户收款凭证有误，请核实";
+	public static final String TASK_REMARK_HWJ_HWRECEIPT_REJECT = "您上传的海外账户收款凭证有误，请核实";
 	//平台操作员审核好望角客户收款凭证，没有问题则发送待办至平台审核员进行复核
 	//如果有问题则直接驳回至好望角操作员 注意：类型及信息同42
 	public static final Integer TASK_TYPE_HWJ_HWRECEIPT_RECHECK = 43; 
-	public static final String TASK_REMARK_HWJ_HWRECEIPT_RECHECK = "好望角用户xxx已经确认海外账户收款，请核实收款凭证";
+	public static final String TASK_REMARK_HWJ_HWRECEIPT_RECHECK = "好望角已完成确认海外账户收款，请核实收款凭证";
 	//平台审核员审核好望角用户收款凭证，没有问题则发送待办至海外用户进行海外账户2次打款
 	public static final Integer TASK_TYPE_SECOND_HWUSERPAY = 44; 
-	public static final String TASK_REMARK_SECOND_HWUSERPAY = "请进行海外账户第2次转账";
+	public static final String TASK_REMARK_SECOND_HWUSERPAY = "请进行海外账户第二次打款";
 	//海外用户第二次打款完成并上传打款凭证，发送待办至平台操作员进行凭证核实
 	public static final Integer TASK_TYPE_SECOND_HWUSERPAY_CONFIRM = 45; 
-	public static final String TASK_REMARK_SECOND_HWUSERPAY_CONFIRM = "海外用户已给华创用户海外账户2次打款完毕，请核验打款凭证信息";
+	public static final String TASK_REMARK_SECOND_HWUSERPAY_CONFIRM = "海外用户已给华创用户海外账户二次打款完毕，请核验打款凭证信息";
 	//平台操作员核验海外用户2次打款凭证，存在问题，则驳回
 	public static final Integer TASK_TYPE_SECOND_HWUSERPAY_REJECT = 46; 
-	public static final String TASK_REMARK_SECOND_HWUSERPAY_REJECT = "海外用户2次打款凭证有误，请核实";
+	public static final String TASK_REMARK_SECOND_HWUSERPAY_REJECT = "海外用户二次打款凭证有误，请核实";
 	//平台操作员核验海外用户2次打款凭证，没有问题，则发送待办至平台审核员进行复核
 	//如果有问题则直接驳回至海外用户 注意：类型及信息同46
 	public static final Integer TASK_TYPE_SECOND_HWUSERPAY_RECHECK = 47; 
-	public static final String TASK_REMARK_SECOND_HWUSERPAY_RECHECK = "海外用户已给华创用户海外账户2次打款完毕，请复核打款凭证信息";
+	public static final String TASK_REMARK_SECOND_HWUSERPAY_RECHECK = "海外用户已给华创用户海外账户二次打款完毕，请复核打款凭证信息";
 	//平台审核员复核海外用户2次打款凭证，没有问题，则发送待办至华创操作员进行2次收款确认
 	public static final Integer TASK_TYPE_SECOND_HCRECEIPT = 48; 
-	public static final String TASK_REMARK_SECOND_HCRECEIPT = "海外用户xxx已进行了2次海外账户打款，请确认收款";
+	public static final String TASK_REMARK_SECOND_HCRECEIPT = "已完成海外账户的二次打款，请确认收款";
 	//华创操作员确认海外账户2次打款，并上传收款凭证，发送待办至平台操作员进行收款凭证核实
 	public static final Integer TASK_TYPE_SECOND_HCRECEIPT_CONFIRM = 49; 
-	public static final String TASK_REMARK_SECOND_HCRECEIPT_CONFIRM = "华创用户xxx的海外账户已收到第2次来款，已上传收款凭证，请核验";
+	public static final String TASK_REMARK_SECOND_HCRECEIPT_CONFIRM = "华创用户海外账户已确认二次来款，请核验";
 	//平台操作员核验华创2次收款凭证，存在问题则驳回
 	public static final Integer TASK_TYPE_SECOND_HCRECEIPT_REJECT = 50; 
-	public static final String TASK_REMARK_SECOND_HCRECEIPT_REJECT = "华创用户xxx的海外2次收款凭证有误，请核实";
+	public static final String TASK_REMARK_SECOND_HCRECEIPT_REJECT = "您上传的海外账户二次收款凭证有误，请核实";
 	//平台操作员核验华创2次收款凭证，没有问题则发送待办至平台审核员进行复核
 	//复核有问题则直接驳回至华创操作员 注意：类型及信息同50
 	public static final Integer TASK_TYPE_SECOND_HCRECEIPT_RECHECK = 51; 
-	public static final String TASK_REMARK_SECOND_HCRECEIPT_RECHECK = "华创用户xxx的海外账户已收到第2次来款，已上传收款凭证，请复核";
+	public static final String TASK_REMARK_SECOND_HCRECEIPT_RECHECK = "华创用户海外账户已确认二次来款，请复核";
 	//平台审核员核验华创2次收款凭证，没有问题，则点击订单完成，并修改相应状态
 	
 	/**

@@ -271,7 +271,14 @@
 .searchBox .searchbar{width:100%;  border:0;}
 .searchBox .searchbar .input-txt{width:130px;border: 1px solid #d2d2d2;
     border-radius: 4px; float:left; margin-left:10px;}
-.tcbox .searchBox{ padding-left:0; padding-bottom:10px;}
+.tcbox .searchBox{ padding-left:0; padding-bottom:15px;}
 .tcbox .searchBox .searchbar .input-txt{width:105px;}
-.select-txt{width:120px; height:30px;margin-left:5px;border:1px solid #d2d2d2}
 
+.xzzh_table{}
+.xzzh_table th{ background-color:#009ce5; line-height:30px; text-align:center; color:#fff; font-size:12px;}
+.xzzh_table td{border-bottom:1px dotted #ccc; text-align:center; line-height:30px; font-size:12px;}
+.xzzh_tc .xzzh_table th label{ color:#fff;}
+.xzzh_tc{width:650px; padding:20px;}
+.xzzh_tc .tcbox{padding:20px 10px;}
+
+.select-txt{width:120px; height:30px;margin-left:5px;border:1px solid #d2d2d2}

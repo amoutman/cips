@@ -44,4 +44,6 @@ public interface TaskService {
 	 * 保存待办
 	 */
 	public void saveNewTask(Task newTask) throws Exception;
+	
+	public void hcFirstPayConfirm(OrderDetails hcAccT3, OrderDetails hcAccT4, OrderOperate orderOperate, Task curTask, Task newTask) throws Exception;
 }
