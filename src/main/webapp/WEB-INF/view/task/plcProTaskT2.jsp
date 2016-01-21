@@ -75,7 +75,7 @@
                </div>
                </div>
                <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
-               <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${taskId}');">确认</a> 
+               <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${task.id}');">确认</a> 
                <a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnOrage btnck">驳回</a></div>
                <!--弹窗start-->
                <div class="tcDiv back_tc" style="width:260px;">
@@ -85,7 +85,7 @@
 	                  <ul class="s-form" style="padding-top:20px;">
 	                   <li><textarea name="textarea" id="remark" class="area" onkeyup="this.value = this.value.substring(0, 30)"></textarea> </li>
 	                  </ul>
-	                 <a href="javascript:void(0)" class="btnOrage" onclick="taskRejected('${taskId}')">提交</a>
+	                 <a href="javascript:void(0)" class="btnOrage" onclick="taskRejected('${task.id}')">提交</a>
 	                </div>
 	           	</div>
 	            <!--弹窗end-->
@@ -101,6 +101,7 @@
 </body>
 <script type="text/javascript">
 function taskConfirm(taskId){
+	
 	$.post(
 			"task/plcProTaskConfirm",
 			{

@@ -86,6 +86,7 @@ public class TaskController {
 			
 			mv.addObject("pager", pager);
 			mv.addObject("tasks", tasks);
+			mv.addObject("size", tasks.size());
 			mv.setViewName("task/proTaskMage");
 			return mv;
 		} catch (Exception e) {
