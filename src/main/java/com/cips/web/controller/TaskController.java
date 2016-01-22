@@ -310,7 +310,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 9:
 				//海外用户账户信息
@@ -319,11 +319,13 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 10:
 				//海外用户账户信息
@@ -332,11 +334,13 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息 并重新上传收款凭证
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 11:
 				//海外用户账户信息
@@ -345,11 +349,13 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 12:
 				//查询华创国内账户信息 上传打款凭证
@@ -361,7 +367,7 @@ public class TaskController {
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 13:
 				//查询华创国内账户信息
@@ -371,11 +377,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 14:
 				//查询华创国内账户信息
@@ -385,11 +393,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 15:
 				//查询华创国内账户信息
@@ -399,11 +409,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 16:
 				//查询华创国内账户信息 上传收款凭证
@@ -416,7 +428,7 @@ public class TaskController {
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 17:
 				//查询华创国内账户信息
@@ -426,11 +438,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 18:
 				//查询华创国内账户信息 可重新上传收款凭证
@@ -440,11 +454,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 19:
 				//查询华创国内账户信息
@@ -454,11 +470,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 20:
 				//海外用户账户信息 上传打款凭证
@@ -470,7 +488,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 21:
 				//海外用户账户信息 
@@ -480,11 +498,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 22:
 				//海外用户账户信息 可重新上传打款凭证 
@@ -494,11 +514,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 23:
 				//海外用户账户信息 
@@ -508,11 +530,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 24:
 				//海外用户账户信息 上传收款凭证
@@ -524,7 +548,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 25:
 				//海外用户账户信息
@@ -534,11 +558,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 26:
 				//海外用户账户信息 可重新上传收款凭证
@@ -548,11 +574,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 27:
 				//海外用户账户信息
@@ -562,11 +590,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 28:
 				//查询华创海外账户 上传海外用户第一次打款凭证
@@ -578,7 +608,7 @@ public class TaskController {
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 29:
 				//查询华创海外账户 
@@ -588,11 +618,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 30:
 				//查询华创海外账户 可重新上传海外用户第一次打款凭证
@@ -602,11 +634,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 31:
 				//查询华创海外账户 
@@ -616,11 +650,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 32:
 				//查询华创海外账户 上传收款凭证
@@ -632,7 +668,7 @@ public class TaskController {
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 33:
 				//查询华创海外账户 
@@ -642,11 +678,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 34:
 				//查询华创海外账户 可重新上传收款凭证
@@ -656,11 +694,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 35:
 				//查询华创海外账户
@@ -670,11 +710,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 36:
 				//查询hwj海外账户信息 上传打款凭证
@@ -686,7 +728,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 37:
 				//查询hwj海外账户信息
@@ -696,11 +738,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 38:
 				//查询hwj海外账户信息 可重新上传凭证
@@ -710,11 +754,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 39:
 				//查询hwj海外账户信息
@@ -724,11 +770,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 40:
 				//查询hwj海外账户信息 上传收款凭证
@@ -740,7 +788,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 41:
 				//查询hwj海外账户信息
@@ -750,11 +798,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 42:
 				//查询hwj海外账户信息 可重新上传收款凭证
@@ -764,11 +814,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 43:
 				//查询hwj海外账户信息
@@ -778,11 +830,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getPayAmount());
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 44:
 				//查询华创海外账户 上传打款凭证
@@ -794,7 +848,7 @@ public class TaskController {
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 45:
 				//查询华创海外账户 
@@ -804,11 +858,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 46:
 				//查询华创海外账户 可重新上传打款凭证
@@ -818,11 +874,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 47:
 				//查询华创海外账户 
@@ -832,11 +890,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 48:
 				//查询华创海外账户  上传收款凭证
@@ -848,7 +908,7 @@ public class TaskController {
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 49:
 				//查询华创海外账户
@@ -858,11 +918,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 50:
 				//查询华创海外账户 可重新上传收款凭证
@@ -872,11 +934,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 51:
 				//查询华创海外账户
@@ -886,11 +950,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 52:
 				//查询海外用户账户信息 上传打款凭证
@@ -902,7 +968,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 53:
 				//查询海外用户账户信息 上传打款凭证
@@ -912,11 +978,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 54:
 				//查询海外用户账户信息 可重新上传打款凭证
@@ -926,11 +994,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 55:
 				//查询海外用户账户信息 
@@ -940,11 +1010,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 56:
 				//查询海外用户账户信息 上传收款凭证
@@ -956,7 +1028,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 57:
 				//查询海外用户账户信息
@@ -966,11 +1038,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 58:
 				//查询海外用户账户信息 可重新上传凭证
@@ -980,11 +1054,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 59:
 				//查询海外用户账户信息
@@ -994,11 +1070,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 60:
 				//查询海外账户信息 上传打款凭证
@@ -1010,7 +1088,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 61:
 				//查询海外账户信息
@@ -1020,11 +1098,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 62:
 				//查询海外账户信息 可重新上传打款凭证
@@ -1034,11 +1114,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 63:
 				//查询海外账户信息
@@ -1048,11 +1130,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 64:
 				//查询海外账户信息 上传收款凭证
@@ -1064,7 +1148,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskUpload");
 				break;
 			case 65:
 				//查询海外账户信息
@@ -1074,11 +1158,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 66:
 				//查询海外账户信息 可重新上传收款凭证
@@ -1090,7 +1176,7 @@ public class TaskController {
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/proTaskReUpload");
 				break;
 			case 67:
 				//查询海外账户信息
@@ -1100,11 +1186,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			}
 			
