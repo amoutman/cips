@@ -29,7 +29,7 @@
          <div class="xlineb w430">
             <div class="searchbar">
               <form action="user/toPageUserManage" id="searchUserForm" method="post">
-              	<input type="text" name="userInfo" id="userInfo" class="input-txt"  placeholder="请输入用户名/电话/身份证/邮箱"/>
+              	<input type="text" name="userInfo" id="userInfo" class="input-txt"  placeholder="请输入用户名/电话/身份证/邮箱" value="${userInfo }"/>
               	<input type="hidden" name="currentPage" id="currentPage"/>
               </form>
                <a href="javascript:void(0);" onClick="searchUser()" class="btnSearch">search</a>

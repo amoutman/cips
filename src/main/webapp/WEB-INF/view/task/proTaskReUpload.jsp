@@ -55,6 +55,13 @@
                </div>
                </c:if>
                <div class="wtbox mt10">
+                 <div id="ImgPr" class="imgShow clearFix">
+                 <c:forEach var="oc" items="${ocList}">
+                 	<a href="javascript:void(0)" onClick="downloadCert(${oc.CertPic })"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.CertPic }" width="100" height="100" /></a>
+                 </c:forEach>
+                 </div>
+               </div>
+               <div class="wtbox mt10">
                  <ul>
                     <li>
                     	<input type="hidden" id="taskId" value="${task.id }"/>
@@ -98,7 +105,7 @@ $(document).ready(function(){
 	});
 	
 	$("#comfirmBtn").click(function(){
-		$("#uploadimg").uploadify("settings", "formData", {'taskId':$("#taskId").val()}); 
+		$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
 		$("#uploadimg").uploadify('upload','*');
 	})
 	
@@ -107,6 +114,20 @@ $(document).ready(function(){
 	})
 
 });
-
+function downloadCert(path){
+	$.post(
+			"task/toDownLoad",
+			{
+				fileName:path
+			},
+			function(data){
+				if (data.msg != "1") {
+					// 失败了
+					alert(data.msg);
+				}
+			},
+			"json"	
+	);
+}
 </script>
 </html>

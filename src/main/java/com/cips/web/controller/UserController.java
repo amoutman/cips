@@ -136,6 +136,7 @@ public class UserController {
 
 		if(!StringUtils.isEmpty(userInfo)){
 			map.put("userInfo", userInfo);
+			mv.addObject("userInfo", userInfo);
 		}
 		map.put(GlobalPara.PAGER_SESSION, pager);
 		List<User> userList = userService.getUserList(map);
@@ -469,9 +470,9 @@ public class UserController {
 	
 	@RequestMapping(value="/uploadUserImg",method=RequestMethod.POST)
 	@ResponseBody
-	public String uploadUserImg(HttpServletRequest request,HttpServletResponse response){
+	public String uploadUserImg(HttpServletRequest request,HttpServletResponse response,String taskId){
 		String responseStr = "";
-
+		System.out.println("--------------------------------"+taskId);
 		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
 		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
 		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"uploadImgFiles";
@@ -502,11 +503,6 @@ public class UserController {
 		}
 		
 		return responseStr;
-	}
-	
-	@RequestMapping("/upload")
-	public void upload(){
-		System.out.println("--------------------------------------------------------");
 	}
 	
 	private List<Menu> getMenuListByRoleId(String[] roleId){

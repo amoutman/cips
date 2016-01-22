@@ -32,4 +32,6 @@ public class GlobalPara {
 	public static final String RNAME_CN_OTHER_CUSTOMER = "国内其他客户";
 	
 	public static final String PAGER_SESSION = "pager";
+	
+	public static final String CERT_FILE_URL = "uploadImgFiles";
 }

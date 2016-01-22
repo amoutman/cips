@@ -48,6 +48,7 @@ import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
 import com.cips.service.UserService;
+import com.cips.util.DownloadUtil;
 import com.cips.util.PKIDUtils;
 
 @Controller
@@ -153,6 +154,8 @@ public class TaskController {
 			OrderDetails hcAccT3 = null;
 			OrderDetails hcAccT4 = null;
 			Map<String,Object> paramMap =  null;
+			//凭证信息
+			List<OrderCert> ocList = null;
 			switch (task.getTaskType()) {
 			case 1:
 				//获取海外账户信息
@@ -226,7 +229,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
-			
+				ocList = orderCertService.getOrderCertList(paramMap);
+	
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -238,6 +242,7 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
+				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcAccT3", hcAccT3);
 				mv.addObject("hcAccT4", hcAccT4);
@@ -252,7 +257,7 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
-				
+				ocList = orderCertService.getOrderCertList(paramMap);
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -264,6 +269,7 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
+				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcAccT3", hcAccT3);
 				mv.addObject("hcAccT4", hcAccT4);
@@ -278,7 +284,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
-				
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -1281,6 +1288,7 @@ public class TaskController {
 	@RequestMapping(value = "/uploadConfirm")
 	public Map<String, Object> uploadConfirm(HttpServletRequest request, String taskId) {
 		Map<String,Object> map = new HashMap<String,Object>();
+	
 		boolean isUpLoad = true;
 		try {
 			isUpLoad = uploadImg(request,taskId);
@@ -2157,6 +2165,27 @@ public class TaskController {
 		}
 	}
 	
+	@RequestMapping(value="/toDownload",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> toDownLoad(HttpServletRequest request,HttpServletResponse response,String fileName) throws Exception{
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		DownloadUtil util = new DownloadUtil();
+		try {
+			request.setCharacterEncoding("utf-8");
+			String path = request.getSession().getServletContext().getRealPath("/")+GlobalPara.CERT_FILE_URL;
+			String filePath = path + "/" + fileName;
+			util.download(filePath, fileName, response);
+			resultMap.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+		} catch (Exception e) {
+			// TODO: handle exception
+			resultMap.put(GlobalPara.AJAX_KEY, "下载凭证异常，请重试！");
+		}
+		
+		return resultMap;
+		
+	}
+	
 	private boolean uploadImg(HttpServletRequest request,String taskId) throws Exception{
 		boolean isUpload = true;
 		//获取客户用户名userId
@@ -2166,7 +2195,7 @@ public class TaskController {
 		
 		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
 		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
-		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"uploadImgFiles";
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+GlobalPara.CERT_FILE_URL;
 		
 		//查询订单信息
 		Order order = orderService.getOrderById(curTask.getOrderId());

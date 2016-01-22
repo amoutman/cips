@@ -16,21 +16,7 @@
 
 <body>
 <!--header start-->
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--header end-->
 
 <!--主题内容 start-->
@@ -73,6 +59,13 @@
 	                     <div class="w235"><label>开户行：</label> <span>${hwUserAcc.accountBank}</span> </div>
 	                 </div>
                </div>
+               </div>
+               <div class="wtbox mt10">
+                 <div id="ImgPr" class="imgShow clearFix">
+                 <c:forEach var="oc" items="${ocList}">
+                 	<a href="javascript:void(0)" onClick="downloadCert(${oc.CertPic })"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.CertPic }" width="100" height="100" /></a>
+                 </c:forEach>
+                 </div>
                </div>
                <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
                <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${task.id}');">确认</a> 
@@ -133,6 +126,22 @@ function taskRejected(taskId){
 					//访问待办
 					window.location.href = "task/toPageTaskMage";
 				} else {
+					// 失败了
+					alert(data.msg);
+				}
+			},
+			"json"	
+	);
+}
+
+function downloadCert(path){
+	$.post(
+			"task/toDownLoad",
+			{
+				fileName:path
+			},
+			function(data){
+				if (data.msg != "1") {
 					// 失败了
 					alert(data.msg);
 				}

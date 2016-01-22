@@ -53,14 +53,14 @@
            <div class="role-name">角色名称：${role.roleName }</div>
            <div class="role-date">创建时间：<fmt:formatDate value="${role.createdDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></div>
            <div class="role-deal">
-              <div class="ck-deal"><a onclick="deleteRole(${role.id })" href="javascript:vote(0)" id="btnDelete" class="btnOrage btnck">修改</a> <a href="" class="btnGrey">删除</a></div>
+              <div class="ck-deal"><a href="javascript:vote(0)" id="btnDelete" class="btnOrage btnck">修改</a> <a onclick="deleteRole(${role.id })" href="javascript:void(0)" class="btnGrey">删除</a></div>
              <!--弹窗start-->
              <div class="tcDiv">
                <span class="close"></span>
                <h2>修改角色</h2>
                <div class="tcbox">
-               		<input type="hidden" name="roleId" id="roleId" value="${role.id }">
-                    <input type="text" name="roleName" id="roleName" class="input-txt"  placeholder="角色名称"/> <a href="javascript:void(0)" onclick="updateRole(this)" id="btnUpdate" class="btnOrage">确认修改</a>
+               		<input type="text" name="roleId" id="roleId" value="${role.id }">
+                    <input type="text" name="roleName" id="roleName" class="input-txt"  placeholder="角色名称" value="${role.roleName }"/> <a href="javascript:void(0)" onclick="updateRole(this)" id="btnUpdate" class="btnOrage">确认修改</a>
                </div>
                
              </div>
@@ -70,15 +70,13 @@
          </c:forEach>
        </ul>
      </div>
-     <!-- 上传图片测试 -->
+     <!-- 上传图片测试
      <div class="wtbox mt10">
      <input type="file" name="uploadimg" id="uploadimg"/>
                  <ul>
                     <li>
-                    	
-                    	<!--a href="javascript:void(0);"  class="btnUpload">上传</a>  -->
-                    	<a href="javascript:$('#uploadimg').uploadify('upload')" class="btnUpload">上传</a>&nbsp;&nbsp;
-                    	<a href="javascript:$('#uploadimg').uploadify('cancel')" class="btnUpload">取消</a>&nbsp;&nbsp;
+                    	<input type="hidden" id="taskId" value="1001001001"/>
+                    	<a href="javascript:void(0);" onClick="upload()"  class="btnUpload">上传图片</a>  
                     	<a href="javascript:$('#uploadimg').uploadify('upload','*')" class="btnUpload">上传所有文件</a>&nbsp;&nbsp;
                     	<a href="javascript:$('#uploadimg').uploadify('cancel','*')" class="btnUpload">取消上传所有文件</a>
                     </li>
@@ -118,27 +116,80 @@ $(document).ready(function(){
 
 });
 
+function upload(){
+	$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
+	$("#uploadimg").uploadify('upload','*');
+}
+
 function addRole(){
 	
 	var roleName = $("#newRoleName").val();
 	if(roleName == ""){
 		alert("角色名称不能为空");
+	}else{
+		$.post(
+				"user/insertRole",
+				{
+					roleName:roleName
+				},
+				function(data){
+					if(data['success']){
+						alert("添加成功");
+						window.location.href="toRoleManage";
+					}else{
+						alert("添加失败");
+					}
+				},
+				"json"
+		);
 	}
-	$.post(
-		"user/insertRole",
-		{
-			roleName:roleName
-		},
-		function(data){
-			if(data['success']){
-				alert("添加成功");
-				window.location.href="user/toRoleManage";
-			}else{
-				alert("添加失败");
-			}
-		},
-		"json"
-	);
+	
+}
+
+function updateRole(obj){
+	var roleId = $(obj).parents(".tcbox").find("#roleId").val();
+	var roleName = $(obj).parents(".tcbox").find("#roleName").val();
+
+	if(roleName == ""){
+		alert("角色名称不能为空");
+	}else{
+		$.post(
+				"user/updateRole",
+				{
+					roleId:roleId,
+					roleName:roleName
+				},
+				function(data){
+					if(data['success']){
+						alert("修改成功");
+						window.location.href="toRoleManage";
+					}else{
+						alert("修改失败");
+					}
+				},
+				"json"
+		);
+	}
+}
+
+function deleteRole(id){
+	if(confirm("是否删除该角色")){
+		$.post(
+				"user/deleteRole",
+				{
+					roleId:id
+				},
+				function(data){
+					if(data['success']){
+						alert("删除成功");
+						window.location.href="toRoleManage";
+					}else{
+						alert("删除失败");
+					}
+				},
+				"json"
+		);
+	}
 }
 </script>
 </html>
