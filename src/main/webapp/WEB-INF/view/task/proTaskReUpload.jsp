@@ -37,9 +37,9 @@
                  <div class="clearFix">
                  <div class="wt-t btp0">收款人账户信息</div>
                  <div class="clearFix">
-                     <div class="w235"><label>收款人姓名：</label> <span>${hwUserAcc.accountName}</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>${hwUserAcc.accountCode}</span> </div>
-                     <div class="w235"><label>开户行：</label> <span>${hwUserAcc.accountBank}</span> </div>
+                     <div class="w235"><label>收款人姓名：</label> <span>${accInfo.accountName}</span> </div>
+                     <div class="w235"><label>收款人账号：</label> <span>${accInfo.accountCode}</span> </div>
+                     <div class="w235"><label>开户行：</label> <span>${accInfo.accountBank}</span> </div>
                      <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${payMoney}</span> </div>
                  </div>
                  </div>
