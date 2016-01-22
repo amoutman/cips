@@ -86,11 +86,30 @@
                          <th>收款人账号</th>
                          <th>开户行</th>
                        </tr>
-
+                       <tr>
+                       	 <td>国内账户</td>
+                       	 <td>${hcT3.accountName }</td>
+                       	 <td>${hcT3.accountCode }</td>
+                       	 <td>${hcT3.accountBank }</td>
+                       </tr>
+                       <tr>
+                       	 <td>海外账户</td>
+                       	 <td>${hcT4.accountName }</td>
+                       	 <td>${hcT4.accountCode }</td>
+                       	 <td>${hcT4.accountBank }</td>
+                       </tr>
+					   
                     </table>
                  </div>
                  </div>
 			   </div>
+			   <div class="wtbox mt10">
+                 <div id="ImgPr" class="imgShow clearFix">
+                 <c:forEach var="oc" items="${ocList}">
+                 	<a href="javascript:void(0)" onClick="downloadCert(${oc.CertPic })"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.CertPic }" width="100" height="100" /></a>
+                 </c:forEach>
+                 </div>
+               </div>
 			   <h2>上传凭证信息</h2>
 			   <div class="wtbox mt10">
                  <ul>
