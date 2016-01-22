@@ -109,7 +109,7 @@ $(document).ready(function(){
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
-		'onUploadSeccess':function(file,data,response){
+		'onUploadSuccess':function(file,data,response){
 			alert(file.name + "上传成功");
 		}
 	});
