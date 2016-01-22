@@ -3,7 +3,6 @@ package com.cips.web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,18 +11,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.cfg.PkDrivenByDefaultMapsIdSecondPass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.util.FileCopyUtils;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -206,19 +202,16 @@ public class TaskController {
 				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 4:
-				//操作员选择的海外用户 上传打款凭证
+				//获取海外用户账户信息 华创上传打款凭证
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000))+"￥");
 				mv.addObject("task", task);
-				//华创维护国内国外账户
-				mv.addObject("hcAccT3", new OrderDetails());
-				mv.addObject("hcAccT4", new OrderDetails());
-				mv.setViewName("task/");
+				mv.setViewName("task/hcFirstPayTask");
 				break;
 			case 5:
 				//海外用户账户信息
@@ -1205,74 +1198,52 @@ public class TaskController {
 		}
 	}
 	
-	//华创第一次付款 需要维护其此订单的国内国外账户
+	//华创第一次付款需要维护其此订单的国内国外账户
 	@ResponseBody
-	@RequestMapping(value = "/hcFirstPayConfirm")
-	public Map<String, Object> hcFirstPayConfirm(HttpServletRequest request, String taskId, @ModelAttribute("hcAccT3")OrderDetails hcAccT3, @ModelAttribute("hcAccT4")OrderDetails hcAccT4){
+	@RequestMapping(value = "/hcAddAccInfo")
+	public Map<String, Object> hcAddAccountInfo(HttpServletRequest request, String taskId, OrderDetails orderDetails){
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			//获取客户用户名userId
-			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-			
 			//获取当前待办
 			Task curTask = taskService.getTaskById(taskId);
-			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
-			curTask.setEndTime(new Date());
+			//根据类型获取OrderDetails
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put("orderId", curTask.getOrderId());
+			params.put("type", orderDetails.getType());
+			OrderDetails curDetailsByType = orderService.getOrderDetailsByParams(params);
 			
-			//生成新的待办任务至平台操作员
-			Task newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CONFIRM_FIRST_HCPAY);
-			newTask.setOrderStatus(curTask.getOrderStatus());
-			
-			Map<String,Object> paramMap = null;
-			switch (curTask.getTaskType()) {
-			case 6:
-				paramMap =  new HashMap<String,Object>();
-				paramMap.put("orderId", curTask.getOrderId());
-				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
-				OrderDetails curHcAccT3 = orderService.getOrderDetailsByParams(paramMap);
-				curHcAccT3.setAccountBank(hcAccT3.getAccountBank());
-				curHcAccT3.setAccountName(hcAccT3.getAccountName());
-				curHcAccT3.setAccountCode(hcAccT3.getAccountCode());
+			if(curDetailsByType != null){
+				curDetailsByType.setAccountName(orderDetails.getAccountName());
+				curDetailsByType.setAccountCode(orderDetails.getAccountCode());
+				curDetailsByType.setAccountBank(orderDetails.getAccountBank());
 				
-				paramMap =  new HashMap<String,Object>();
-				paramMap.put("orderId", curTask.getOrderId());
-				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
-				OrderDetails curHcAccT4 = orderService.getOrderDetailsByParams(paramMap);
-				curHcAccT4.setAccountBank(hcAccT3.getAccountBank());
-				curHcAccT4.setAccountName(hcAccT3.getAccountName());
-				curHcAccT4.setAccountCode(hcAccT3.getAccountCode());
+				orderService.updateOrderDetails(curDetailsByType);
+			}else{
+				orderDetails.setId(PKIDUtils.getUuid());
+				orderDetails.setOrderId(curTask.getOrderId());
 				
-				break;
-			default:
-				hcAccT3.setId(PKIDUtils.getUuid());
-				hcAccT3.setOrderId(curTask.getOrderId());
-				hcAccT3.setTaskType(curTask.getTaskType());
-				hcAccT3.setType(BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
-				
-				hcAccT4.setId(PKIDUtils.getUuid());
-				hcAccT4.setOrderId(curTask.getOrderId());
-				hcAccT4.setTaskType(curTask.getTaskType());
-				hcAccT4.setType(BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
-				break;
+				orderService.insertOrderDetails(orderDetails);
 			}
-
-			//生成操作步骤
-			OrderOperate oOperate = new OrderOperate();
-			oOperate.setId(PKIDUtils.getUuid());
-			oOperate.setOrderId(curTask.getOrderId());
-			oOperate.setStatus(curTask.getOrderStatus());
-			oOperate.setOperatedId(user.getId());
-			oOperate.setOpEndTime(new Date());
-			oOperate.setOpSequence(curTask.getTaskType());
-			oOperate.setTaskId(curTask.getId());
 			
-			taskService.hcFirstPayConfirm(hcAccT3, hcAccT4, oOperate, curTask, newTask);
+			//查询账户信息
+			params = new HashMap<String,Object>();
+			params.put("orderId", curTask.getOrderId());
+			params.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+			OrderDetails hcT3 = orderService.getOrderDetailsByParams(params);
+			
+			params = new HashMap<String,Object>();
+			params.put("orderId", curTask.getOrderId());
+			params.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+			OrderDetails hcT4 = orderService.getOrderDetailsByParams(params);
+			
+			map.put("hcT3", hcT3);
+			map.put("hcT4", hcT4);
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
 			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
+			map.put(GlobalPara.AJAX_KEY, "保存账户信息异常，请重试！");
 			return map;
 		}
 	}
@@ -2133,24 +2104,30 @@ public class TaskController {
 			Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-			//根据userId查询该用户所属角色
-			List<Role> roles = roleService.getRoleListByUserId(user.getId());
-			List<String> roleIds = new ArrayList<String>();
-			for (Role role : roles) {
-				roleIds.add(role.getId());
-			}
-			//根据用户角色查询该角色所有未处理任务
+			
+			
 			Map<String,Object> params = new HashMap<String,Object>();
 			params.put(GlobalPara.PAGER_SESSION, pager);
 	        params.put("status", BusConstants.TASK_STATUS_PROCESSED);
-	        params.put("userId", user.getId());
-	        params.put("roleIds", roleIds);
+	        params.put("operatedId", user.getId());
+	        
+	        if(StringUtils.isNotBlank(task.getOrderNo())){
+	        	params.put("orderNo", task.getOrderNo());
+	        }
+	        if(StringUtils.isNotBlank(task.getProTaskBTime())){
+	        	params.put("beginTime", task.getProTaskBTime());
+	        }
+	        if(StringUtils.isNotBlank(task.getProTaskETime())){
+	        	params.put("endTime", task.getProTaskETime());
+	        }
+	        
 	        
 			List<Task> tasks = taskService.getTaskListByParams(params);
 			
+			mv.addObject("task", task);
 			mv.addObject("pager", pager);
 			mv.addObject("tasks", tasks);
-			mv.setViewName("task/proTaskMage");
+			mv.setViewName("task/toPageTaskProed");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();

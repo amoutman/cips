@@ -157,7 +157,7 @@
 
 .tcDiv{width:525px;  padding:10px 35px 30px; background-color:#f6f6f6;border:1px solid #dcdcdc;  display:none; position:absolute;z-index:9999;}
 .tcDiv h2{ line-height:44px; color:#009ce5; text-align:left;}
-.tcDiv .close{ display:block;width:30px; height:30px; background-position:-1px -749px; float:right; cursor:pointer;}
+.tcDiv .close{ display:block;width:30px; height:30px; background-position:-1px -749px; float:right; cursor:pointer; position:absolute;right:10px; top:10px; }
 .tcbox{border:1px solid #dcdcdc;background-color:#fff; padding:20px 15px 20px 35px; text-align:left;}
 .tcbox .w235{ float:left; height:35px; line-height:35px;}
 .tcbox label{ display:inline-block; color:#666;}

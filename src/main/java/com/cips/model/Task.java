@@ -26,8 +26,28 @@ public class Task {
 	private String msg;
 	
 	private String orderNo;
+	
+	private String proTaskBTime;
+	
+	private String proTaskETime;
 
-    public String getId() {
+    public String getProTaskBTime() {
+		return proTaskBTime;
+	}
+
+	public void setProTaskBTime(String proTaskBTime) {
+		this.proTaskBTime = proTaskBTime;
+	}
+
+	public String getProTaskETime() {
+		return proTaskETime;
+	}
+
+	public void setProTaskETime(String proTaskETime) {
+		this.proTaskETime = proTaskETime;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -18,6 +18,8 @@ public interface OrderService {
 	public void saveOrderOperate(OrderOperate operate) throws Exception;
 	
 	public OrderDetails getOrderDetailsByParams(Map<String,Object> paramMap);
+	public void updateOrderDetails(OrderDetails orderDetails);
+	public void insertOrderDetails(OrderDetails orderDetails);
 	public Order getOrderByOrderNo(String orderNo) throws Exception;
 	public OrderDetails getOrderDetailsById(String orderDetailsId);
 	
