@@ -46,7 +46,7 @@ public class BusConstants {
 	public static final String TASK_REMARK_HWUSERINFO_REJECT = "海外用户收款账户信息有误，请核实";
 	//订单海外用户信息已由审核员复审后发送待办至华创操作员进行打款
 	public static final Integer TASK_TYPE_FIRST_HCPAY = 4; 
-	public static final String TASK_REMARK_FIRST_HCPAY = "请为该订单进行人民币支付";
+	public static final String TASK_REMARK_FIRST_HCPAY = "请为该订单进行人民币支付，并维护账户信息";
 	//打款完成后发送待办至平台操作员进行第一次打款确认
 	public static final Integer TASK_TYPE_CONFIRM_FIRST_HCPAY = 5; 
 	public static final String TASK_REMARK_CONFIRM_FIRST_HCPAY = "请确认华创用户第1次打款信息";

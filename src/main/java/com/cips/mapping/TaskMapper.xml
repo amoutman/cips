@@ -170,7 +170,19 @@
  	<if test="userId != null">
       	and (t.operated_id = #{userId,jdbcType=CHAR} or t.operated_id IS NULL)
     </if>
-    order by t.end_time,t.begin_time
+    <if test="operatedId != null">
+    	and t.operated_id = #{operatedId,jdbcType=CHAR}
+    </if>
+    <if test="orderNo != null">
+    	and o.order_no = #{orderNo,jdbcType=CHAR}
+    </if>
+    <if test="beginTime != null">
+    	and str_to_date(t.end_time,'%Y-%m-%d') &gt;= str_to_date(#{beginTime},'%Y-%m-%d')
+    </if>
+    <if test="endTime != null">
+    	and str_to_date(t.end_time,'%Y-%m-%d') &lt;= str_to_date(#{endTime},'%Y-%m-%d')
+    </if>
+    order by t.operated_id, t.end_time, t.begin_time
    </select>
    <select id="getTaskByParams" parameterType="Map" resultType="com.cips.model.Task">
 	select

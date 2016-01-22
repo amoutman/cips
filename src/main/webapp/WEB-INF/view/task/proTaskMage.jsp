@@ -30,6 +30,8 @@
      </div>
      <div class="content">
        <ul class="waitevent">
+       <c:if test="${size <= 0}"><h2>当前没有待办任务</h2></c:if>
+       <c:if test="${size > 0}">
        	 <c:forEach items="${tasks}" var="task">
 	         <li>
 	           <div class="wt-lf"><span class="wt-border"></span></div>
@@ -38,6 +40,7 @@
 	           <div class="wt-deal"><a href="javascript:void(0);" class="btnBlue"  onclick="processingTask('${task.id}')">处理</a></div>
 	         </li>
          </c:forEach>
+       </c:if>
        </ul>
        <!-- 分页 -->
        <jsp:include page="../header/pager.jsp"></jsp:include>

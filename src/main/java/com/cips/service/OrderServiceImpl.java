@@ -99,4 +99,14 @@ public class OrderServiceImpl implements OrderService {
 		return orderDetailsMapper.selectByPrimaryKey(orderDetailsId);
 	}
 
+	@Override
+	public void updateOrderDetails(OrderDetails orderDetails) {
+		orderDetailsMapper.updateByPrimaryKeySelective(orderDetails);		
+	}
+
+	@Override
+	public void insertOrderDetails(OrderDetails orderDetails) {
+		orderDetailsMapper.insertSelective(orderDetails);		
+	}
+
 }
