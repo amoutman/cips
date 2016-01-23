@@ -87,13 +87,13 @@
                          <th>开户行</th>
                        </tr>
                        <tr>
-                       	 <td>国内账户</td>
+                       	 <td>国内账户<input type='hidden' id='rmbAccount' value='1' /></td>
                        	 <td>${hcT3.accountName }</td>
                        	 <td>${hcT3.accountCode }</td>
                        	 <td>${hcT3.accountBank }</td>
                        </tr>
                        <tr>
-                       	 <td>海外账户</td>
+                       	 <td>海外账户<input type='hidden' id='hwAccount' value='2' /></td>
                        	 <td>${hcT4.accountName }</td>
                        	 <td>${hcT4.accountCode }</td>
                        	 <td>${hcT4.accountBank }</td>
