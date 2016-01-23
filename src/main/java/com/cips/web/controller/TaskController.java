@@ -240,11 +240,11 @@ public class TaskController {
 				
 				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("hcAccT3", hcAccT3);
-				mv.addObject("hcAccT4", hcAccT4);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 6:
 				//海外用户账户信息 
@@ -267,11 +267,11 @@ public class TaskController {
 				
 				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("hcAccT3", hcAccT3);
-				mv.addObject("hcAccT4", hcAccT4);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/hcReFirstPayTask");
 				break;
 			case 7:
 				//海外用户账户信息
@@ -298,7 +298,7 @@ public class TaskController {
 				mv.addObject("hcAccT4", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
-				mv.setViewName("task/");
+				mv.setViewName("task/plProTaskAudit");
 				break;
 			case 8:
 				//海外用户账户信息 上传收款凭证

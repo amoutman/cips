@@ -41,6 +41,35 @@
                  </div>
                  </div>
                </div>
+               <c:if test="task.taskType == 5 || task.taskType == 7">
+               <h2>华创账户信息</h2>
+               <div class="wtbox mt10">
+			   <div class="clearFix">
+                 <div class="clearFix">
+                    <table width="100%" class="dataTable zhtable" id="accTab">
+                       <tr>
+                         <th>账户类型</th>
+                         <th>收款人姓名</th>
+                         <th>收款人账号</th>
+                         <th>开户行</th>
+                       </tr>
+                       <tr>
+                       	 <td>国内账户</td>
+                       	 <td>${hcT3.accountName }</td>
+                       	 <td>${hcT3.accountCode }</td>
+                       	 <td>${hcT3.accountBank }</td>
+                       </tr>
+                       <tr>
+                       	 <td>海外账户</td>
+                       	 <td>${hcT4.accountName }</td>
+                       	 <td>${hcT4.accountCode }</td>
+                       	 <td>${hcT4.accountBank }</td>
+                       </tr>
+                    </table>
+                 </div>
+                 </div>
+			   </div>
+			   </c:if>
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">

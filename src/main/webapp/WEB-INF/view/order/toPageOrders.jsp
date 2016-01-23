@@ -40,7 +40,8 @@
             <th>订单号</th>
             <th>兑换金额</th>
             <th>支付金额</th>
-            <th>撮合进度</th>
+            <th>状态</th>
+            <th>中间人</th>
             <th>提交人</th>
             <th>时间</th>
             <th class="w120">操作</th>
@@ -52,48 +53,12 @@
             <td>1234567890000</td>
             <td><span class="colorBlue">$200,000,000</span></td>
             <td><span class="color_orange">$200,000,000</span></td>
-            <td>
-            <dl class="barbox">
-              <dd class="barline">
-                <div class="charts" style="width:50%;"></div>
-              </dd>
-              <dd>50%</dd>
-            </dl></td>
+            <td><span class="color_grey">已撮合</span></td>
+            <td>豆沙包</td>
             <td>豆沙包</td>
             <td>2015-01-12   AM:10:10:10</td>
-            <td class="t-cz">
-              <div class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)"  class="colorBlue btnck">查看</a> <a href="" class="color_888">删除</a></div>
-              <!--弹窗start-->
-             <div class="tcDiv">
-               <span class="close"></span>
-               <h2>订单信息</h2>
-               <div class="tcbox">
-                 <div class="clearFix">
-                     <div class="w235"><label>订  单  号：</label> <span>324356786576455</span> </div>
-                     <div class="w235"><label>提  交  人：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>提交时间：</label> <span>2015-01-01</span> </div>
-                     <div class="w235"><label>订单状态：</label> <span>已撮合</span> </div>
-                     <div class="w235"><label>撮合进度：</label> <span>60%</span> </div>
-                     <div class="w235"><label>支付金额：</label> <span class="color_orange font18">58000￥</span> </div>
-                     <div class="w235"><label>申请金额：</label> <span class="color_orange font18">58000￥</span> </div>
-                 </div>
-                 <div class="wt-t">海外账户信息</div>
-                 <div class="clearFix">
-                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行</label> <span>doushabao</span> </div>
-                 </div>
-               </div>
-                <h2>代收人信息</h2>
-               <div class="tcbox">
-                 <div class="clearFix">
-                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行</label> <span>doushabao</span> </div>
-                 </div>
-               </div>
-           </div>
-           <!--弹窗end-->
+            <td>
+             <a  href="订单查询详情.html"  class="colorBlue">查看</a> <a href="" class="color_888">删除</a>
             </td>
           </tr>
           <tr>
@@ -101,97 +66,12 @@
             <td>1234567890000</td>
             <td><span class="colorBlue">$200,000,000</span></td>
             <td><span class="color_orange">$200,000,000</span></td>
-            <td><dl class="barbox">
-              <dd class="barline">
-                <div class="charts" style="width:100%;"></div>
-              </dd>
-              <dd>100%</dd>
-            </dl></td>
+            <td><span class="color_orange">待办中</span></td>
+            <td>豆沙包</td>
             <td>豆沙包</td>
             <td>2015-01-12   AM:10:10:10</td>
-            <td class="t-cz">
-              <div class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)"  class="colorBlue btnck">查看</a> <a href="" class="color_888">删除</a></div>
-              <!--弹窗start-->
-             <div class="tcDiv">
-               <span class="close"></span>
-               <h2>订单信息</h2>
-               <div class="tcbox">
-                 <div class="clearFix">
-                     <div class="w235"><label>订  单  号：</label> <span>324356786576455</span> </div>
-                     <div class="w235"><label>提  交  人：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>提交时间：</label> <span>2015-01-01</span> </div>
-                     <div class="w235"><label>订单状态：</label> <span>已撮合</span> </div>
-                     <div class="w235"><label>撮合进度：</label> <span>60%</span> </div>
-                     <div class="w235"><label>支付金额：</label> <span class="color_orange font18">58000￥</span> </div>
-                     <div class="w235"><label>申请金额：</label> <span class="color_orange font18">58000￥</span> </div>
-                 </div>
-                 <div class="wt-t">海外账户信息</div>
-                 <div class="clearFix">
-                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行</label> <span>doushabao</span> </div>
-                 </div>
-               </div>
-                <h2>代收人信息</h2>
-               <div class="tcbox">
-                 <div class="clearFix">
-                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行</label> <span>doushabao</span> </div>
-                 </div>
-               </div>
-           </div>
-           <!--弹窗end-->
-            </td>
-          </tr>
-          <tr>
-            <td class="num">3</td>
-            <td>1234567890000</td>
-            <td><span class="colorBlue">$200,000,000</span></td>
-            <td><span class="color_orange">$200,000,000</span></td>
             <td>
-            <dl class="barbox">
-              <dd class="barline">
-                <div class="charts" style="width:30%;"></div>
-              </dd>
-              <dd>30%</dd>
-            </dl>
-            </td>
-            <td>豆沙包</td>
-            <td>2015-01-12   AM:10:10:10</td>
-            <td class="t-cz">
-              <div class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)"  class="colorBlue btnck">查看</a> <a href="" class="color_888">删除</a></div>
-              <!--弹窗start-->
-             <div class="tcDiv">
-               <span class="close"></span>
-               <h2>订单信息</h2>
-               <div class="tcbox">
-                 <div class="clearFix">
-                     <div class="w235"><label>订  单  号：</label> <span>324356786576455</span> </div>
-                     <div class="w235"><label>提  交  人：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>提交时间：</label> <span>2015-01-01</span> </div>
-                     <div class="w235"><label>订单状态：</label> <span>已撮合</span> </div>
-                     <div class="w235"><label>撮合进度：</label> <span>60%</span> </div>
-                     <div class="w235"><label>支付金额：</label> <span class="color_orange font18">58000￥</span> </div>
-                     <div class="w235"><label>申请金额：</label> <span class="color_orange font18">58000￥</span> </div>
-                 </div>
-                 <div class="wt-t">海外账户信息</div>
-                 <div class="clearFix">
-                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行</label> <span>doushabao</span> </div>
-                 </div>
-               </div>
-                <h2>代收人信息</h2>
-               <div class="tcbox">
-                 <div class="clearFix">
-                     <div class="w235"><label>收款人姓名： </label> <span>doushabao</span> </div>
-                     <div class="w235"><label>收款人账号：</label> <span>doushabao</span> </div>
-                     <div class="w235"><label>开户行</label> <span>doushabao</span> </div>
-                 </div>
-               </div>
-           </div>
-           <!--弹窗end-->
+              <a  href="订单查询详情.html"  class="colorBlue">查看</a> <a href="" class="color_888">删除</a>
             </td>
           </tr>
           </tbody>
