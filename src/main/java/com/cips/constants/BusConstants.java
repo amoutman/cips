@@ -5,10 +5,16 @@ package com.cips.constants;
  */
 public class BusConstants {
 
-	/**任务状态 0：未处理  1：已处理  2：处理中  3：已驳回*/
+	/**任务状态 0：未处理  1：已处理  2：处理中  3：已驳回  4:删除作废*/
 	public static final Integer TASK_STATUS_NOT_PROCESS = 0;
 	public static final Integer TASK_STATUS_PROCESSED = 1;
 	public static final Integer TASK_STATUS_PROCESSING = 2;
+	public static final Integer TASK_STATUS_REBACK = 3;
+	public static final Integer TASK_STATUS_DELETE = 3;
+	
+	/**taskService 同步方法  */
+	public static final Integer TASK_PRO_TYPE_PROCESSING = 1;
+	public static final Integer TASK_PRO_TYPE_DELETE = 2;
 	
 	/**订单状态 0：已提交  1：处理中  2：已完成  3:作废删除*/
 	public static final Integer ORDER_STATUS_COMMIT = 0;

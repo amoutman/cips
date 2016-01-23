@@ -60,18 +60,38 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public synchronized String processingTaskById(String taskId, String userId) {
+	public synchronized String processingTaskById(String taskId, String userId, Integer type) {
 		//用来返回处理信息
 		String msg = null;
 		//根据ID查询任务状态 如果为未处理则修改状态及为任务分配当前用户为处理人 否则直接返回
 		Task task = taskMapper.selectByPrimaryKey(taskId);
-		if(task.getOperatedId() != null && !task.getOperatedId().equals(userId)){
-			msg = "该待办任务已由其他人进行处理！";
-		}else{
-			task.setOperatedId(userId);
-			task.setBeginTime(new Date());
-			taskMapper.updateByPrimaryKey(task);
+		if(BusConstants.TASK_PRO_TYPE_PROCESSING.equals(type)){
+			if(task.getOperatedId() != null && !task.getOperatedId().equals(userId)){
+				msg = "该待办任务已由其他人进行处理！";
+			}else{
+				task.setOperatedId(userId);
+				task.setBeginTime(new Date());
+				taskMapper.updateByPrimaryKey(task);
+			}
+		}else if(BusConstants.TASK_PRO_TYPE_DELETE.equals(type)){
+			Order order = orderMapper.selectByPrimaryKey(task.getOrderId());
+			if(BusConstants.ORDER_STATUS_COMMIT.equals(order.getStatus())){
+				if(task.getOperatedId() == null && task.getStatus().equals(BusConstants.TASK_STATUS_NOT_PROCESS)){
+					task.setStatus(BusConstants.TASK_STATUS_DELETE);
+					task.setEndTime(new Date());
+					taskMapper.updateByPrimaryKey(task);
+					
+					
+					order.setStatus(BusConstants.ORDER_STATUS_DELETE);
+					orderMapper.updateByPrimaryKeySelective(order);
+				}else{
+					msg = "该订单已受理无法删除！";
+				}
+			}else{
+				msg = "该订单已受理无法删除！";
+			}
 		}
+
 		return msg;
 	}
 

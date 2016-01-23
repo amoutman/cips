@@ -17,8 +17,9 @@ public interface TaskService {
 	
 	/**
 	 * 待办处理
+	 * type:1: 为处理任务 2： 为删除任务
 	 */
-	public String processingTaskById(String taskId, String userId) throws Exception;
+	public String processingTaskById(String taskId, String userId, Integer type) throws Exception;
 	
 	/**
 	 * 初始化出一个新的待办任务

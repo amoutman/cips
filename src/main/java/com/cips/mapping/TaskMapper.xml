@@ -164,22 +164,22 @@
  	  	#{roleId,jdbcType=CHAR}
  	  </foreach> 
  	 </if>
- 	<if test="status != null">
+ 	<if test="status != null and status != ''">
       	and t.status = #{status,jdbcType=INTEGER}
     </if>
- 	<if test="userId != null">
+ 	<if test="userId != null and userId != ''">
       	and (t.operated_id = #{userId,jdbcType=CHAR} or t.operated_id IS NULL)
     </if>
-    <if test="operatedId != null">
+    <if test="operatedId != null and operatedId != ''">
     	and t.operated_id = #{operatedId,jdbcType=CHAR}
     </if>
-    <if test="orderNo != null">
+    <if test="orderNo != null and orderNo != ''">
     	and o.order_no = #{orderNo,jdbcType=CHAR}
     </if>
-    <if test="beginTime != null">
+    <if test="beginTime != null and beginTime != ''">
     	and str_to_date(t.end_time,'%Y-%m-%d') &gt;= str_to_date(#{beginTime},'%Y-%m-%d')
     </if>
-    <if test="endTime != null">
+    <if test="endTime != null and endTime != ''">
     	and str_to_date(t.end_time,'%Y-%m-%d') &lt;= str_to_date(#{endTime},'%Y-%m-%d')
     </if>
     order by t.operated_id, t.end_time, t.begin_time
