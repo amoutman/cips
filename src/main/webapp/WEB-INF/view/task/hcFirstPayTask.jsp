@@ -46,6 +46,8 @@
                <div class="wtbox mt10">
 			      <div class="wt_skzh clearFix rolebox">
                    <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnBlue btnck">添加收款账户</a></h2>
+                   <input type="hidden" id="rmbAccount"/>
+                   <input type="hidden" id="hwAccount" />
                <!--弹窗start-->
              <div class="tcDiv zhtc">
                <span class="close"></span>
@@ -191,12 +193,14 @@ $(document).ready(function(){
 						if (data.msg == "1") {
 							$("#accTab").html("<tr><th>账户类型</th><th>收款人姓名</th><th>收款人账号</th><th>开户行</th></tr>");
 							if(data.hcT3 != null){
-								var hc3 = "<tr><td>国内账户<input type='hidden' id='rmbAccount' value='1' /></td><td>"+data.hcT3.accountName+"</td><td>"+data.hcT3.accountCode+"</td><td>"+data.hcT3.accountBank+"</td></tr>";
+								var hc3 = "<tr><td>国内账户</td><td>"+data.hcT3.accountName+"</td><td>"+data.hcT3.accountCode+"</td><td>"+data.hcT3.accountBank+"</td></tr>";
 								$("#accTab").append(hc3);
+								$("#rmbAccount").val("1");
 							}
 							if(data.hcT4 != null){
-								var hc4 = "<tr><td>国外账户<input type='hidden' id='hwAccount' value='2' /></td><td>"+data.hcT4.accountName+"</td><td>"+data.hcT4.accountCode+"</td><td>"+data.hcT4.accountBank+"</td></tr>";
+								var hc4 = "<tr><td>国外账户</td><td>"+data.hcT4.accountName+"</td><td>"+data.hcT4.accountCode+"</td><td>"+data.hcT4.accountBank+"</td></tr>";
 								$("#accTab").append(hc4);
+								$("#hwAccount").val("2");
 							}
 						} else {
 							alert("账户信息提交失败");

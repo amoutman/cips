@@ -70,7 +70,7 @@ function processingTask(taskId){
 			function(data){
 				if (data.msg == "1") {
 					//访问
-					window.location.href = "task/preProTask?taskId="+taskId;
+					window.location.href = "${pageContext.request.contextPath}/task/preProTask?taskId="+taskId;
 				} else {
 					// 失败了
 					alert(data.msg);

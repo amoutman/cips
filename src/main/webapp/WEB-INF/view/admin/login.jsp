@@ -7,12 +7,11 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <head>
-<base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="resource/css/base.css" rel="stylesheet" type="text/css" />
-<link href="resource/css/login.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="resource/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="resource/js/style.js"></script>
+<link href="${pageContext.request.contextPath}/resource/css/base.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resource/css/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/style.js"></script>
     <!--[if lte IE 7]>
     <script type="text/javascript">
         window.location.href = 'https://www.alipay.com/x/kill-ie.htm';
@@ -73,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return false;
 		}else{
 			$.post(
-				"user/login",
+				"${pageContext.request.contextPath}/user/login",
 				{
 					userName:userName,
 					password:password
@@ -81,9 +80,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				function(data){
 					if(data["success"]){
 						if(data["isFirstLogin"]){
-							window.location.href="user/toChangePassword";
+							window.location.href="${pageContext.request.contextPath}/user/toChangePassword";
 						}else{
-							window.location.href="user/toPageUserManage";
+							window.location.href="${pageContext.request.contextPath}/user/toPageUserManage";
 						}
 					}else{
 						alert("登录失败");
@@ -99,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="main">
     <div class="header">
         <div class="nav">
-            <div class="logo"><img src="resource/images/logo.gif" width="190" height="65" /></div>
+            <div class="logo"><img src="${pageContext.request.contextPath}/resource/images/logo.gif" width="190" height="65" /></div>
         </div>
     </div>
     <div class="container">
@@ -107,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="wrap">
                <div class="wrapbox">
                 <div class="exchangeItem">
-                  <h2><img src="resource/images/login-txt.png" width="338" height="109" /></h2>
+                  <h2><img src="${pageContext.request.contextPath}/resource/images/login-txt.png" width="338" height="109" /></h2>
                   <p>Low Cost Low fees displayed up-front.FastFastTransfer to many countries.TrustedTrustedIndustry-leading payment security.</p>
                   <div class="todayEx">
                     <span class="exnum">今日汇率：${currentRate }</span>
@@ -129,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <div class="back">
             <div class="items">
-                <div class="item item1" style="background-image:url(resource/images/loginBg.jpg)"></div>
+                <div class="item item1" style="background-image:url(${pageContext.request.contextPath}/resource/images/loginBg.jpg)"></div>
             </div>
         </div>
     </div>

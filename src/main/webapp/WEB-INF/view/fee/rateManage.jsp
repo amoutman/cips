@@ -14,21 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>汇率管理</title>
 </head>
 <body>
-<div class="header">
-  <div class="w1200">
-    <span class="layout">
-       <a href="" class="btnLayout">退出</a>
-    </span>
-     <span class="logo"></span>
-     <div class="welcomeWord">
-        <span class="avatar">
-          <span class="avatar-shade"></span>
-          <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
-        </span>
-        <span class="word">豆沙包欢迎您！</span>
-     </div>
-  </div>
-</div>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--主题内容 start-->
 <div class="w1200">
   <!--左侧栏目 start-->
@@ -44,19 +30,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="exchangeBox clearFix">
         <dl class="exRate myRate">
           <dt><span class="wt-border"></span></dt>
-          <dd class="label">美元</dd>
+          <dd class="label">
+          	 <div class="m-calculator-con">
+                <span class="calculator-tit" id="rateType">美元</span>
+                <ul class="calculator-dis" style="display:none">
+                    <li>人民币</li>
+                    <li>美元</li>
+                </ul>
+            </div>
+          </dd>
           <dd>
-          	<input type="hidden" name="typeUsd" id="typeUsd" value="2"/>
-            <input type="text" name="rateUsd" id="rateUsd" class="input-txt" />
+            <input type="text" class="input-txt" value="100"/>
           </dd>
         </dl>
         <span class="changeRate"></span>
         <dl class="exRate chainRate">
           <dt><span class="wt-border"></span></dt>
-          <dd class="label">人民币</dd>
+          <dd class="label">
+          	<div class="m-calculator-con">
+                <span class="calculator-tit" id="exRateType">人民币</span>
+            </div>
+		  </dd>
           <dd>
-          	<input type="hidden" name="typeRmb" id="typeRmb" value="1"/>
-            <input type="text" name="rateRmb" id="rateRmb" class="input-txt" />
+            <input type="text" name="myExchangeRate" id="myExchangeRate" class="input-txt" />
           </dd>
         </dl>
         <a href="javascript:void(0)" onClick="insertRate()" class="btnBlue">新增</a>
@@ -98,23 +94,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="bg"></div>
 <script type="text/javascript">
 	function insertRate(){
-		var rateUsd = $("#rateUsd").val();
-		var typeUsd = $("#typeUsd").val();
+		var rate = $("#myExchangeRate").val();
+		var rateTypeMsg = $("#rateType").text();
 		
-		if(rateUsd==""){
+		if(rateTypeMsg == "美元"){
+			rateType = "2";
+		}else{
+			rateType = "1";
+		}
+		
+		if(rate==""){
 			alert("汇率不能为空");
 			return false;
 		}else{
 			$.post(
-				"fee/insertRate",
+				"${pageContext.request.contextPath}/fee/insertRate",
 				{
-					rateHigh:rateUsd,
-					type:typeUsd
+					rateHigh:rate,
+					type:rateType
 				},
 				function(data){
 					if(data["success"]){
 						alert("添加成功");
-						window.location.href="fee/toPageRateManage";
+						window.location.href="${pageContext.request.contextPath}/fee/toPageRateManage";
 					}else{
 						alert("添加失败");
 					}
@@ -128,7 +130,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script type="text/javascript">
 function pageClick(currentPage){
-	window.location.href="fee/toPageRateManage?currentPage="+currentPage;
+	window.location.href="${pageContext.request.contextPath}/fee/toPageRateManage?currentPage="+currentPage;
 }
 </script>
 </html>
