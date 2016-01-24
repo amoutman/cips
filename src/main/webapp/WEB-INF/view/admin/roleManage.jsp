@@ -47,6 +47,9 @@
      <div class="content">
       
       <ul class="rolebox">
+      <form action="${pageContext.request.contextPath}/user/toPageRoleManage" method="post" id="searchRoleForm">
+      <input type="hidden" name="currentPage" id="currentPage"/>
+      </form>
       	<c:forEach var="role" items="${roleList }">
          <li>
            <div class="role-img"><img src="resource/images/role-tx1.gif" width="51" height="51" /></div>
@@ -59,7 +62,7 @@
                <span class="close"></span>
                <h2>修改角色</h2>
                <div class="tcbox">
-               		<input type="text" name="roleId" id="roleId" value="${role.id }">
+               		<input type="hidden" name="roleId" id="roleId" value="${role.id }">
                     <input type="text" name="roleName" id="roleName" class="input-txt"  placeholder="角色名称" value="${role.roleName }"/> <a href="javascript:void(0)" onclick="updateRole(this)" id="btnUpdate" class="btnOrage">确认修改</a>
                </div>
                
@@ -69,9 +72,11 @@
          </li>
          </c:forEach>
        </ul>
+        <!-- 分页 -->
+       	<jsp:include page="../header/pager.jsp"></jsp:include>
      </div>
      <!-- 上传图片测试
-     <div class="wtbox mt10">-->
+     <div class="wtbox mt10">
      <input type="file" name="uploadimg" id="uploadimg"/>
                  <ul>
                     <li>
@@ -135,7 +140,7 @@ function addRole(){
 				function(data){
 					if(data['success']){
 						alert("添加成功");
-						window.location.href="toRoleManage";
+						window.location.href="${pageContext.request.contextPath}/user/toPageRoleManage";
 					}else{
 						alert("添加失败");
 					}
@@ -162,7 +167,7 @@ function updateRole(obj){
 				function(data){
 					if(data['success']){
 						alert("修改成功");
-						window.location.href="toRoleManage";
+						window.location.href="${pageContext.request.contextPath}/user/toPageRoleManage";
 					}else{
 						alert("修改失败");
 					}
@@ -182,7 +187,7 @@ function deleteRole(id){
 				function(data){
 					if(data['success']){
 						alert("删除成功");
-						window.location.href="toRoleManage";
+						window.location.href="${pageContext.request.contextPath}/user/toPageRoleManage";
 					}else{
 						alert("删除失败");
 					}
@@ -190,6 +195,11 @@ function deleteRole(id){
 				"json"
 		);
 	}
+}
+
+function pageClick(currentPage){
+	$("#currentPage").val(currentPage);
+	$("#searchRoleForm").submit();
 }
 </script>
 </html>

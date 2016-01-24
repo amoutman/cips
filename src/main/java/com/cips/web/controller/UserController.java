@@ -346,10 +346,14 @@ public class UserController {
 		return resultMap;
 	}
 	
-	@RequestMapping("/toRoleManage")
+	@RequestMapping("/toPageRoleManage")
 	public ModelAndView toRoleManage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
-		List<Role> roleList = roleService.getRoleList();
+		Map<String,Object> map = new HashMap<String,Object>();
+		//分页条件
+		Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
+		map.put(GlobalPara.PAGER_SESSION, pager);
+		List<Role> roleList = roleService.toPageGetRoleList(map);
 		mv.addObject("roleList", roleList);
 		mv.setViewName("admin/roleManage");
 		return mv;

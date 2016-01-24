@@ -53,6 +53,11 @@ $(document).ready(function () {
     $('.calculator-dis li').click(function () {
         var this_text = $(this).text()
         $(this).parents('.m-calculator-con').children('.calculator-tit').text(this_text);
+        if(this_text == "美元"){
+        	$("#exRateType").text("人民币");
+        }else{
+        	$("#exRateType").text("美元");
+        }
         $(this).parents('.calculator-dis').fadeOut('fast');
 
     })

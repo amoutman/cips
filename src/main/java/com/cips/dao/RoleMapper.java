@@ -1,6 +1,7 @@
 package com.cips.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cips.model.Role;
 
@@ -17,9 +18,11 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role record);
     
-    List<Role> getRoleList();
+    List<Role> toPageGetRoleList(Map<String,Object> param);
     
     List<Role> getRoleListByUserId(String userId);
     
     Role selectRoleByName(String roleName);
+    
+    List<Role> getRoleList();
 }

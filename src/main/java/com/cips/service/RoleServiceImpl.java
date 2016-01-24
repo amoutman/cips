@@ -1,6 +1,7 @@
 package com.cips.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class RoleServiceImpl implements RoleService {
 	}
 	
 	@Override
-	public List<Role> getRoleList() {
-		return roleMapper.getRoleList();
+	public List<Role> toPageGetRoleList(Map<String,Object> param) {
+		return roleMapper.toPageGetRoleList(param);
 	}
 
 	@Override
@@ -72,6 +73,10 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Role selectRoleByName(String roleName) {
 		return roleMapper.selectRoleByName(roleName);
+	}
+	
+	public List<Role> getRoleList(){
+		return roleMapper.getRoleList();
 	}
 
 }
