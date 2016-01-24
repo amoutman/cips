@@ -76,14 +76,15 @@
        	<jsp:include page="../header/pager.jsp"></jsp:include>
      </div>
      <!-- 上传图片测试
-     <div class="wtbox mt10">
+     <div class="wtbox mt10">-->
      <input type="file" name="uploadimg" id="uploadimg"/>
                  <ul>
                     <li>
                     	<input type="hidden" id="taskId" value="1001001001"/>
-                    	<a href="javascript:void(0);" onClick="upload()"  class="btnUpload">上传图片</a>  
+                    	<!-- <a href="javascript:void(0);" onClick="upload()"  class="btnUpload">上传图片</a>  
                     	<a href="javascript:$('#uploadimg').uploadify('upload','*')" class="btnUpload">上传所有文件</a>&nbsp;&nbsp;
-                    	<a href="javascript:$('#uploadimg').uploadify('cancel','*')" class="btnUpload">取消上传所有文件</a>
+                    	<a href="javascript:$('#uploadimg').uploadify('cancel','*')" class="btnUpload">取消上传所有文件</a> -->
+                    	
                     </li>
                  </ul>
                  <div id="ImgPr" class="imgShow clearFix">
@@ -108,14 +109,21 @@ $(document).ready(function(){
 		'swf':'resource/uploadify/uploadify.swf',
 		'cancelImg':'resource/uploadify/uploadify-cancel.png',
 		'buttonText':'上传凭证',
-		'removeCompleted':false,
-		'auto':false,
+		'removeCompleted':true,
+		'auto':true,
 		'fileTypeExts':'*.jpg; *.png; *.gif',
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
 		'onUploadSuccess':function(file,data,response){
-			alert(file.name + "上传成功");
+			alert(data);
+			var dataArray = data.split(",");
+			var img = "";
+			for(var i=0;i<dataArray.length;i++){
+				img = img + "<img src='uploadImgFiles/"+data+"' width='100' height='100'/>";
+			}
+			var imgPr = $("#ImgPr").html();
+			$("#ImgPr").html(imgPr + img);
 		}
 	});
 

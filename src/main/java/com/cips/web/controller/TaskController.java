@@ -1455,20 +1455,6 @@ public class TaskController {
 	@RequestMapping(value = "/uploadConfirm")
 	public Map<String, Object> uploadConfirm(HttpServletRequest request, String taskId) {
 		Map<String,Object> map = new HashMap<String,Object>();
-	
-		boolean isUpLoad = true;
-		try {
-			isUpLoad = uploadImg(request,taskId);
-			if(!isUpLoad){
-				map.put(GlobalPara.AJAX_KEY, "上传凭证失败，请重试！");
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			isUpLoad = false;
-			map.put(GlobalPara.AJAX_KEY, "上传凭证失败，请重试！");
-		}
-		//判断凭证是否已经上传成功
-		if(isUpLoad){
 			try {
 				//获取客户用户名userId
 				User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
@@ -1583,14 +1569,13 @@ public class TaskController {
 				oOperate.setTaskId(curTask.getId());
 				
 				taskService.processTask(null, null, oOperate, curTask, newTask);
+				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			} catch (Exception e) {
 				e.printStackTrace();
 				map = new HashMap<String,Object>();
 				map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
 				
 			}
-		}
-		map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 		return map;
 		
 	}
@@ -2649,7 +2634,9 @@ public class TaskController {
 		
 	}
 	
-	private boolean uploadImg(HttpServletRequest request,String taskId) throws Exception{
+	@RequestMapping(value="/uploadImg",method=RequestMethod.POST)
+	@ResponseBody
+	public void uploadImg(HttpServletRequest request,HttpServletResponse response,String taskId) throws Exception{
 		boolean isUpload = true;
 		//获取客户用户名userId
 		User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
@@ -2679,15 +2666,13 @@ public class TaskController {
 		if(!file.exists()){
 			file.mkdirs();
 		}
-		
-		
-		
 		List<OrderCert> orderCertList = new ArrayList<OrderCert>();
 		String fileName = null;
 		//String certName = null;
 		OrderCert oCert = null;
 		int fileIndex = 1;
 		boolean isSuccess = true;
+		String filePath = "";
 		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
 			MultipartFile mf = entity.getValue();
 			fileName = mf.getOriginalFilename();
@@ -2707,6 +2692,12 @@ public class TaskController {
 			File uploadFile = new File(finalPath + fileName);
 			try {
 				FileCopyUtils.copy(mf.getBytes(), uploadFile);
+				String picPath = certPath+fileName;
+				if(filePath==""){
+					filePath = picPath;
+				}else{
+					filePath = "," + picPath;
+				}
 				//CipsFileUtils.copyFile(uploadFile, targetPath);
 				orderCertList.add(oCert);
 				isSuccess = true;
@@ -2735,11 +2726,9 @@ public class TaskController {
 			}else{
 				isUpload = false;
 			}
-		}else{
-			isUpload = false;
 		}
-		
-		return isUpload;
+		response.getWriter().print(filePath);
+		//return isUpload;
 	}
 	
 	

@@ -474,17 +474,17 @@ public class UserController {
 	
 	@RequestMapping(value="/uploadUserImg",method=RequestMethod.POST)
 	@ResponseBody
-	public String uploadUserImg(HttpServletRequest request,HttpServletResponse response,String taskId){
-		String responseStr = "";
-		System.out.println("--------------------------------"+taskId);
+	public void uploadUserImg(HttpServletRequest request,HttpServletResponse response,String taskId) throws Exception{
 		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
 		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
-		String ctxPath = request.getContextPath()+"/uploadImgFiles";
-		System.out.println("================="+request.getServerName() +":"+ request.getServerPort()+ request.getContextPath());
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"/uploadImgFiles";
+		
 		//后期替换为订单号
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
 		String ymd = sdf.format(new Date());
 		String finalPath = ctxPath  + File.separator + ymd + File.separator;
+		
+		String xdPath = ymd + "/";
 
 		File file = new File(finalPath);
 		
@@ -493,6 +493,7 @@ public class UserController {
 		}
 		
 		String fileName = null;
+		String filePath = "";
 		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
 			MultipartFile mf = entity.getValue();
 			fileName = mf.getOriginalFilename();
@@ -500,14 +501,21 @@ public class UserController {
 			File uploadFile = new File(finalPath + fileName);
 			try {
 				FileCopyUtils.copy(mf.getBytes(), uploadFile);
-				responseStr = "上传成功";
+				String picPath = xdPath+fileName;
+				if(filePath==""){
+					filePath = picPath;
+				}else{
+					filePath = "," + picPath;
+				}
+				
 			} catch (IOException e) {
 				// TODO: handle exception
-				responseStr = "上传失败";
 			}
 		}
 		
-		return responseStr;
+		response.getWriter().print(filePath);
+		
+		
 	}
 	
 	private List<Menu> getMenuListByRoleId(String[] roleId){

@@ -119,6 +119,7 @@
                     	<input type="file" name="uploadimg" id="uploadimg"/>
                     </li>
                  </ul>
+                 <div id="ImgPr" class="imgShow clearFix">
                </div>
 
                <div class="btnDiv tac ck-deal"><a href="javascript:void(0)" id="returnBtn" class="btnGrey">返回</a><a href="javascript:void(0)" id="comfirmBtn" class="btnOrage">确认</a></div>
@@ -137,31 +138,61 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#uploadimg").uploadify({
-		'uploader':'uploadConfirm;jsessionid=<%=session.getId()%>',
+		'uploader':'uploadImg;jsessionid=<%=session.getId()%>',
 		'swf':'resource/uploadify/uploadify.swf',
 		'cancelImg':'resource/uploadify/uploadify-cancel.png',
 		'buttonText':'上传凭证',
-		'removeCompleted':false,
-		'auto':false,
+		'removeCompleted':true,
+		'auto':true,
 		'fileTypeExts':'*.jpg; *.png; *.gif',
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
+		'onUploadStart':function(){
+			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
+		},
 		'onUploadSuccess':function(file,data,response){
-			window.location.href="task/toPageTaskMage";
+			var dataArray = data.split(",");
+			var img = "";
+			for(var i=0;i<dataArray.length;i++){
+				img = img + "<img class='imgClass' src='uploadImgFiles/"+data+"' width='100' height='100'/>";
+			}
+			var imgPr = $("#ImgPr").html();
+			$("#ImgPr").html(imgPr + img);
 		}
 	});
 	
 	$("#comfirmBtn").click(function(){
 		var rmbAccount = $("#rmbAccount").val();
 		var hwAccount = $("#hwAccount").val();
+		
+		var imgCount = 0;
+		$("#ImgPr").find(".imgClass").each(function(){
+			imgCount = imgCount + 1;
+		})
+		
 		if(rmbAccount == ""){
 			alert("请填写国内账户信息");
 		}else if(hwAccount == ""){
 			alert("请填写海外账户信息");
+		}else if(imgCount==0){
+			alert("请上传凭证");
 		}else{
-			$("#uploadimg").uploadify("settings", "formData", {'taskId':$("#taskId").val()}); 
-			$("#uploadimg").uploadify('upload','*');
+			$.post(
+			"${pageContext.request.contextPath}/task/uploadConfirm",
+			{
+				taskId:$('#taskId').val()
+			},
+			function(data){
+				if(data.msg == "1"){
+					alert("任务成功完成");
+					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage"
+				}else{
+					alert(data.msg);
+				}
+			},
+			"json"
+			)
 		}
 	})
 	
