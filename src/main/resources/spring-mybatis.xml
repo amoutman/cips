@@ -16,7 +16,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/cips?useUnicode=yes&amp;characterEncoding=UTF8" />
 		<property name="username" value="root" />
-		<property name="password" value="" />
+		<property name="password" value="123456" />
 		
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="10" />

@@ -38,7 +38,7 @@
                      <div class="w235"><label>收款人姓名：</label> <span>${accInfo.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${accInfo.accountCode}</span> </div>
                      <div class="w235"><label>开户行：</label> <span>${accInfo.accountBank}</span> </div>
-                     <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${payMoney}</span> </div>
+                     <div class="w235"><label>${title1 }</label> <span class="color_orange font18">${payMoney}</span> </div>
                  </div>
                  </div>
                </div>
@@ -71,6 +71,7 @@
                  </div>
 			   </div>
 			   </c:if>
+			   <h2>${title2 }</h2>
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
@@ -120,7 +121,7 @@ function taskConfirm(taskId){
 			function(data){
 				if (data.msg == "1") {
 					//访问待办
-					window.location.href = "task/toPageTaskMage";
+					window.location.href = "${pageContext.request.contextPath}/task/toPageTaskMage";
 				} else {
 					// 失败了
 					alert(data.msg);
@@ -134,7 +135,7 @@ function taskRejected(taskId){
 	var remark = $("#remark").val();
 	
 	$.post(
-			"task/plpProTaskRejected",
+			"${pageContext.request.contextPath}/task/plpProTaskRejected",
 			{
 				"taskId":taskId,
 				"remark":remark
@@ -142,7 +143,7 @@ function taskRejected(taskId){
 			function(data){
 				if (data.msg == "1") {
 					//访问待办
-					window.location.href = "task/toPageTaskMage";
+					window.location.href = "${pageContext.request.contextPath}/task/toPageTaskMage";
 				} else {
 					// 失败了
 					alert(data.msg);
@@ -154,7 +155,7 @@ function taskRejected(taskId){
 
 function downloadCert(path){
 	$.post(
-			"task/toDownload",
+			"${pageContext.request.contextPath}/task/toDownload",
 			{
 				fileName:path
 			},

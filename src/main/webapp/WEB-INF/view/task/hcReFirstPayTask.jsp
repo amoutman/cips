@@ -38,7 +38,7 @@
                      <div class="w235"><label>收款人姓名：</label> <span>${accInfo.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${accInfo.accountCode}</span> </div>
                      <div class="w235"><label>开户行：</label> <span>${accInfo.accountBank}</span> </div>
-                     <div class="w235"><label>应收金额：</label> <span class="color_orange font18">${payMoney}</span> </div>
+                     <div class="w235"><label>${title1 }</label> <span class="color_orange font18">${payMoney}</span> </div>
                  </div>
                </div>
        
@@ -111,7 +111,7 @@
                  </c:forEach>
                  </div>
                </div>
-			   <h2>上传凭证信息</h2>
+			   <h2>${title2 }</h2>
 			   <div class="wtbox mt10">
                  <ul>
                     <li>
@@ -148,7 +148,7 @@ $(document).ready(function(){
 		'fileObjectName':'file',
 		'mult':true,
 		'onUploadSuccess':function(file,data,response){
-			window.location.href="task/toPageTaskMage";
+			window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 		}
 	});
 	
@@ -166,7 +166,7 @@ $(document).ready(function(){
 	})
 	
 	$("#returnBtn").click(function(){
-		window.location.href="task/toPageTaskMage";
+		window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 	})
 	
 	$("#addAccForm").validate({

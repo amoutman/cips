@@ -89,14 +89,14 @@ function searchTask(){
 
 function viewTask(taskId){
 	$.post(
-			"task/viewProTask",
+			"${pageContext.request.contextPath}/task/viewProTask",
 			{
 				"taskId":taskId
 			},
 			function(data){
 				if (data.msg == "1") {
 					//访问
-					window.location.href = "task/preProTask?taskId="+taskId;
+					window.location.href = "${pageContext.request.contextPath}/task/preProTask?taskId="+taskId;
 				} else {
 					// 失败了
 					alert(data.msg);

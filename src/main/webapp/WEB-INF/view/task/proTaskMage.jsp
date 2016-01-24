@@ -63,7 +63,7 @@ function pageClick(currentPage){
 
 function processingTask(taskId){
 	$.post(
-			"task/processingTask",
+			"${pageContext.request.contextPath}/task/processingTask",
 			{
 				"taskId":taskId
 			},
