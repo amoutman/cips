@@ -17,7 +17,7 @@
 
 <body>
 <!--header start-->
-<jsp:include page="../header/headerIndex.jsp" /></jsp:include>
+<jsp:include page="../header/headerIndex.jsp" ></jsp:include>
 <!--header end-->
 
 <!--主题内容 start-->
@@ -89,11 +89,8 @@ $(document).ready(function(){
 		'fileObjectName':'file',
 		'mult':true,
 		'onUploadSuccess':function(file,data,response){
-			if(data.msg == "1"){
-				window.location.href="task/toPageTaskMage";
-			}else{
-				alert(data.msg);
-			}
+			alert("上传成功");
+			window.location.href="task/toPageTaskMage";
 		}
 	});
 	

@@ -51,7 +51,7 @@
 	          <tr>
 	            <td>${task.orderNo}</td>
 	            <td>${task.msg}</td> 
-	            <td><a href="已办事项详情.html" class="colorBlue">查看</a></td>
+	            <td><a href="task/viewProTask?taskId=${task.id}" class="colorBlue">查看</a></td>
 	          </tr>
           </c:forEach>
           </tbody>
@@ -85,6 +85,25 @@ function pageClick(currentPage){
 function searchTask(){
 	$("#currentPage").val("1");
 	$("#searchForm").submit();
+}
+
+function viewTask(taskId){
+	$.post(
+			"task/viewProTask",
+			{
+				"taskId":taskId
+			},
+			function(data){
+				if (data.msg == "1") {
+					//访问
+					window.location.href = "task/preProTask?taskId="+taskId;
+				} else {
+					// 失败了
+					alert(data.msg);
+				}
+			},
+			"json"	
+	);
 }
 </script>
 </html>

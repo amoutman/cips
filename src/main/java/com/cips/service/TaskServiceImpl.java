@@ -158,7 +158,7 @@ public class TaskServiceImpl implements TaskService {
 			break;
 		case 9:
 			task.setMsg(BusConstants.TASK_REMARK_FIRST_MONEYRECEIPT_VOUCHER);
-			role = roleMapper.selectRoleByName(GlobalPara.RNAME_HC_OPERATOR);
+			role = roleMapper.selectRoleByName(GlobalPara.RNAME_PL_OPERATOR);
 			task.setRoleId(role.getId());
 			break;
 		case 10:

@@ -36,11 +36,13 @@ import com.cips.model.Order;
 import com.cips.model.OrderCert;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
+import com.cips.model.Rate;
 import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.page.Pager;
 import com.cips.service.AccountFrService;
+import com.cips.service.FeeService;
 import com.cips.service.OrderCertService;
 import com.cips.service.OrderService;
 import com.cips.service.RoleService;
@@ -73,6 +75,9 @@ public class TaskController {
 	
 	@Resource(name="orderCertService")
 	private OrderCertService orderCertService;
+	
+	@Resource(name="feeService")
+	private FeeService feeService;
 	
 	/**
 	 * 待办管理
@@ -153,6 +158,7 @@ public class TaskController {
 			OrderDetails hwUserAcc = null;
 			OrderDetails hcAccT3 = null;
 			OrderDetails hcAccT4 = null;
+			Rate curRToURate = null;
 			Map<String,Object> paramMap =  null;
 			//凭证信息
 			List<OrderCert> ocList = null;
@@ -298,8 +304,8 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("hcAccT3", hcAccT3);
-				mv.addObject("hcAccT4", hcAccT4);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
 				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
@@ -625,7 +631,7 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -642,7 +648,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -659,7 +665,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -676,7 +682,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -688,7 +694,7 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -705,7 +711,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -722,7 +728,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -739,7 +745,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -751,7 +757,7 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -768,7 +774,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -785,7 +791,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -802,7 +808,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -814,7 +820,7 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -831,7 +837,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -848,7 +854,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -865,7 +871,7 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("accInfo", hwAcc);
-				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("payMoney", order.getApplyAmount());
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -875,9 +881,14 @@ public class TaskController {
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
 				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh().divide(new BigDecimal(100)))));
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -893,8 +904,14 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -910,8 +927,14 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -927,8 +950,14 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -939,8 +968,14 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -956,8 +991,14 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -973,8 +1014,14 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -990,8 +1037,14 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -1407,13 +1460,11 @@ public class TaskController {
 		try {
 			isUpLoad = uploadImg(request,taskId);
 			if(!isUpLoad){
-				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_FALSE);
 				map.put(GlobalPara.AJAX_KEY, "上传凭证失败，请重试！");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			isUpLoad = false;
-			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_FALSE);
 			map.put(GlobalPara.AJAX_KEY, "上传凭证失败，请重试！");
 		}
 		//判断凭证是否已经上传成功
@@ -1532,15 +1583,14 @@ public class TaskController {
 				oOperate.setTaskId(curTask.getId());
 				
 				taskService.processTask(null, null, oOperate, curTask, newTask);
-				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			} catch (Exception e) {
 				e.printStackTrace();
 				map = new HashMap<String,Object>();
-				map.put(GlobalPara.AJAX_KEY, "平台操作员待办处理异常，请重试！");
+				map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
 				
 			}
 		}
-		
+		map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 		return map;
 		
 	}
@@ -1642,7 +1692,124 @@ public class TaskController {
 				newTask.setOrderStatus(curTask.getOrderStatus());
 				break;
 			}
-
+			
+			//生成下一环节待办
+			Order order = null;
+			String applyId = null;
+			List<Role> roles = null;
+			switch (curTask.getTaskType()) {
+			case 2:
+				applyId = orderService.getOrderById(curTask.getOrderId()).getApplyId();
+				roles = roleService.getRoleListByUserId(applyId);
+				for (Role role : roles) {
+					if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
+						newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCPAY);
+						newTask.setOrderStatus(curTask.getOrderStatus());
+					}
+					if(GlobalPara.RNAME_CN_OTHER_CUSTOMER.equals(role.getRoleName())){
+						newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY);
+						newTask.setOrderStatus(curTask.getOrderStatus());
+					}
+				}
+				break;
+			case 7:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				//角色为海外用户 需指定到人
+				order = orderService.getOrderById(curTask.getOrderId());
+				newTask.setOperatedId(order.getHwUserId());
+				break;
+			case 11:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 15:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_CONFIRM);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 19:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 23:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_CONFIRM);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				//角色为海外用户 需指定到人
+				order = orderService.getOrderById(curTask.getOrderId());
+				newTask.setOperatedId(order.getHwUserId());
+				break;
+			case 27:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HWUSERPAY);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				//角色为海外用户 需指定到人
+				order = orderService.getOrderById(curTask.getOrderId());
+				newTask.setOperatedId(order.getHwUserId());
+				break;
+			case 31:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCRECEIPT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 35:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HC_HWPAY);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 39:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJ_HWRECEIPT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 43:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HWUSERPAY);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 47:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCRECEIPT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 51:
+				//更新订单状态
+				order = orderService.getOrderById(curTask.getOrderId());
+				order.setModifiedDate(new Date());
+				order.setModifiedId(user.getId());
+				order.setStatus(BusConstants.ORDER_STATUS_COMPLETED);
+				break;
+			case 55:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_RECEIPT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 59:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_PAY);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				//角色为海外用户 需指定到人
+				order = orderService.getOrderById(curTask.getOrderId());
+				newTask.setOperatedId(order.getHwUserId());
+				break;
+			case 63:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_RECEIPT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				break;
+			case 67:
+				//更新订单状态
+				order = orderService.getOrderById(curTask.getOrderId());
+				order.setModifiedDate(new Date());
+				order.setModifiedId(user.getId());
+				order.setStatus(BusConstants.ORDER_STATUS_COMPLETED);
+				break;
+			}
+			 
 			//生成操作步骤
 			OrderOperate oOperate = new OrderOperate();
 			oOperate.setId(PKIDUtils.getUuid());
@@ -1653,7 +1820,12 @@ public class TaskController {
 			oOperate.setOpSequence(curTask.getTaskType());
 			oOperate.setTaskId(curTask.getId());
 			
-			taskService.processTask(null, null, oOperate, curTask, newTask);
+			if(BusConstants.TASK_TYPE_SECOND_HCRECEIPT_RECHECK.equals(curTask.getTaskType()) || BusConstants.TASK_TYPE_CUSTOMER_RECEIPT_RECHECK.equals(curTask.getTaskType())){
+				taskService.processTask(order, null, oOperate, curTask, null);
+			}else{
+				taskService.processTask(null, null, oOperate, curTask, newTask);
+			}
+			
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map;
 		} catch (Exception e) {
@@ -1682,6 +1854,7 @@ public class TaskController {
 			Task newTask = null;
 			Map<String,Object> paramMap = null;
 			Task upTask = null;
+			
 			switch (curTask.getTaskType()) {
 			case 5:
 				//生成新的待办任务
@@ -1844,7 +2017,179 @@ public class TaskController {
 				newTask.setOperatedId(upTask.getOperatedId());
 				break;
 			}
-
+			
+			//生成上一环节待办
+			switch (curTask.getTaskType()) {
+			case 2:
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSERINFO_REJECT);
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_COMMIT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 7:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCPAY_VOUCHER_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_FIRST_HCPAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 11:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT_VOUCHER_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_FIRST_MONEYRECEIPT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 15:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_CONFIRM_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_HWJPAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 19:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_VOUCHER_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_CONFIRM);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 23:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_CONFIRM_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_SECOND_HCPAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 27:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_VOUCHER_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_CONFIRM);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 31:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HWUSERPAY_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_FIRST_HWUSERPAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 35:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCRECEIPT_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_FIRST_HCRECEIPT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 39:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HC_HWPAY_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_HC_HWPAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 43:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJ_HWRECEIPT_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_HWJ_HWRECEIPT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 47:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HWUSERPAY_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_SECOND_HWUSERPAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 51:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCRECEIPT_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_SECOND_HCRECEIPT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 55:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_CUSTOMER_PAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 59:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_RECEIPT_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_HWUSER_RECEIPT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 63:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_PAY_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_HWUSER_PAY);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			case 67:
+				//生成新的待办任务
+				newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_RECEIPT_REJECT);
+				newTask.setOrderStatus(curTask.getOrderStatus());
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", curTask.getOrderId());
+				paramMap.put("taskType", BusConstants.TASK_TYPE_CUSTOMER_RECEIPT);
+				upTask = taskService.getTaskByParams(paramMap);
+				newTask.setOperatedId(upTask.getOperatedId());
+				break;
+			}
+			
 			//生成操作步骤
 			OrderOperate oOperate = new OrderOperate();
 			oOperate.setId(PKIDUtils.getUuid());
@@ -1864,7 +2209,7 @@ public class TaskController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "平台操作员待办处理异常，请重试！");
+			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
 			return map;
 		}
 	}
@@ -2395,5 +2740,1276 @@ public class TaskController {
 		}
 		
 		return isUpload;
+	}
+	
+	
+	@RequestMapping(value = "/viewProTask")
+	public ModelAndView viewProTask(HttpServletRequest request, @RequestParam("taskId")String taskId){
+		try {
+			ModelAndView mv = new ModelAndView();
+			//查询当前要处理的待办
+			Task task = taskService.getTaskById(taskId);
+			//根据类型选择视图及参数
+			//查询订单信息
+			Order order = orderService.getOrderById(task.getOrderId());
+			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+			User user = userService.getUserByUserId(order.getApplyId());
+			
+			OrderDetails hwAcc = null;
+			OrderDetails hwUserAcc = null;
+			OrderDetails hcAccT3 = null;
+			OrderDetails hcAccT4 = null;
+			Rate curRToURate = null;
+			Map<String,Object> paramMap =  null;
+			//凭证信息
+			List<OrderCert> ocList = null;
+			switch (task.getTaskType()) {
+			case 1:
+				//获取海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("order", order);
+				mv.addObject("user", user);
+				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTaskHwUser");
+				break;
+			case 2:
+				//获取海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("order", order);
+				mv.addObject("user", user);
+				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTaskHwUser");
+				break;
+			case 3:
+				//获取海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				//操作员选择的海外用户
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("order", order);
+				mv.addObject("user", user);
+				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("hwUserAcc", hwUserAcc);
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTaskHwUser");
+				break;
+			case 4:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 4);
+				ocList = orderCertService.getOrderCertList(paramMap);
+	
+				//查询出华创维护的国内国外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("ocList", ocList);
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 5:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 4);
+				ocList = orderCertService.getOrderCertList(paramMap);
+	
+				//查询出华创维护的国内国外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("ocList", ocList);
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 6:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 4);
+				ocList = orderCertService.getOrderCertList(paramMap);
+	
+				//查询出华创维护的国内国外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("ocList", ocList);
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 7:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 4);
+				ocList = orderCertService.getOrderCertList(paramMap);
+	
+				//查询出华创维护的国内国外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				mv.addObject("ocList", ocList);
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("hcT3", hcAccT3);
+				mv.addObject("hcT4", hcAccT4);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 8:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				//查询上传图片信息
+				paramMap.put("taskType", 8);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 9:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				//查询上传图片信息
+				paramMap.put("taskType", 8);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 10:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				//查询上传图片信息
+				paramMap.put("taskType", 8);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 11:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				//查询上传图片信息
+				paramMap.put("taskType", 8);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount().add(new BigDecimal(50000)));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 12:
+				//查询华创国内账户信息 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType",12);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 13:
+				//查询华创国内账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType",12);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 14:
+				//查询华创国内账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 12);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 15:
+				//查询华创国内账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 12);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 16:
+				//查询华创国内账户信息 上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 16);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 17:
+				//查询华创国内账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 16);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 18:
+				//查询华创国内账户信息 可重新上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 16);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 19:
+				//查询华创国内账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_LOCACC);
+				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 16);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT3);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 20:
+				//海外用户账户信息 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 20);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 21:
+				//海外用户账户信息 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 20);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 22:
+				//海外用户账户信息 可重新上传打款凭证 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 20);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 23:
+				//海外用户账户信息 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 20);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 24:
+				//海外用户账户信息 上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 24);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 25:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 24);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 26:
+				//海外用户账户信息 可重新上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 24);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 27:
+				//海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType",24);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 28:
+				//查询华创海外账户 上传海外用户第一次打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 28);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 29:
+				//查询华创海外账户 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 28);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 30:
+				//查询华创海外账户 可重新上传海外用户第一次打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 28);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 31:
+				//查询华创海外账户 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 28);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 32:
+				//查询华创海外账户 上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 32);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 33:
+				//查询华创海外账户 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 32);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 34:
+				//查询华创海外账户 可重新上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 32);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 35:
+				//查询华创海外账户
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 32);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 36:
+				//查询hwj海外账户信息 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 36);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 37:
+				//查询hwj海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 36);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 38:
+				//查询hwj海外账户信息 可重新上传凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 36);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 39:
+				//查询hwj海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 36);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 40:
+				//查询hwj海外账户信息 上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 40);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 41:
+				//查询hwj海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 40);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 42:
+				//查询hwj海外账户信息 可重新上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 40);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 43:
+				//查询hwj海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 40);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount());
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 44:
+				//查询华创海外账户 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 44);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh().divide(new BigDecimal(100)))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 45:
+				//查询华创海外账户 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 44);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 46:
+				//查询华创海外账户 可重新上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 44);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 47:
+				//查询华创海外账户 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 44);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 48:
+				//查询华创海外账户  上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 48);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 49:
+				//查询华创海外账户
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 48);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 50:
+				//查询华创海外账户 可重新上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 48);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 51:
+				//查询华创海外账户
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
+				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 48);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				//查询rmb兑美元汇率
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
+				curRToURate = feeService.getCurrentRate(paramMap);
+				
+				mv.addObject("accInfo", hcAccT4);
+				mv.addObject("payMoney", order.getApplyAmount().add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100))));
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 52:
+				//查询海外用户账户信息 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType",52);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 53:
+				//查询海外用户账户信息 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType",52);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 54:
+				//查询海外用户账户信息 可重新上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType", 52);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 55:
+				//查询海外用户账户信息 
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType", 52);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 56:
+				//查询海外用户账户信息 上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType", 56);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 57:
+				//查询海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType", 56);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 58:
+				//查询海外用户账户信息 可重新上传凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType", 56);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 59:
+				//查询海外用户账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+
+				//查询上传图片信息
+				paramMap.put("taskType", 56);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwUserAcc);
+				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 60:
+				//查询海外账户信息 上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 60);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 61:
+				//查询海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 60);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 62:
+				//查询海外账户信息 可重新上传打款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 60);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 63:
+				//查询海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 60);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 64:
+				//查询海外账户信息 上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 64);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 65:
+				//查询海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 64);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 66:
+				//查询海外账户信息 可重新上传收款凭证
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				paramMap.put("taskType", 64);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			case 67:
+				//查询海外账户信息
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+				hwAcc = orderService.getOrderDetailsByParams(paramMap);
+				
+				//查询上传图片信息
+				paramMap.put("taskType", 64);
+				ocList = orderCertService.getOrderCertList(paramMap);
+				mv.addObject("ocList", ocList);
+				
+				mv.addObject("accInfo", hwAcc);
+				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("task", task);
+				mv.setViewName("task/viewProTask");
+				break;
+			}
+			
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("待办处理页面异常!");
+		}
 	}
 }
