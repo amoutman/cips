@@ -13,6 +13,7 @@
 	
 	<!-- 静态资源文件，不会被Spring MVC拦截 -->
     <mvc:resources location="/resource/" mapping="/resource/**"/>
+     <mvc:resources location="/uploadImgFiles/" mapping="/uploadImgFiles/**"/>
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"

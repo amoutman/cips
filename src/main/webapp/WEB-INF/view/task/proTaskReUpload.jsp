@@ -57,7 +57,7 @@
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
-                 	<a href="javascript:void(0)" onClick="downloadCert(${oc.CertPic })"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.CertPic }" width="100" height="100" /></a>
+                 	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100" />
                  </c:forEach>
                  </div>
                </div>

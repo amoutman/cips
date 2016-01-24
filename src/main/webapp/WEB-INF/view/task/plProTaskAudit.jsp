@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
+	String imgPath = request.getSession().getServletContext().getRealPath("/");
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <base href="<%=basePath%>">
@@ -73,9 +74,14 @@
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
-                 	<a href="javascript:void(0)" onClick="downloadCert(${oc.CertPic })"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.CertPic }" width="100" height="100" /></a>
+                 	<a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
+                 	<div class="tcDiv">
+               		<span class="close"></span>
+                   	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="500" height="300"/>
+          		    </div>
                  </c:forEach>
                  </div>
+                 
                </div>
                <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
                <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${task.id}');">确认</a> 
@@ -91,13 +97,15 @@
 	                 <a href="javascript:void(0)" class="btnOrage" onclick="taskRejected('${task.id}')">提交</a>
 	                </div>
 	           	</div>
-	            <!--弹窗end-->
+	            <!--弹窗end uploadImgFiles/${oc.certPic}-->
            </div>
      </div>
   </div>
   <!--右侧模块 end-->
 </div>
-<!--主题内容 end-->
+<!--主题内容 end
+
+-->
 
 <div class="bg"></div>
 
@@ -146,7 +154,7 @@ function taskRejected(taskId){
 
 function downloadCert(path){
 	$.post(
-			"task/toDownLoad",
+			"task/toDownload",
 			{
 				fileName:path
 			},
@@ -158,6 +166,11 @@ function downloadCert(path){
 			},
 			"json"	
 	);
+}
+
+function clickImg(obj){
+	obj.width=360;
+    obj.height=300;
 }
 </script>
 </html>

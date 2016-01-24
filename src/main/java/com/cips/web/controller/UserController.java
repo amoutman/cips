@@ -475,7 +475,8 @@ public class UserController {
 		System.out.println("--------------------------------"+taskId);
 		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
 		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
-		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"uploadImgFiles";
+		String ctxPath = request.getContextPath()+"/uploadImgFiles";
+		System.out.println("================="+request.getServerName() +":"+ request.getServerPort()+ request.getContextPath());
 		//后期替换为订单号
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
 		String ymd = sdf.format(new Date());
