@@ -122,7 +122,7 @@ public class TaskController {
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 			//根据ID修改任务所属人为当前用户及修改该任务状态为处理中
-			String msg = taskService.processingTaskById(taskId, user.getId());
+			String msg = taskService.processingTaskById(taskId, user.getId(), BusConstants.TASK_PRO_TYPE_PROCESSING);
 			if(msg != null){
 				map.put(GlobalPara.AJAX_KEY, msg);
 			}else{

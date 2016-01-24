@@ -196,25 +196,25 @@
       hw_user_id = #{hwUserId,jdbcType=CHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
+  <select id="toPageOrderListByParams" parameterType="Map" resultMap="BaseResultMap">
 	select
     <include refid="Base_Column_List" />
     from tb_order o
 	where 1=1
-    <if test="order.applyId != null">
+    <if test="order.applyId != null and order.applyId != ''">
  		and o.apply_id = #{order.applyId}
     </if>
- 	<if test="order.status != null">
+ 	<if test="order.status != null and order.status != ''">
  		and o.status = #{order.status}
  	</if>
- 	<if test="order.orderNo != null">
+ 	<if test="order.orderNo != null and order.orderNo != ''">
  		and o.order_no = #{order.orderNo}
  	</if>
- 	<if test="order.applyDateBegin != null">
- 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateBegin},'%Y-%m-%d')
+ 	<if test="order.applyBDate != null and order.applyBDate != ''">
+ 		and str_to_date(o.apply_date,'%Y-%m-%d') &gt;= str_to_date(#{order.applyBDate},'%Y-%m-%d')
  	</if>
- 	<if test="order.applyDateEnd != null">
- 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyDateEnd},'%Y-%m-%d')
+ 	<if test="order.applyEDate != null and order.applyEDate != ''">
+ 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
  	</if>
   </select>
   <select id="getOrderByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >

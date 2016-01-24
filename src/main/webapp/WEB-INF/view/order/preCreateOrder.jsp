@@ -99,7 +99,19 @@ $(document).ready(function() {
 	$("#insertBtn").click(function(e){
 		$("#insertBtn")
 		if($('#orderForm').valid()){
-			$('#orderForm').submit();
+			$.post(
+					"order/createOrder",
+					$("#orderForm").serialize(),
+					function(data){
+						if(data.msg == "1"){
+							alert("提交成功");
+							window.location.href="order/toPageOrders";
+						}else{
+							alert(data.msg);
+						}
+					},
+					"json"
+				)
 		}
 	});
 	

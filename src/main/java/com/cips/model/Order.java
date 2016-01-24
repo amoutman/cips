@@ -21,6 +21,10 @@ public class Order {
     private String applyId;
 
     private Date applyDate;
+    
+    private String applyBDate;
+    
+    private String applyEDate;
 
     private Integer status;
     
@@ -152,5 +156,21 @@ public class Order {
 
 	public void setStatusDesc(String statusDesc) {
 		this.statusDesc = statusDesc;
+	}
+
+	public String getApplyBDate() {
+		return applyBDate;
+	}
+
+	public void setApplyBDate(String applyBDate) {
+		this.applyBDate = applyBDate;
+	}
+
+	public String getApplyEDate() {
+		return applyEDate;
+	}
+
+	public void setApplyEDate(String applyEDate) {
+		this.applyEDate = applyEDate;
 	}
 }

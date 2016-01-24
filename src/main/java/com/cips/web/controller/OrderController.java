@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cips.constants.BusConstants;
+import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
 import com.cips.model.Dictionary;
 import com.cips.model.Order;
@@ -25,11 +26,13 @@ import com.cips.model.OrderOperate;
 import com.cips.model.Rate;
 import com.cips.model.Task;
 import com.cips.model.User;
+import com.cips.page.Pager;
 import com.cips.service.DictionaryService;
 import com.cips.service.FeeService;
 import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
+import com.cips.service.UserService;
 import com.cips.util.PKIDUtils;
 import com.cips.util.PropertiesUtil;
 
@@ -51,6 +54,9 @@ public class OrderController {
 	
 	@Resource(name="roleService")
 	private RoleService roleService;
+	
+	@Resource(name="userService")
+	private UserService userService;
 
 
 	/**
@@ -77,8 +83,10 @@ public class OrderController {
 		}
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/createOrder")
-	public ModelAndView createOrder(Order order, OrderDetails orderDetails, HttpServletRequest request){
+	public Object createOrder(Order order, OrderDetails orderDetails, HttpServletRequest request){
+		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
@@ -134,10 +142,13 @@ public class OrderController {
 			//订单生成
 			orderService.createOrder(order, orderDetails, oOperate, task);
 			
-			return new ModelAndView("redirect:/order/toPageOrders"); 
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			return map; 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("订单申请提交异常，请重试!");
+			map = new HashMap<String,Object>();
+			map.put(GlobalPara.AJAX_KEY, "订单申请模块异常，请重试！");
+			return map;
 		}
 	}
 	
@@ -148,15 +159,24 @@ public class OrderController {
 	public ModelAndView toPageOrderListByParams(HttpServletRequest request, Order order){
 		try {
 			ModelAndView mv = new ModelAndView();
+			//分页条件
+			Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 			//查询参数
 			Map<String, Object> params = new HashMap<String, Object>();
+			params.put(GlobalPara.PAGER_SESSION, pager);
 			order.setApplyId(user.getId());
 			params.put("order", order);
 			//分页查询
 			List<Order> orders = orderService.toPageOrderListByParams(params);
+			for (Order o : orders) {
+				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
+			}
+			
+			mv.addObject("order", order);
 			mv.addObject("orders", orders);
+			mv.addObject("pager", pager);
 			mv.setViewName("order/toPageOrders");
 			return mv;
 		} catch (Exception e) {
@@ -170,18 +190,22 @@ public class OrderController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/delOrder")
-	public Object deleteOrder(@RequestParam("orderId")String orderId){
+	public Object deleteOrder(HttpServletRequest request, @RequestParam("orderId")String orderId){
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			Order order = orderService.getOrderById(orderId);
-			if(BusConstants.ORDER_STATUS_COMMIT.equals(order.getStatus())){
-				order.setStatus(BusConstants.ORDER_STATUS_DELETE);
-				orderService.updateOrderById(order);
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//获取创建订单后生成的待办
+			Map<String,Object> paramMap =  new HashMap<String,Object>();
+			paramMap.put("orderId", orderId);
+			paramMap.put("taskType", BusConstants.TASK_TYPE_COMMIT);
+			Task task = taskService.getTaskByParams(paramMap);
+			String msg = taskService.processingTaskById(task.getId(), user.getId(), BusConstants.TASK_PRO_TYPE_DELETE);
+			if(msg == null){
 				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			}else{
-				map.put(GlobalPara.AJAX_KEY, "订单已受理无法删除！");
+				map.put(GlobalPara.AJAX_KEY, msg);
 			}
-			
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,26 +220,27 @@ public class OrderController {
 	 * @param orderId
 	 * @return
 	 */
-	@ResponseBody
 	@RequestMapping(value = "/viewOrder")
-	public Object viewOrder(@RequestParam("orderId")String orderId){
-		Map<String,Object> map = new HashMap<String,Object>();
+	public ModelAndView viewOrder(@RequestParam("orderId")String orderId){
 		try {
+			ModelAndView mv = new ModelAndView();
 			Order order = orderService.getOrderById(orderId);
-			if(BusConstants.ORDER_STATUS_COMMIT.equals(order.getStatus())){
-				order.setStatus(BusConstants.ORDER_STATUS_DELETE);
-				orderService.updateOrderById(order);
-				map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
-			}else{
-				map.put(GlobalPara.AJAX_KEY, "订单已受理无法删除！");
-			}
+			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+			User user = userService.getUserByUserId(order.getApplyId());
+			//获取海外账户信息
+			Map<String,Object> paramMap =  new HashMap<String,Object>();
+			paramMap.put("orderId", order.getId());
+			paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+			OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
 			
-			return null;
+			mv.addObject("hwAcc", hwAcc);
+			mv.addObject("user", user);
+			mv.addObject("order", order);
+			mv.setViewName("order/viewOrder");
+			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			map = new HashMap<String,Object>();
-			map.put(GlobalPara.AJAX_KEY, "订单删除失败，请重试！");
-			return map;
+			throw new RuntimeException("订单查看页面异常，请重试!");
 		}
 	}
 	

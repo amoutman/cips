@@ -7,7 +7,7 @@ import java.util.Map;
 public class EnumConstants {
 
 	/**
-	 * 审核状态
+	 * 订单状态
 	 */
 	public static enum OrderStsEnum {
 
