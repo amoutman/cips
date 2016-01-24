@@ -71,7 +71,7 @@
        </ul>
      </div>
      <!-- 上传图片测试
-     <div class="wtbox mt10">
+     <div class="wtbox mt10">-->
      <input type="file" name="uploadimg" id="uploadimg"/>
                  <ul>
                     <li>

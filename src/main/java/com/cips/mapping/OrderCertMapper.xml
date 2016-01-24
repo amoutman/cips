@@ -175,9 +175,9 @@
     from tb_order_cert
     where order_id = #{orderId,jdbcType=CHAR}
     and task_type = #{taskType,jdbcType=INTEGER}
-    and status = 0
+
   </select>
   <delete id="deleteOrderCertByParam" parameterType="map">
-  	delete tb_order_cert where order_id = #{orderId,jdbcType=CHAR} and task_type = #{taskType,jdbcType=INTEGER}
+  	delete from tb_order_cert where order_id = #{orderId,jdbcType=CHAR} and task_type = #{taskType,jdbcType=INTEGER}
   </delete>
 </mapper>

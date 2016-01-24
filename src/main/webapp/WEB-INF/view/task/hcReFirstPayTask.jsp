@@ -11,6 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="resource/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
 <title>代办事项</title>
 </head>
 
@@ -106,7 +107,7 @@
 			   <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
-                 	<a href="javascript:void(0)" onClick="downloadCert(${oc.CertPic })"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.CertPic }" width="100" height="100" /></a>
+                 	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100" />
                  </c:forEach>
                  </div>
                </div>
@@ -132,6 +133,7 @@
 
 </body>
 <script type="text/javascript" src="resource/js/jquery.validate.js"></script>
+<script type="text/javascript" src="resource/uploadify/jquery.uploadify.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#uploadimg").uploadify({
@@ -146,20 +148,16 @@ $(document).ready(function(){
 		'fileObjectName':'file',
 		'mult':true,
 		'onUploadSuccess':function(file,data,response){
-			if(data.msg == "1"){
-				window.location.href="task/toPageTaskMage";
-			}else{
-				alert(data.msg);
-			}
+			window.location.href="task/toPageTaskMage";
 		}
 	});
 	
 	$("#comfirmBtn").click(function(){
-		var rmbAccount = $("rmbAccount").val();
-		var hwAccount = $("hwAccount").val();
-		if(rmbAccount==""){
+		var rmbAccount = $("#rmbAccount").val();
+		var hwAccount = $("#hwAccount").val();
+		if(rmbAccount == ""){
 			alert("请填写国内账户信息");
-		}else if(hwAccount==""){
+		}else if(hwAccount == ""){
 			alert("请填写海外账户信息");
 		}else{
 			$("#uploadimg").uploadify("settings", "formData", {'taskId':$("#taskId").val()}); 
