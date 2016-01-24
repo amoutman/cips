@@ -96,7 +96,7 @@ function taskConfirm(taskId){
 			function(data){
 				if (data.msg == "1") {
 					//访问待办
-					window.location.href = "task/toPageTaskMage";
+					window.location.href = "${pageContext.request.contextPath}/task/toPageTaskMage";
 				} else {
 					// 失败了
 					alert(data.msg);
@@ -118,7 +118,7 @@ function taskRejected(taskId){
 			function(data){
 				if (data.msg == "1") {
 					//访问待办
-					window.location.href = "task/toPageTaskMage";
+					window.location.href = "${pageContext.request.contextPath}/task/toPageTaskMage";
 				} else {
 					// 失败了
 					alert(data.msg);

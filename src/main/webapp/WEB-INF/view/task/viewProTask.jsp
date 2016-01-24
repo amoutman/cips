@@ -38,7 +38,7 @@
                      <div class="w235"><label>收款人姓名：</label> <span>${accInfo.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${accInfo.accountCode}</span> </div>
                      <div class="w235"><label>开户行：</label> <span>${accInfo.accountBank}</span> </div>
-                     <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${payMoney}</span> </div>
+                     <div class="w235"><label>${title1 }</label> <span class="color_orange font18">${payMoney}</span> </div>
                  </div>
                  </div>
                </div>
@@ -71,6 +71,7 @@
                  </div>
 			   </div>
 			   </c:if>
+			   <h2>${title2 }</h2>
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
@@ -99,7 +100,7 @@
 <script type="text/javascript">
 function downloadCert(path){
 	$.post(
-			"task/toDownload",
+			"${pageContext.request.contextPath}/task/toDownload",
 			{
 				fileName:path
 			},

@@ -25,6 +25,7 @@ $(document).ready(function () {
          function showDiv() {document.getElementById('bg').style.display = 'block';}
 		//弹窗
 	    $(".ck-deal .btnck").click(function(){
+	    	document.getElementById('bg').style.display = 'block';
 				var bW=Math.ceil(($(window).width()-$(".tcDiv").outerWidth())/2);
 				var bH=Math.ceil(($(window).height()-$(".tcDiv").outerHeight())/2);
 				$(this).parent(".ck-deal").next(".tcDiv").fadeIn(500).css({
@@ -53,11 +54,6 @@ $(document).ready(function () {
     $('.calculator-dis li').click(function () {
         var this_text = $(this).text()
         $(this).parents('.m-calculator-con').children('.calculator-tit').text(this_text);
-        if(this_text == "美元"){
-        	$("#exRateType").text("人民币");
-        }else{
-        	$("#exRateType").text("美元");
-        }
         $(this).parents('.calculator-dis').fadeOut('fast');
 
     })

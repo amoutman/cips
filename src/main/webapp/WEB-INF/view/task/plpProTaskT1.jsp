@@ -50,7 +50,7 @@
                  </div>
                </div>
                
-
+			<h2>海外用户账户信息</h2>
                <div class="wtbox mt10">
  			   <div class="wt_skzh clearFix">
                    <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnBlue btnck">选择收款账户信息</a></h2>
@@ -116,7 +116,7 @@ function getAccountInfo(){
 	$("#accountInfo").html("");
 	var data = $("#searchAccountForm").serializeArray();
 	$.post(
-		"accountFr/toPageAccountFrMap",
+		"${pageContext.request.contextPath}/accountFr/toPageAccountFrMap",
         data,
 		function(data){
 			//var jsonObj=eval("("+data+")");
@@ -174,7 +174,7 @@ function confirmOrder(){
 			function(data){
 				if(data.msg == "1"){
 					alert("提交成功");
-					window.location.href="task/toPageTaskMage";
+					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 				}else{
 					alert(data.msg);
 				}

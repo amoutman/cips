@@ -38,16 +38,20 @@
                      <div class="w235"><label>收款人姓名：</label> <span>${accInfo.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${accInfo.accountCode}</span> </div>
                      <div class="w235"><label>开户行：</label> <span>${accInfo.accountBank}</span> </div>
-                     <div class="w235"><label>应收金额：</label> <span class="color_orange font18">${payMoney}</span> </div>
+                     <div class="w235"><label>${title1 }</label> <span class="color_orange font18">${payMoney}</span> </div>
                  </div>
                </div>
        
 				<h2>华创账户信息</h2>
                <div class="wtbox mt10">
 			      <div class="wt_skzh clearFix rolebox">
+<<<<<<< HEAD
 			       <input type="hidden" id="rmbAccount"/>
                    <input type="hidden" id="hwAccount" />
                    <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnBlue btnck">添加收款账户</a></h2>
+=======
+                   <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:void(0)" class="btnBlue btnck">添加收款账户</a></h2>
+>>>>>>> branch 'master' of https://github.com/amoutman/cips.git
                <!--弹窗start-->
              <div class="tcDiv zhtc">
                <span class="close"></span>
@@ -73,7 +77,7 @@
                     </li>
                     </form>
                     <li>
-                     <a href="javascript:vote(0);" class="btnOrage" id="addAccBtn">确认添加</a>
+                     <a href="javascript:void(0);" class="btnOrage" id="addAccBtn">确认添加</a>
                     </li>
                    </ul>
                </div>
@@ -94,7 +98,7 @@
                  </div>
                  </div>
 			   </div>
-			   <h2>上传凭证信息</h2>
+			   <h2>${title2 }</h2>
 			   <div class="wtbox mt10">
                  <ul>
                     <li>
