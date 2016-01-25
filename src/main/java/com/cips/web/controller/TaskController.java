@@ -3033,6 +3033,44 @@ public class TaskController {
 		//return isUpload;
 	}
 	
+	@RequestMapping(value="/deletePic",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> deletePic(HttpServletRequest request,HttpServletResponse response,String taskId,String filePath) throws Exception{
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		boolean isDelete = true;
+		//获取客户用户名userId
+		User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+				//获取当前待办
+		Task curTask = taskService.getTaskById(taskId);
+		
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("taskId", taskId);
+		paramMap.put("certPic", filePath);
+		try {
+			orderCertService.deleteOrderCertByParam(paramMap);
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			isDelete = false;
+		}
+		
+		if(isDelete){
+			String ctxPath = request.getSession().getServletContext().getRealPath("/")+"/uploadImgFiles";
+			
+			String finalPath = ctxPath + File.separator + filePath;
+			File file = new File(finalPath);
+			
+			if(file.exists()){
+				file.delete();
+			}	
+			
+			resultMap.put("success", true);
+		}
+		
+		
+		return resultMap;
+	}
+	
 	
 	@RequestMapping(value = "/viewProTask")
 	public ModelAndView viewProTask(HttpServletRequest request, @RequestParam("taskId")String taskId){

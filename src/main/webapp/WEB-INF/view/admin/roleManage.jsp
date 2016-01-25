@@ -89,8 +89,6 @@
                     </li>
                  </ul>
                  <div id="imgShow" class="lightBox imgShow clearFix">
-                  <a rel="example_group" href="uploadImgFiles/1234567890/Desert.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/1234567890/Desert.jpg" width="100" height="100"/></a>
-                  <a rel="example_group" href="uploadImgFiles/Chrysanthemum.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/Chrysanthemum.jpg" width="100" height="100"/></a>
                  </div>
                </div>
                <!-- 上传图片测试 -->
@@ -134,7 +132,8 @@ $(document).ready(function(){
 				//img = img + "<a rel='example_group' href='uploadImgFiles/"+data+"' title=''><img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a>";
 			//}
 			//var imgShow = $("#imgShow").html();
-			$("#imgShow").html("<a rel='example_group' href='uploadImgFiles/Chrysanthemum.jpg' title='Lorem ipsum dolor sit amet'><img alt='' src='uploadImgFiles/Chrysanthemum.jpg' width='100' height='100'/></a>");
+			$("#imgShow").html("<span id='picli'><input type='hidden' id='filePath' value='"+data+"'><a rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'>"+
+			"<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a><br><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></span>");
 			window.onload = showBigPic();
 		}
 	});
@@ -142,6 +141,25 @@ $(document).ready(function(){
 
 
 });
+
+function deletePic(obj){
+	var filePath = $(obj).parents("#picli").find("#filePath").val();
+	$.post(
+			"user/deletePic",
+			{
+				filePath:filePath
+			},
+			function(data){
+				if(data.success){
+					alert("删除成功");
+					$(obj).parents("#picli").html("");
+				}else{
+					alert("删除失败");
+				}
+			},
+			"json"
+	);
+}
 
 function upload(){
 	$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 

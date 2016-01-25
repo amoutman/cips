@@ -524,8 +524,15 @@ public class UserController {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		//System.out.println("-----------------------"+taskId);
 		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"/uploadImgFiles";
+		String finalPath = ctxPath + File.separator + filePath;
+		File file = new File(finalPath);
+		
+		if(file.exists()){
+			file.delete();
+		}	
 		System.out.println("==========================="+filePath);
 		System.out.println("==========================="+ctxPath+File.separator+filePath);
+		resultMap.put("success", true);
 		return resultMap;
 	}
 	

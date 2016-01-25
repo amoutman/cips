@@ -188,7 +188,18 @@
     </if>
   </select>
   <delete id="deleteOrderCertByParam" parameterType="map">
-  	delete from tb_order_cert where order_id = #{orderId,jdbcType=CHAR} and task_type = #{taskType,jdbcType=INTEGER} and cert_pic = #{certPic,jdbcType=VARCHAR} and task_id = #{taskId,jdbcType=CHAR}
+  	delete from tb_order_cert 
+  	where task_id = #{taskId,jdbcType=CHAR}
+  	and cert_pic = #{certPic,jdbcType=VARCHAR} 
+  	<if test="orderId != null">
+  	and order_id = #{orderId,jdbcType=CHAR} 
+  	</if>
+  	<if test="taskType != null">
+  	and task_type = #{taskType,jdbcType=INTEGER} 
+  	</if>
+  	
+  	
+  	
   </delete>
   <update id="updateOrderCertByParam" parameterType="map">
     update tb_order_cert
