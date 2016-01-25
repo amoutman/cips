@@ -45,16 +45,6 @@
                  </div>
                  </div>
                </div>
-               <c:if test="${task.remark != null}">
-               <div class="wtbox mt10">
-                 <div class="clearFix">
-                 <div class="wt-t btp0">驳回原因</div>
-                 <div class="clearFix">
-                     <div class="w470">${task.remark}</div>
-                 </div>
-                 </div>
-               </div>
-               </c:if>
                <h2>驳回凭证信息</h2>
                <div class="wtbox mt10">
                  <div id="ImgShow" class="imgShow clearFix">
@@ -62,7 +52,15 @@
                  	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  </c:forEach>
                  </div>
-               </div>
+                 <c:if test="${task.remark != null}">
+	                 <div class="clearFix">
+	                 <div class="wt-t">驳回原因</div>
+	                 <div class="clearFix">
+	                     <div class="w470">${task.remark}</div>
+	                 </div>
+	                 </div>
+		             </div>
+	             </c:if>
                <h2>${title2 }</h2>
                <div class="wtbox mt10">
                  <ul>
@@ -73,6 +71,7 @@
                     </li>
                  </ul>
                  <div id="ImgPr" class="imgShow clearFix">
+               </div>
                </div>
                <div class="btnDiv tac"><a href="javascript:void(0)" id="returnBtn" class="btnGrey">返回</a><a href="javascript:void(0)" id="comfirmBtn" class="btnOrage">确认</a></div>
            </div>

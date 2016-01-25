@@ -105,12 +105,22 @@
                  </div>
                  </div>
 			   </div>
+			   <h2>驳回凭证信息</h2>
 			   <div class="wtbox mt10">
                  <div id="ImgShow" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
                  	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  </c:forEach>
                  </div>
+                 <c:if test="${task.remark != null}">
+                 <div class="clearFix">
+                 <div class="wt-t">驳回原因</div>
+                 <div class="clearFix">
+                     <div class="w470">${task.remark}</div>
+                 </div>
+                 </div>
+               </div>
+               </c:if>
                </div>
 			   <h2>${title2 }</h2>
 			   <div class="wtbox mt10">
