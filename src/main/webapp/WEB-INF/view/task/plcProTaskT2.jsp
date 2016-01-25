@@ -60,7 +60,7 @@
 	                 </div>
                </div>
                </div>
-               <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
+               <div class="btnDiv tac ck-deal"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
                <a href="javascript:void(0);" class="btnOrage" onclick="taskConfirm('${task.id}');">确认</a> 
                <a onclick="javascript:showDiv()" href="javascript:void(0);" class="btnOrage btnck">驳回</a></div>
                <!--弹窗start-->

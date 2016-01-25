@@ -49,7 +49,6 @@
                  </div>
                  </div>
                </div>
-               
 			<h2>海外用户账户信息</h2>
                <div class="wtbox mt10">
  			   <div class="wt_skzh clearFix">
@@ -85,10 +84,19 @@
 	             <!--弹窗end-->
 	                 <div class="clearFix">
 	                 	 <input type="hidden" name="taskId" id="taskId" value="${task.id }"/>
-	                     <div class="w235"><label>收款人姓名： </label> <span id="accountNameSpan"></span><input type="hidden" name="accountId" id="accountId" /> </div>
-	                     <div class="w235"><label>收款人账号：</label> <span id="accountCodeSpan"></span> </div>
-	                     <div class="w235"><label>开户行：</label> <span id="accountBankSpan"></span> </div>
+	                     <div class="w235"><label>收款人姓名： </label> <span id="accountNameSpan">${hwUserAcc.accountName}</span><input type="hidden" name="accountId" id="accountId" /> </div>
+	                     <div class="w235"><label>收款人账号：</label> <span id="accountCodeSpan">${hwUserAcc.accountCode}</span> </div>
+	                     <div class="w235"><label>开户行：</label> <span id="accountBankSpan">${hwUserAcc.accountBank}</span> </div>
 	                 </div>
+	             <c:if test="${task.remark != null}">
+	                 <div class="clearFix">
+	                 <div class="wt-t">驳回原因</div>
+	                 <div class="clearFix">
+	                     <div class="w470">${task.remark}</div>
+	                 </div>
+	                 </div>
+		             </div>
+	             </c:if>
                </div>
                </div>
                <div class="btnDiv tac"><a href="javascript:void(0)" class="btnGrey">返回</a><a href="javascript:void(0)" class="btnOrage" onClick="confirmOrder()" >确认</a></div>

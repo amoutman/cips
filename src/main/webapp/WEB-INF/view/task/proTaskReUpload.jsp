@@ -44,15 +44,6 @@
                  </div>
                  </div>
                </div>
-               <c:if test="${task.remark != null}">
-               <h2>驳回原因</h2>
-               <div class="wtbox mt10">
-                 <div class="clearFix">
-                     <div class="w470">${task.remark}</div>
-                 </div>
-                 </div>
-               </div>
-               </c:if>
                <h2>驳回凭证信息</h2>
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
@@ -60,6 +51,15 @@
                  	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100" />
                  </c:forEach>
                  </div>
+                 <c:if test="${task.remark != null}">
+	                 <div class="clearFix">
+	                 <div class="wt-t">驳回原因</div>
+	                 <div class="clearFix">
+	                     <div class="w470">${task.remark}</div>
+	                 </div>
+	                 </div>
+		             </div>
+	             </c:if>
                </div>
                <h2>${title2 }</h2>
                <div class="wtbox mt10">
