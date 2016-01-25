@@ -17,7 +17,7 @@
 
 <body>
 <!--header start-->
-<jsp:include page="../header/headerIndex.jsp" /></jsp:include>
+<jsp:include page="../header/headerIndex.jsp"></jsp:include>
 <!--header end-->
 
 <!--主题内容 start-->
@@ -70,6 +70,7 @@
                     	<!--a href="javascript:void(0);"  class="btnUpload">上传</a>  -->
                     </li>
                  </ul>
+                 <div id="ImgPr" class="imgShow clearFix">
                </div>
                <div class="btnDiv tac"><a href="javascript:void(0)" id="returnBtn" class="btnGrey">返回</a><a href="javascript:void(0)" id="comfirmBtn" class="btnOrage">确认</a></div>
            </div>
@@ -86,18 +87,27 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#uploadimg").uploadify({
-		'uploader':'uploadConfirm;jsessionid=<%=session.getId()%>',
+		'uploader':'uploadImg;jsessionid=<%=session.getId()%>',
 		'swf':'resource/uploadify/uploadify.swf',
 		'cancelImg':'resource/uploadify/uploadify-cancel.png',
 		'buttonText':'上传凭证',
-		'removeCompleted':false,
-		'auto':false,
+		'removeCompleted':true,
+		'auto':true,
 		'fileTypeExts':'*.jpg; *.png; *.gif',
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
+		'onUploadStart':function(){
+			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
+		},
 		'onUploadSuccess':function(file,data,response){
-			window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
+			var dataArray = data.split(",");
+			var img = "";
+			for(var i=0;i<dataArray.length;i++){
+				img = img + "<img class='imgClass' src='uploadImgFiles/"+data+"' width='100' height='100'/>";
+			}
+			var imgPr = $("#ImgPr").html();
+			$("#ImgPr").html(imgPr + img);
 		}
 	});
 	
