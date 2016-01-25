@@ -2799,6 +2799,7 @@ public class TaskController {
 		if(!file.exists()){
 			file.mkdirs();
 		}
+		
 		List<OrderCert> orderCertList = new ArrayList<OrderCert>();
 		String fileName = null;
 		//String certName = null;
@@ -2845,8 +2846,9 @@ public class TaskController {
 				try {
 					//删除相同的凭证
 					Map<String,Object> param = new HashMap<String,Object>();
-					param.put("orderId", curTask.getId());
+					param.put("orderId", curTask.getOrderId());
 					param.put("taskType", curTask.getTaskType());
+					param.put("certPic",filePath);
 					
 					orderCertService.deleteOrderCertByParam(param);
 					

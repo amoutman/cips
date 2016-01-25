@@ -12,6 +12,7 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="resource/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
 <title>角色管理</title>
 </head>
 <body>
@@ -87,7 +88,9 @@
                     	
                     </li>
                  </ul>
-                 <div id="ImgPr" class="imgShow clearFix">
+                 <div id="imgShow" class="lightBox imgShow clearFix">
+                  <a rel="example_group" href="uploadImgFiles/1234567890/Desert.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/1234567890/Desert.jpg" width="100" height="100"/></a>
+                  <a rel="example_group" href="uploadImgFiles/Chrysanthemum.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/Chrysanthemum.jpg" width="100" height="100"/></a>
                  </div>
                </div>
                <!-- 上传图片测试 -->
@@ -101,9 +104,13 @@
 
 </body>
 <script type="text/javascript" src="resource/uploadify/jquery.uploadify.js"></script>
-
+<script type="text/javascript" src="resource/js/jquery.mousewheel-3.0.2.pack.js"></script>
+<script type="text/javascript" src="resource/js/jquery.fancybox-1.3.1.js"></script>
+<script type="text/javascript" src="resource/js/pngobject.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	showBigPic();
+	
 	$("#uploadimg").uploadify({
 		'uploader':'uploadUserImg;jsessionid=<%=session.getId()%>',
 		'swf':'resource/uploadify/uploadify.swf',
@@ -116,16 +123,23 @@ $(document).ready(function(){
 		'fileObjectName':'file',
 		'mult':true,
 		'onUploadSuccess':function(file,data,response){
-			alert(data);
-			var dataArray = data.split(",");
-			var img = "";
-			for(var i=0;i<dataArray.length;i++){
-				img = img + "<img src='uploadImgFiles/"+data+"' width='100' height='100'/>";
-			}
-			var imgPr = $("#ImgPr").html();
-			$("#ImgPr").html(imgPr + img);
+			//var dataArray = data.split(",");
+			//var img = "";
+			//for(var i=0;i<dataArray.length;i++){
+				//if(img == ""){
+			
+			var	img = "<a rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'><img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a>";
+					
+				//}
+				//img = img + "<a rel='example_group' href='uploadImgFiles/"+data+"' title=''><img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a>";
+			//}
+			//var imgShow = $("#imgShow").html();
+			$("#imgShow").html("<a rel='example_group' href='uploadImgFiles/Chrysanthemum.jpg' title='Lorem ipsum dolor sit amet'><img alt='' src='uploadImgFiles/Chrysanthemum.jpg' width='100' height='100'/></a>");
+			window.onload = showBigPic();
 		}
 	});
+	
+
 
 });
 
@@ -209,5 +223,76 @@ function pageClick(currentPage){
 	$("#currentPage").val(currentPage);
 	$("#searchRoleForm").submit();
 }
+
+function showBigPic(){
+	/*
+	*   Examples - images
+	*/
+
+	$("a#example1").fancybox({
+		'titleShow'		: false
+	});
+
+	$("a#example2").fancybox({
+		'titleShow'		: false,
+		'transitionIn'	: 'elastic',
+		'transitionOut'	: 'elastic'
+	});
+
+	$("a#example3").fancybox({
+		'titleShow'		: false,
+		'transitionIn'	: 'none',
+		'transitionOut'	: 'none'
+	});
+
+	$("a#example4").fancybox();
+
+	$("a#example5").fancybox({
+		'titlePosition'	: 'inside'
+	});
+
+	$("a#example6").fancybox({
+		'titlePosition'	: 'over'
+	});
+
+	$("a[rel=example_group]").fancybox({
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'titlePosition' 	: 'over',
+		'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+			return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+		}
+	});
+
+	/*
+	*   Examples - various
+	*/
+
+	$("#various1").fancybox({
+		'titlePosition'		: 'inside',
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
+
+	$("#various2").fancybox();
+
+	$("#various3").fancybox({
+		'width'				: '75%',
+		'height'			: '75%',
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'type'				: 'iframe'
+	});
+
+	$("#various4").fancybox({
+		'padding'			: 0,
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
+}
+
+
 </script>
 </html>

@@ -105,7 +105,7 @@ $(document).ready(function() {
 					function(data){
 						if(data.msg == "1"){
 							alert("提交成功");
-							window.location.href="order/toPageOrders";
+							window.location.href="${pageContext.request.contextPath}/order/toPageOrders";
 						}else{
 							alert(data.msg);
 						}

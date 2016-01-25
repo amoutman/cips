@@ -12,6 +12,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="resource/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
 <title>代办事项</title>
 </head>
 
@@ -118,8 +119,12 @@
 </body>
 <script type="text/javascript" src="resource/js/jquery.validate.js"></script>
 <script type="text/javascript" src="resource/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript" src="resource/js/jquery.mousewheel-3.0.2.pack.js"></script>
+<script type="text/javascript" src="resource/js/jquery.fancybox-1.3.1.js"></script>
+<script type="text/javascript" src="resource/js/pngobject.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	showBigPic();
 	$("#uploadimg").uploadify({
 		'uploader':'uploadImg;jsessionid=<%=session.getId()%>',
 		'swf':'resource/uploadify/uploadify.swf',
@@ -135,13 +140,10 @@ $(document).ready(function(){
 			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
 		},
 		'onUploadSuccess':function(file,data,response){
-			var dataArray = data.split(",");
-			var img = "";
-			for(var i=0;i<dataArray.length;i++){
-				img = img + "<img class='imgClass' src='uploadImgFiles/"+data+"' width='100' height='100'/>";
-			}
+			var	img = "<a id='showPicA' rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'><img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a>";
 			var imgPr = $("#ImgPr").html();
 			$("#ImgPr").html(imgPr + img);
+			window.onload = showBigPic();
 		}
 	});
 	
@@ -150,7 +152,7 @@ $(document).ready(function(){
 		var hwAccount = $("#hwAccount").val();
 		
 		var imgCount = 0;
-		$("#ImgPr").find(".imgClass").each(function(){
+		$("#ImgPr").find("#showPicA").each(function(){
 			imgCount = imgCount + 1;
 		})
 		
@@ -243,6 +245,76 @@ $(document).ready(function(){
 		}
 	});
 })
+
+function showBigPic(){
+	/*
+	*   Examples - images
+	*/
+
+	$("a#example1").fancybox({
+		'titleShow'		: false
+	});
+
+	$("a#example2").fancybox({
+		'titleShow'		: false,
+		'transitionIn'	: 'elastic',
+		'transitionOut'	: 'elastic'
+	});
+
+	$("a#example3").fancybox({
+		'titleShow'		: false,
+		'transitionIn'	: 'none',
+		'transitionOut'	: 'none'
+	});
+
+	$("a#example4").fancybox();
+
+	$("a#example5").fancybox({
+		'titlePosition'	: 'inside'
+	});
+
+	$("a#example6").fancybox({
+		'titlePosition'	: 'over'
+	});
+
+	$("a[rel=example_group]").fancybox({
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'titlePosition' 	: 'over',
+		'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+			return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+		}
+	});
+
+	/*
+	*   Examples - various
+	*/
+
+	$("#various1").fancybox({
+		'titlePosition'		: 'inside',
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
+
+	$("#various2").fancybox();
+
+	$("#various3").fancybox({
+		'width'				: '75%',
+		'height'			: '75%',
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'type'				: 'iframe'
+	});
+
+	$("#various4").fancybox({
+		'padding'			: 0,
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
+}
+
 
 </script>
 </html>

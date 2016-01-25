@@ -518,6 +518,17 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value="/deletePic",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> deletePic(HttpServletRequest request,HttpServletResponse response,String filePath){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		//System.out.println("-----------------------"+taskId);
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+"/uploadImgFiles";
+		System.out.println("==========================="+filePath);
+		System.out.println("==========================="+ctxPath+File.separator+filePath);
+		return resultMap;
+	}
+	
 	private List<Menu> getMenuListByRoleId(String[] roleId){
 		Map<String,Object> paraMap = new HashMap<String,Object>();
 		paraMap.put("roleId", roleId);
