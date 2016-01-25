@@ -100,6 +100,7 @@ function taskConfirm(taskId){
 				} else {
 					// 失败了
 					alert(data.msg);
+					window.location.href = "${pageContext.request.contextPath}/task/toPageTaskMage";
 				}
 			},
 			"json"	
@@ -122,6 +123,7 @@ function taskRejected(taskId){
 				} else {
 					// 失败了
 					alert(data.msg);
+					window.location.href = "${pageContext.request.contextPath}/task/toPageTaskMage";
 				}
 			},
 			"json"	

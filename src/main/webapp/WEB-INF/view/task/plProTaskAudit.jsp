@@ -75,7 +75,7 @@
                <div class="wtbox mt10">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
-                 	<a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
+                 	<a href="javascript:void(0);" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
                  	<div class="tcDiv">
                		<span class="close"></span>
                    	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="500" height="300"/>
@@ -84,18 +84,18 @@
                  </div>
                  
                </div>
-               <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey" onclick="">返回</a>
-               <a href="javascript:vote(0)" class="btnOrage" onclick="taskConfirm('${task.id}');">确认</a> 
-               <a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnOrage btnck">驳回</a></div>
+               <div class="btnDiv tac ck-deal"><a href="task/toPageTaskMage" class="btnGrey">返回</a>
+               <a href="javascript:void(0);" class="btnOrage" onclick="taskConfirm('${task.id}');">确认</a> 
+               <a onclick="javascript:showDiv();" href="javascript:void(0);" class="btnOrage btnck">驳回</a></div>
                <!--弹窗start-->
                <div class="tcDiv back_tc" style="width:260px;">
 	               <span class="close"></span>
 	               <h2>驳回原因</h2>
 	               <div class="tcbox">
 	                  <ul class="s-form" style="padding-top:20px;">
-	                   <li><textarea name="textarea" id="remark" class="area" onkeyup="this.value = this.value.substring(0, 30)"></textarea> </li>
+	                   <li><textarea name="textarea" id="remark" class="area" onkeyup="this.value = this.value.substring(0, 30);"></textarea> </li>
 	                  </ul>
-	                 <a href="javascript:void(0)" class="btnOrage" onclick="taskRejected('${task.id}')">提交</a>
+	                 <a href="javascript:void(0);" class="btnOrage" onclick="taskRejected('${task.id}')">提交</a>
 	                </div>
 	           	</div>
 	            <!--弹窗end uploadImgFiles/${oc.certPic}-->

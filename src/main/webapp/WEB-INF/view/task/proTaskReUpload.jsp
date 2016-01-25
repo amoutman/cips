@@ -98,11 +98,7 @@ $(document).ready(function(){
 		'fileObjectName':'file',
 		'mult':true,
 		'onUploadSuccess':function(file,data,response){
-			if(data.msg == "1"){
-				window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
-			}else{
-				alert(data.msg);
-			}
+			window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 		}
 	});
 	

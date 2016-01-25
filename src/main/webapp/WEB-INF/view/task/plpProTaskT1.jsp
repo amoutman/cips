@@ -177,6 +177,7 @@ function confirmOrder(){
 					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 				}else{
 					alert(data.msg);
+					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 				}
 			},
 			"json"
