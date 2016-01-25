@@ -24,4 +24,6 @@ public interface OrderCertMapper {
     
     List<OrderCert> getOrderCertList(Map<String,Object> param);
     
+    int updateOrderCertByParam(Map<String,Object> param);
+    
 }

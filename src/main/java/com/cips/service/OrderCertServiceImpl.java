@@ -36,5 +36,9 @@ public class OrderCertServiceImpl implements OrderCertService {
 		// TODO Auto-generated method stub
 		return orderCertMapper.getOrderCertList(param);
 	}
+	
+	public void updateOrderCertByParam(Map<String,Object> param){
+		orderCertMapper.updateOrderCertByParam(param);
+	}
 
 }

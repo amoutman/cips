@@ -7,9 +7,17 @@ public class OrderCert {
 
     private String orderId;
 
-    private String orderOperateId;
+    private String taskId;
 
-    private String orderAccountId;
+    public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+
+	private String orderAccountId;
 
     private Integer taskType;
 
@@ -39,14 +47,6 @@ public class OrderCert {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId == null ? null : orderId.trim();
-    }
-
-    public String getOrderOperateId() {
-        return orderOperateId;
-    }
-
-    public void setOrderOperateId(String orderOperateId) {
-        this.orderOperateId = orderOperateId == null ? null : orderOperateId.trim();
     }
 
     public String getOrderAccountId() {

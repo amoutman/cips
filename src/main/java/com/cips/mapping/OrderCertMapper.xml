@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cips.model.OrderCert" >
     <id column="id" property="id" jdbcType="CHAR" />
     <result column="order_id" property="orderId" jdbcType="CHAR" />
-    <result column="order_operate_id" property="orderOperateId" jdbcType="CHAR" />
+    <result column="task_id" property="taskId" jdbcType="CHAR" />
     <result column="order_account_id" property="orderAccountId" jdbcType="CHAR" />
     <result column="task_type" property="taskType" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -15,7 +15,7 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, order_operate_id, order_account_id, task_type, status, cert_pic, created_id, 
+    id, order_id, task_id, order_account_id, task_type, status, cert_pic, created_id, 
     created_date, modified_id, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -29,11 +29,11 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.cips.model.OrderCert" >
-    insert into tb_order_cert (id, order_id, order_operate_id, 
+    insert into tb_order_cert (id, order_id, task_id, 
       order_account_id, task_type, status, 
       cert_pic, created_id, created_date, 
       modified_id, modified_date)
-    values (#{id,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{orderOperateId,jdbcType=CHAR}, 
+    values (#{id,jdbcType=CHAR}, #{orderId,jdbcType=CHAR}, #{taskId,jdbcType=CHAR}, 
       #{orderAccountId,jdbcType=CHAR}, #{taskType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{certPic,jdbcType=VARCHAR}, #{createdId,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
       #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP})
@@ -47,8 +47,8 @@
       <if test="orderId != null" >
         order_id,
       </if>
-      <if test="orderOperateId != null" >
-        order_operate_id,
+      <if test="taskId != null" >
+        task_id,
       </if>
       <if test="orderAccountId != null" >
         order_account_id,
@@ -82,8 +82,8 @@
       <if test="orderId != null" >
         #{orderId,jdbcType=CHAR},
       </if>
-      <if test="orderOperateId != null" >
-        #{orderOperateId,jdbcType=CHAR},
+      <if test="taskId != null" >
+        #{taskId,jdbcType=CHAR},
       </if>
       <if test="orderAccountId != null" >
         #{orderAccountId,jdbcType=CHAR},
@@ -117,8 +117,8 @@
       <if test="orderId != null" >
         order_id = #{orderId,jdbcType=CHAR},
       </if>
-      <if test="orderOperateId != null" >
-        order_operate_id = #{orderOperateId,jdbcType=CHAR},
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=CHAR},
       </if>
       <if test="orderAccountId != null" >
         order_account_id = #{orderAccountId,jdbcType=CHAR},
@@ -150,7 +150,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cips.model.OrderCert" >
     update tb_order_cert
     set order_id = #{orderId,jdbcType=CHAR},
-      order_operate_id = #{orderOperateId,jdbcType=CHAR},
+      task_id = #{taskId,jdbcType=CHAR},
       order_account_id = #{orderAccountId,jdbcType=CHAR},
       task_type = #{taskType,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
@@ -162,10 +162,10 @@
     where id = #{id,jdbcType=CHAR}
   </update>
   <insert id="insertOrderCertList" parameterType="list">
-   insert into tb_order_cert (id, order_id,task_type, status, cert_pic, created_id, created_date)
+   insert into tb_order_cert (id, order_id,task_id,task_type, status, cert_pic, created_id, created_date)
     values 
     <foreach collection="list" item="oc" index="index" separator="," >
-    (#{oc.id,jdbcType=CHAR}, #{oc.orderId,jdbcType=CHAR}, #{oc.taskType,jdbcType=INTEGER}, #{oc.status,jdbcType=INTEGER}, 
+    (#{oc.id,jdbcType=CHAR}, #{oc.orderId,jdbcType=CHAR},#{oc.taskId,jdbcType=CHAR}, #{oc.taskType,jdbcType=INTEGER}, #{oc.status,jdbcType=INTEGER}, 
       #{oc.certPic,jdbcType=VARCHAR}, #{oc.createdId,jdbcType=CHAR}, #{oc.createdDate,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
@@ -174,10 +174,32 @@
     <include refid="Base_Column_List" />
     from tb_order_cert
     where order_id = #{orderId,jdbcType=CHAR}
-    and task_type = #{taskType,jdbcType=INTEGER}
-
+    <if test="taskType != null">
+     and 
+      <trim prefix="(" suffix=")">
+      task_type = #{reTaskType} or task_type = #{taskType}
+     </trim>
+    </if>
+    <if test="status != null">
+    and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="taskId !=null">
+    and task_id = #{taskId,jdbcType=CHAR}
+    </if>
   </select>
   <delete id="deleteOrderCertByParam" parameterType="map">
-  	delete from tb_order_cert where order_id = #{orderId,jdbcType=CHAR} and task_type = #{taskType,jdbcType=INTEGER} and cert_pic = #{certPic,jdbcType=VARCHAR}
+  	delete from tb_order_cert where order_id = #{orderId,jdbcType=CHAR} and task_type = #{taskType,jdbcType=INTEGER} and cert_pic = #{certPic,jdbcType=VARCHAR} and task_id = #{taskId,jdbcType=CHAR}
   </delete>
+  <update id="updateOrderCertByParam" parameterType="map">
+    update tb_order_cert
+    set 
+      status = #{status,jdbcType=INTEGER},
+      modified_id = #{modifiedId,jdbcType=CHAR},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=CHAR} 
+      and 
+      <trim prefix="(" suffix=")">
+      task_type = #{reTaskType} or task_type = #{taskType}
+     </trim>
+  </update>
 </mapper>

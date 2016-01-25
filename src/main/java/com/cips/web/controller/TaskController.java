@@ -155,6 +155,7 @@ public class TaskController {
 			OrderDetails hcAccT4 = null;
 			Rate curRToURate = null;
 			Map<String,Object> paramMap =  null;
+			//String taskType = null;
 			//凭证信息
 			List<OrderCert> ocList = null;
 			switch (task.getTaskType()) {
@@ -229,7 +230,10 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
+				
 				paramMap.put("taskType", 4);
+				paramMap.put("reTaskType", 6);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 	
 				//查询出华创维护的国内国外账户信息
@@ -261,6 +265,8 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
 				paramMap.put("taskType", 4);
+				paramMap.put("reTaskType", 6);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
@@ -290,7 +296,9 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
-				paramMap.put("taskType",4);
+				paramMap.put("taskType", 4);
+				paramMap.put("reTaskType", 6);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				//查询出华创维护的国内国外账户信息
@@ -335,6 +343,8 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
 				paramMap.put("taskType", 8);
+				paramMap.put("reTaskType", 10);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -353,6 +363,8 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息 并重新上传收款凭证
 				paramMap.put("taskType", 8);
+				paramMap.put("reTaskType", 10);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -371,6 +383,8 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
 				paramMap.put("taskType", 8);
+				paramMap.put("reTaskType", 10);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -404,7 +418,9 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType",12);
+				paramMap.put("taskType", 12);
+				paramMap.put("reTaskType", 14);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -424,6 +440,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 12);
+				paramMap.put("reTaskType", 14);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -443,6 +461,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 12);
+				paramMap.put("reTaskType", 14);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -476,6 +496,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 16);
+				paramMap.put("reTaskType", 18);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -495,6 +517,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 16);
+				paramMap.put("reTaskType", 18);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -514,6 +538,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 16);
+				paramMap.put("reTaskType", 18);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -547,6 +573,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 20);
+				paramMap.put("reTaskType", 22);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -566,6 +594,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 20);
+				paramMap.put("reTaskType", 22);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -585,6 +615,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 20);
+				paramMap.put("reTaskType", 22);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -618,6 +650,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 24);
+				paramMap.put("reTaskType", 26);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -637,6 +671,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 24);
+				paramMap.put("reTaskType", 26);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -655,7 +691,9 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType",24);
+				paramMap.put("taskType", 24);
+				paramMap.put("reTaskType", 26);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -689,6 +727,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 28);
+				paramMap.put("reTaskType", 30);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -708,6 +748,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 28);
+				paramMap.put("reTaskType", 30);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -727,6 +769,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 28);
+				paramMap.put("reTaskType", 30);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -760,6 +804,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 32);
+				paramMap.put("reTaskType", 34);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -779,6 +825,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 32);
+				paramMap.put("reTaskType", 34);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -798,6 +846,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 32);
+				paramMap.put("reTaskType", 34);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -831,6 +881,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 36);
+				paramMap.put("reTaskType", 38);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -850,6 +902,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 36);
+				paramMap.put("reTaskType", 38);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -869,6 +923,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 36);
+				paramMap.put("reTaskType", 38);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -902,6 +958,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 40);
+				paramMap.put("reTaskType", 42);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -921,6 +979,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 40);
+				paramMap.put("reTaskType", 42);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -940,6 +1000,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 40);
+				paramMap.put("reTaskType", 42);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -978,6 +1040,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 44);
+				paramMap.put("reTaskType", 46);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1003,6 +1067,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 44);
+				paramMap.put("reTaskType", 46);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1028,6 +1094,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 44);
+				paramMap.put("reTaskType", 46);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1073,6 +1141,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 48);
+				paramMap.put("reTaskType", 50);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1098,6 +1168,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 48);
+				paramMap.put("reTaskType", 50);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1123,6 +1195,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 48);
+				paramMap.put("reTaskType", 50);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1161,7 +1235,9 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType",52);
+				paramMap.put("taskType", 52);
+				paramMap.put("reTaskType", 54);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1181,6 +1257,8 @@ public class TaskController {
 
 				//查询上传图片信息
 				paramMap.put("taskType", 52);
+				paramMap.put("reTaskType", 54);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1200,6 +1278,8 @@ public class TaskController {
 
 				//查询上传图片信息
 				paramMap.put("taskType", 52);
+				paramMap.put("reTaskType", 54);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1233,6 +1313,8 @@ public class TaskController {
 
 				//查询上传图片信息
 				paramMap.put("taskType", 56);
+				paramMap.put("reTaskType", 58);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1252,6 +1334,8 @@ public class TaskController {
 
 				//查询上传图片信息
 				paramMap.put("taskType", 56);
+				paramMap.put("reTaskType", 58);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1271,6 +1355,8 @@ public class TaskController {
 
 				//查询上传图片信息
 				paramMap.put("taskType", 56);
+				paramMap.put("reTaskType", 58);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1304,6 +1390,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 60);
+				paramMap.put("reTaskType", 62);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1323,6 +1411,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 60);
+				paramMap.put("reTaskType", 62);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1342,6 +1432,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 60);
+				paramMap.put("reTaskType", 62);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1375,6 +1467,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 64);
+				paramMap.put("reTaskType", 66);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1393,6 +1487,8 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				paramMap.put("taskType", 64);
+				paramMap.put("reTaskType", 66);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -1412,6 +1508,8 @@ public class TaskController {
 				
 				//查询上传图片信息
 				paramMap.put("taskType", 64);
+				paramMap.put("reTaskType", 66);
+				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
@@ -2776,6 +2874,70 @@ public class TaskController {
 		//获取当前待办
 		Task curTask = taskService.getTaskById(taskId);
 		
+		//如果是驳回之后再传凭证，需先改变已有凭证的状态
+		Map<String,Object> reTaskMap = new HashMap<String,Object>();
+		Integer reTaskType = 0;
+		switch (curTask.getTaskType()) {
+		case 6:
+			reTaskType = 4;
+			break;
+		case 10:
+			reTaskType = 8;
+			break;
+		case 14:
+			reTaskType = 12;
+			break;
+		case 18:
+			reTaskType = 16;
+			break;
+		case 22:
+			reTaskType = 20;
+			break;
+		case 26:
+			reTaskType = 24;
+			break;
+		case 30:
+			reTaskType = 28;
+			break;
+		case 34:
+			reTaskType = 32;
+			break;
+		case 38:
+			reTaskType = 36;
+			break;
+		case 42:
+			reTaskType = 40;
+			break;
+		case 46:
+			reTaskType = 44;
+			break;
+		case 50:
+			reTaskType = 48;
+			break;
+		case 54:
+			reTaskType = 52;
+			break;
+		case 58:
+			reTaskType = 56;
+			break;
+		case 62:
+			reTaskType = 60;
+			break;
+		case 66:
+			reTaskType = 64;
+			break;
+		default:
+			break;
+		}
+		if(reTaskType != 0){
+			reTaskMap.put("reTaskType", reTaskType);
+			reTaskMap.put("taskType",curTask.getTaskType());
+			reTaskMap.put("orderId", curTask.getOrderId());
+			reTaskMap.put("status",1);
+			reTaskMap.put("modifiedId", user.getId());
+			reTaskMap.put("modifiedDate",new Date());
+		}
+		
 		MultipartHttpServletRequest mhRequest = (MultipartHttpServletRequest)request;
 		Map<String,MultipartFile> mfMap = mhRequest.getFileMap();
 		String ctxPath = request.getSession().getServletContext().getRealPath("/")+GlobalPara.CERT_FILE_URL;
@@ -2815,6 +2977,7 @@ public class TaskController {
 			//生成凭证存储List
 			oCert = new OrderCert();
 			oCert.setId(PKIDUtils.getUuid());
+			oCert.setTaskId(taskId);
 			oCert.setTaskType(taskType);
 			oCert.setStatus(0);
 			oCert.setOrderId(order.getId());
@@ -2844,12 +3007,16 @@ public class TaskController {
 		if(isSuccess){
 			if(orderCertList.size()>0){
 				try {
+					//驳回再次上传 更改之前上传凭证状态
+					if(reTaskType != 0){
+						orderCertService.updateOrderCertByParam(reTaskMap);
+					}
 					//删除相同的凭证
 					Map<String,Object> param = new HashMap<String,Object>();
 					param.put("orderId", curTask.getOrderId());
 					param.put("taskType", curTask.getTaskType());
 					param.put("certPic",filePath);
-					
+					param.put("taskId", taskId);
 					orderCertService.deleteOrderCertByParam(param);
 					
 					orderCertService.insertOrderCertList(orderCertList);

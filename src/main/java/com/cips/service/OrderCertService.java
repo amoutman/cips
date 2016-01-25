@@ -12,4 +12,6 @@ public interface OrderCertService {
 	void deleteOrderCertByParam(Map<String,Object> param);
     
     List<OrderCert> getOrderCertList(Map<String,Object> param);
+    
+    void updateOrderCertByParam(Map<String,Object> param);
 }
