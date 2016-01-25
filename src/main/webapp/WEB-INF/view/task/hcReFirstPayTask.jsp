@@ -135,7 +135,7 @@
 </body>
 <script type="text/javascript" src="resource/js/jquery.validate.js"></script>
 <script type="text/javascript" src="resource/uploadify/jquery.uploadify.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">  
 $(document).ready(function(){
 	$("#uploadimg").uploadify({
 		'uploader':'uploadImg;jsessionid=<%=session.getId()%>',
