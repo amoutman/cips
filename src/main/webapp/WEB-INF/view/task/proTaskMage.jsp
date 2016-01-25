@@ -74,6 +74,7 @@ function processingTask(taskId){
 				} else {
 					// 失败了
 					alert(data.msg);
+					window.location.href = "${pageContext.request.contextPath}/task/preProTask?taskId="+taskId;
 				}
 			},
 			"json"	

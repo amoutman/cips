@@ -1,8 +1,6 @@
 package com.cips.web.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,12 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.cfg.PkDrivenByDefaultMapsIdSecondPass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,7 +44,6 @@ import com.cips.service.OrderService;
 import com.cips.service.RoleService;
 import com.cips.service.TaskService;
 import com.cips.service.UserService;
-import com.cips.util.CipsFileUtils;
 import com.cips.util.DownloadUtil;
 import com.cips.util.PKIDUtils;
 
@@ -1719,6 +1714,11 @@ public class TaskController {
 			
 			//获取当前待办
 			Task curTask = taskService.getTaskById(taskId);
+			//防止多个页面重复提交处理
+			if(BusConstants.TASK_STATUS_PROCESSED.equals(curTask.getStatus())){
+				map.put(GlobalPara.AJAX_KEY, "该待办任务已处理！");
+				return map;
+			}
 			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
 			curTask.setEndTime(new Date());
 			
@@ -1960,6 +1960,11 @@ public class TaskController {
 			
 			//获取当前待办
 			Task curTask = taskService.getTaskById(taskId);
+			//防止多个页面重复提交处理
+			if(BusConstants.TASK_STATUS_PROCESSED.equals(curTask.getStatus())){
+				map.put(GlobalPara.AJAX_KEY, "该待办任务已处理！");
+				return map;
+			}
 			curTask.setStatus(BusConstants.TASK_STATUS_PROCESSED);
 			curTask.setEndTime(new Date());
 			curTask.setRemark(remark);
