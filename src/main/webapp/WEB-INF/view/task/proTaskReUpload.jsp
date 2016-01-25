@@ -113,8 +113,31 @@ $(document).ready(function(){
 	});
 	
 	$("#comfirmBtn").click(function(){
-		$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
-		$("#uploadimg").uploadify('upload','*');
+		var imgCount = 0;
+		$("#ImgPr").find(".imgClass").each(function(){
+			imgCount = imgCount + 1;
+		});
+		if(imgCount==0){
+			alert("请上传凭证");
+		}else{
+			$.post(
+			"${pageContext.request.contextPath}/task/uploadConfirm",
+			{
+				taskId:$('#taskId').val()
+			},
+			function(data){
+				if(data.msg == "1"){
+					alert("任务成功完成");
+					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage"
+				}else{
+					alert(data.msg);
+					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage"
+				}
+			},
+			"json"
+			)
+		}
+		
 	})
 	
 	$("#returnBtn").click(function(){
