@@ -60,7 +60,6 @@
 	                 </div>
 		             </div>
 	             </c:if>
-               </div>
                <h2>${title2 }</h2>
                <div class="wtbox mt10">
                  <ul>
@@ -71,6 +70,7 @@
                     </li>
                  </ul>
                  <div id="ImgPr" class="imgShow clearFix">
+               </div>
                </div>
                <div class="btnDiv tac"><a href="javascript:void(0)" id="returnBtn" class="btnGrey">返回</a><a href="javascript:void(0)" id="comfirmBtn" class="btnOrage">确认</a></div>
            </div>

@@ -52,7 +52,7 @@
 			<h2>海外用户账户信息</h2>
                <div class="wtbox mt10">
  			   <div class="wt_skzh clearFix">
-                   <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnBlue btnck">选择收款账户信息</a></h2>
+                   <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:void(0)" class="btnBlue btnck">选择收款账户信息</a></h2>
 	                <!--弹窗start-->
 	               <div class="tcDiv xzzh_tc">
 	               <span class="close"></span>
@@ -95,7 +95,6 @@
 	                     <div class="w470">${task.remark}</div>
 	                 </div>
 	                 </div>
-		             </div>
 	             </c:if>
                </div>
                </div>
