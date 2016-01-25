@@ -25,7 +25,6 @@ $(document).ready(function () {
          function showDiv() {document.getElementById('bg').style.display = 'block';}
 		//弹窗
 	    $(".ck-deal .btnck").click(function(){
-	    	document.getElementById('bg').style.display = 'block';
 				var bW=Math.ceil(($(window).width()-$(".tcDiv").outerWidth())/2);
 				var bH=Math.ceil(($(window).height()-$(".tcDiv").outerHeight())/2);
 				$(this).parent(".ck-deal").next(".tcDiv").fadeIn(500).css({
