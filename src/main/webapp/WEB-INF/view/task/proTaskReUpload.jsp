@@ -45,9 +45,8 @@
                  </div>
                </div>
                <c:if test="${task.remark != null}">
+               <h2>驳回原因</h2>
                <div class="wtbox mt10">
-                 <div class="clearFix">
-                 <div class="wt-t btp0">驳回原因</div>
                  <div class="clearFix">
                      <div class="w470">${task.remark}</div>
                  </div>
