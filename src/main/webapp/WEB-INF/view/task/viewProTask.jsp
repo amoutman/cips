@@ -33,7 +33,7 @@
                <h2>订单信息</h2>
                <div class="wtbox">
                  <div class="clearFix">
-                 <div class="wt-t btp0">收款人账户信息</div>
+                 <div class="wt-t btp0">${title3}</div>
                  <div class="clearFix">
                      <div class="w235"><label>收款人姓名：</label> <span>${accInfo.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${accInfo.accountCode}</span> </div>

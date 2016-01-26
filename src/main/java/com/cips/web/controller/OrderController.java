@@ -24,6 +24,7 @@ import com.cips.model.Order;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
 import com.cips.model.Rate;
+import com.cips.model.Role;
 import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.page.Pager;
@@ -163,10 +164,18 @@ public class OrderController {
 			Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//获取用户角色
+			List<Role> roles = roleService.getRoleListByUserId(user.getId());
 			//查询参数
 			Map<String, Object> params = new HashMap<String, Object>();
 			params.put(GlobalPara.PAGER_SESSION, pager);
-			order.setApplyId(user.getId());
+			for (Role role : roles) {
+				if(GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName()) || GlobalPara.RNAME_PL_CHECKER.equals(role.getRoleName()) 
+						|| GlobalPara.RNAME_PL_OPERATOR.equals(role.getRoleName())){
+				}else{
+					order.setApplyId(user.getId());
+				}
+			}
 			params.put("order", order);
 			//分页查询
 			List<Order> orders = orderService.toPageOrderListByParams(params);
