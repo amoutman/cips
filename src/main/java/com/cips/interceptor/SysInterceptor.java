@@ -39,6 +39,11 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 				request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
 				return false;
 			}
+			if(user.getIsFirstLogin() == 0 && !(url.matches(".*toChangePassword.*") || url.matches(".*updatePassword.*"))){
+				String contextPath=request.getContextPath();
+				response.sendRedirect(contextPath+"/user/toChangePassword");
+				return false;
+			}
 		}
 		
 		 if (url.matches(mappingUrl)) {

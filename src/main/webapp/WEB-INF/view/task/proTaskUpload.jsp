@@ -95,13 +95,16 @@ $(document).ready(function(){
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
+		'onSelect' : function(file) {  
+	        this.addPostParam("file_name",encodeURI(file.name));//改变文件名的编码
+	    },
 		'onUploadStart':function(){
 			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
 		},
 		'onUploadSuccess':function(file,data,response){
-			var	img = "<p id='picli'><input type='hidden' id='filePath' value='"+data+"'><a id='showPicA' rel='example_group' href='uploadImgFiles/"+data+
+			var	img = "<span id='picli'><p><input type='hidden' id='filePath' value='"+data+"'><a id='showPicA' rel='example_group' href='uploadImgFiles/"+data+
 			  "' title='Lorem ipsum dolor sit amet'>"+
-			  "<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a><br><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></p>";
+			  "<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a></p><p><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></p></span>";
 			var imgPr = $("#ImgPr").html();
 			$("#ImgPr").html(imgPr + img);
 			window.onload = showBigPic();

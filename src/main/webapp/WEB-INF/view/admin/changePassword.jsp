@@ -93,7 +93,7 @@ $(document).ready(function() {
 				function(data){
 					if(data['success']){
 						alert("修改密码成功");
-						window.location.href="user/toPageUserManage";
+						window.location.href="${pageContext.request.contextPath}/user/toPageUserManage";
 					}else{
 						alert("修改密码失败");
 					}

@@ -70,7 +70,7 @@
                <h2>修改账户</h2>
                <div class="tcbox">
                     <ul>
-                    <form action="accountFr/updateAccountFr" method="post" id="updateAccountFrForm">
+                    <form action="${pageContext.request.contextPath}/accountFr/updateAccountFr" method="post" id="updateAccountFrForm">
                      <li>
                       <label>用户名</label>
                       <span class="color_666">${accountFr.userName }</span>
@@ -152,7 +152,7 @@ $(document).ready(function() {
 							 			return $("#accountCode").val();
 						 			 }
 					 },
-			 		 url:"accountFr/validateAccountCode" 
+			 		 url:"${pageContext.request.contextPath}/accountFr/validateAccountCode" 
 				 }
 			 },
 			 "accountBank":{

@@ -173,7 +173,7 @@ $(document).ready(function() {
 				function(data){
 					if(data["success"]){
 						alert("删除成功");
-						window.location.href="user/toPageUserManage";
+						window.location.href="${pageContext.request.contextPath}/user/toPageUserManage";
 					}else{
 						alert("删除失败");
 					}
@@ -254,7 +254,7 @@ $('#addUserForm').validate({
 						 			return $("#addUserForm").find("#userName").val();
 					 			 }
 				 },
-		 		 url:"user/validate" 
+		 		 url:"${pageContext.request.contextPath}/user/validate" 
 			 }
 		},
 		"roleId":{
@@ -270,7 +270,7 @@ $('#addUserForm').validate({
 						 			return $("#addUserForm").find("#mobile").val();
 					 			 }
 				 },
-		 		 url:"user/validate" 
+		 		 url:"${pageContext.request.contextPath}/user/validate" 
 			 }
 		},
 		"creditId":{
@@ -283,7 +283,7 @@ $('#addUserForm').validate({
 						 			return $("#addUserForm").find("#creditId").val();
 					 			 }
 				 },
-		 		 url:"user/validate" 
+		 		 url:"${pageContext.request.contextPath}/user/validate" 
 			 }
 		},
 		"email":{
@@ -297,7 +297,7 @@ $('#addUserForm').validate({
 						 			return $("#addUserForm").find("#email").val();
 					 			 }
 				 },
-		 		 url:"user/validate" 
+		 		 url:"${pageContext.request.contextPath}/user/validate" 
 			 }
 		}	
 	},
