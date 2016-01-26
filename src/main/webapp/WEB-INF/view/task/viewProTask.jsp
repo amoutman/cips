@@ -12,6 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="resource/css/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
 <title>代办事项</title>
 </head>
 
@@ -76,11 +77,8 @@
                <div class="wtbox">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocVList}">
-                 	<a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
-                 	<div class="tcDiv">
-               		<span class="close"></span>
-                   	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="500" height="300"/>
-          		    </div>
+                 	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
+                 	
                  </c:forEach>
                  </div>
                </div>
@@ -90,11 +88,7 @@
                <div class="wtbox">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocCList}">
-                 	<a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
-                 	<div class="tcDiv">
-               		<span class="close"></span>
-                   	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="500" height="300"/>
-          		    </div>
+                 	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  </c:forEach>
                  </div>
                </div>
@@ -112,7 +106,13 @@
 <div class="bg"></div>
 
 </body>
+<script type="text/javascript" src="resource/js/jquery.mousewheel-3.0.2.pack.js"></script>
+<script type="text/javascript" src="resource/js/jquery.fancybox-1.3.1.js"></script>
+<script type="text/javascript" src="resource/js/pngobject.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+	showBigPic();
+});
 function downloadCert(path){
 	$.post(
 			"${pageContext.request.contextPath}/task/toDownload",
@@ -132,6 +132,75 @@ function downloadCert(path){
 function clickImg(obj){
 	obj.width=360;
     obj.height=300;
+}
+
+function showBigPic(){
+	/*
+	*   Examples - images
+	*/
+
+	$("a#example1").fancybox({
+		'titleShow'		: false
+	});
+
+	$("a#example2").fancybox({
+		'titleShow'		: false,
+		'transitionIn'	: 'elastic',
+		'transitionOut'	: 'elastic'
+	});
+
+	$("a#example3").fancybox({
+		'titleShow'		: false,
+		'transitionIn'	: 'none',
+		'transitionOut'	: 'none'
+	});
+
+	$("a#example4").fancybox();
+
+	$("a#example5").fancybox({
+		'titlePosition'	: 'inside'
+	});
+
+	$("a#example6").fancybox({
+		'titlePosition'	: 'over'
+	});
+
+	$("a[rel=example_group]").fancybox({
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'titlePosition' 	: 'over',
+		'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+			return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+		}
+	});
+
+	/*
+	*   Examples - various
+	*/
+
+	$("#various1").fancybox({
+		'titlePosition'		: 'inside',
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
+
+	$("#various2").fancybox();
+
+	$("#various3").fancybox({
+		'width'				: '75%',
+		'height'			: '75%',
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'type'				: 'iframe'
+	});
+
+	$("#various4").fancybox({
+		'padding'			: 0,
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
 }
 </script>
 </html>
