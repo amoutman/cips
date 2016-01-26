@@ -121,7 +121,7 @@
                  </div>
                </div>
                </c:if>
-               </div>
+               
 			   <h2>${title2 }</h2>
 			   <div class="wtbox mt10">
                  <ul>

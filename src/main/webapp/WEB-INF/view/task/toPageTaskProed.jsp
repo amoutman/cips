@@ -41,7 +41,7 @@
        <table cellpadding="0" cellspacing="0" class="dataTable">
         <thead>
           <tr>
-            <th>订单号</th>
+            <th width="30%">订单号</th>
             <th>任务信息</th>
             <th class="w120">操作</th>
           </tr>

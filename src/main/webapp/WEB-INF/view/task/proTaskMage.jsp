@@ -33,7 +33,7 @@
        <c:if test="${size <= 0}"><h2>当前没有待办任务</h2></c:if>
        <c:if test="${size > 0}">
        	 <c:forEach items="${tasks}" var="task">
-	         <li>
+	         <li class="clearFix">
 	           <div class="wt-lf"><span class="wt-border"></span></div>
 	           <div class="wt-num">订单号：${task.orderNo}</div>
 	           <div class="wt-event">${task.msg}</div>

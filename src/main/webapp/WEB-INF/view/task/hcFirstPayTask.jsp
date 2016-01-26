@@ -238,6 +238,12 @@ $(document).ready(function(){
 								$("#accTab").append(hc4);
 								$("#hwAccount").val("2");
 							}
+							 $(".tcDiv").fadeOut(300);
+							 $('div.bg').fadeOut(200);
+							 
+							 $("#accountName").val("");
+							 $("#accountCode").val("");
+							 $("#accountBank").val("");
 						} else {
 							alert("账户信息提交失败");
 						}
