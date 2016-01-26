@@ -29,4 +29,6 @@ public interface OrderCertMapper {
     
     List<OrderCert> getOrderCertListByTaskCert(TaskCert taskCert);
     
+    OrderCert selectOrderCertByParam(Map<String,Object> param);
+    
 }

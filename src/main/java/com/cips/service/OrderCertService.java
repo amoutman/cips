@@ -21,4 +21,9 @@ public interface OrderCertService {
     TaskCert searchTaskCertByParam(Map<String,Object> param);
     
     List<OrderCert> getOrderCertListByTaskCert(TaskCert taskCert);
+    
+    OrderCert selectOrderCertByParam(Map<String,Object> param);
+    
+    void deleteTaskCertByCertId(Map<String,Object> param);
+    
 }

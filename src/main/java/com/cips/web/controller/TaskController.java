@@ -2984,6 +2984,7 @@ public class TaskController {
 		String fileName = null;
 		//String certName = null;
 		OrderCert oCert = null;
+		TaskCert tCert = null;
 		int fileIndex = 1;
 		boolean isSuccess = true;
 		String filePath = "";
@@ -3002,6 +3003,13 @@ public class TaskController {
 			oCert.setCertPic(certPath + fileName);
 			oCert.setCreatedId(user.getId());
 			oCert.setCreatedDate(new Date());
+			
+			//插入任务凭证中间表
+			tCert = new TaskCert();
+			tCert.setId(PKIDUtils.getUuid());
+			tCert.setCertId(oCert.getId());
+			tCert.setTaskId(taskId);
+			tCert.setType(0);
 			
 			String targetPath = finalPath + fileName;
 			File uploadFile = new File(finalPath + fileName);
@@ -3038,6 +3046,7 @@ public class TaskController {
 					orderCertService.deleteOrderCertByParam(param);
 					
 					orderCertService.insertOrderCertList(orderCertList);
+					orderCertService.insertTaskCert(tCert);
 					isUpload = true;
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -3065,6 +3074,11 @@ public class TaskController {
 		paramMap.put("taskId", taskId);
 		paramMap.put("certPic", filePath);
 		try {
+			OrderCert dCert = orderCertService.selectOrderCertByParam(paramMap);
+			Map<String,Object> dMap = new HashMap<String,Object>();
+			dMap.put("taskId", taskId);
+			dMap.put("certId", dCert.getId());
+			orderCertService.deleteTaskCertByCertId(dMap);
 			orderCertService.deleteOrderCertByParam(paramMap);
 		
 		} catch (Exception e) {

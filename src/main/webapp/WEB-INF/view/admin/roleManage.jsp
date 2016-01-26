@@ -132,8 +132,8 @@ $(document).ready(function(){
 				//img = img + "<a rel='example_group' href='uploadImgFiles/"+data+"' title=''><img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a>";
 			//}
 			//var imgShow = $("#imgShow").html();
-			$("#imgShow").html("<span id='picli'><input type='hidden' id='filePath' value='"+data+"'><a rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'>"+
-			"<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a><br><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></span>");
+			$("#imgShow").html("<span id='picli'><p><input type='hidden' id='filePath' value='"+data+"'><a rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'>"+
+			"<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a></p><br><p><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></span></p>");
 			window.onload = showBigPic();
 		}
 	});
