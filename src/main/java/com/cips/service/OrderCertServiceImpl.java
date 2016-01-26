@@ -54,5 +54,13 @@ public class OrderCertServiceImpl implements OrderCertService {
 	public void insertTaskCert(TaskCert taskCert) {
 		taskCertMapper.insertSelective(taskCert);
 	}
+	
+	public OrderCert selectOrderCertByParam(Map<String,Object> param){
+		return orderCertMapper.selectOrderCertByParam(param);
+	}
+	
+	public void deleteTaskCertByCertId(Map<String,Object> param){
+		taskCertMapper.deleteTaskCertByCertId(param);
+	}
 
 }

@@ -213,4 +213,10 @@
       task_type = #{reTaskType} or task_type = #{taskType}
      </trim>
   </update>
+  <select id="selectOrderCertByParam" resultMap="BaseResultMap" parameterType="map">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_order_cert
+    where task_id = #{taskId,jdbcType=CHAR} and cert_pic = #{certPic,jdbcType=VARCHAR}
+  </select>
 </mapper>

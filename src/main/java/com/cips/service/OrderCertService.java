@@ -18,4 +18,8 @@ public interface OrderCertService {
     
     void insertTaskCert(TaskCert taskCert);
     
+    OrderCert selectOrderCertByParam(Map<String,Object> param);
+    
+    void deleteTaskCertByCertId(Map<String,Object> param);
+    
 }
