@@ -51,10 +51,15 @@ $(document).ready(function () {
     })
 	 //筛选
     $('.calculator-dis li').click(function () {
-        var this_text = $(this).text()
+        var this_text = $(this).text();
+      
         $(this).parents('.m-calculator-con').children('.calculator-tit').text(this_text);
+        if($(this).html() == "美元"){
+        	$("#exRateType").html("人民币");
+        }else{
+        	$("#exRateType").html("美元");
+        }
         $(this).parents('.calculator-dis').fadeOut('fast');
-
     })
 
     //点击以外的区域子 弹窗隐藏

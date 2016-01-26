@@ -136,6 +136,9 @@ $(document).ready(function(){
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
+		'onSelect' : function(file) {  
+	        this.addPostParam("file_name",encodeURI(file.name));//改变文件名的编码
+	    },
 		'onUploadStart':function(){
 			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
 		},

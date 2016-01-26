@@ -14,19 +14,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="resource/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="resource/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="resource/js/style.js"></script>
+<script type="text/javascript">
+</script>
 <!--左侧栏目 start-->
   <div class="part-left">
   	<ul class="menu">
   	<c:forEach var="menu" items="${menuList }">
   		<c:if test="${menu.menuType == 1 }">
-  			<li class="menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			<li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
   		</c:if>
   	</c:forEach>
     </ul>
     <ul class="menu rolemenu">
     <c:forEach var="menu" items="${menuList }">
   		<c:if test="${menu.menuType == 0 }">
-  			<li class="menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			<li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
   		</c:if>
   	</c:forEach>
     </ul>

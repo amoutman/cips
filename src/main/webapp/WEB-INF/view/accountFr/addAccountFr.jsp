@@ -29,7 +29,11 @@
          <h2 class="icon-zh">新增账户</h2>
          <div class="xlineb w430 clearFix">
             <div class="searchbar right mr50">
-              <input type="text" name="textfield" id="textfield" class="input-txt"  placeholder="请输入用户名/电话/身份证/邮箱"/> <a href="" class="btnSearch">search</a>
+            <form action="accountFr/toPageInsertAcccountFr" method="post" id="searchFrUserForm">
+            <input type="text" name="userInfo" id="userInfo" class="input-txt"  placeholder="请输入用户名/电话/身份证/邮箱" value="${userInfo }"/>
+            <input type="hidden" name="currentPage" id="currentPage"/>
+            </form>
+               <a href="javascript:void(0)" onclick="searchFrUser()" class="btnSearch">search</a>
             </div>
          </div>
      </div>
@@ -52,7 +56,7 @@
                <h2>新增账户</h2>
                <div class="tcbox clearFix">
                     <ul class="clearFix">
-                    <form action="accountFr/insertAccountFr" method="post" id="insertAccountForm">
+                    <form action="${pageContext.request.contextPath}/accountFr/insertAccountFr" method="post" id="insertAccountForm">
                     <li>
                       <input type="radio" name="accountType" id="accountType" value="1" checked/>国内账户　　　
                       <input type="radio" name="accountType" id="accountType" value="2" />海外账户
@@ -129,7 +133,7 @@ $(document).ready(function() {
 							 			return $("#accountCode").val();
 						 			 }
 					 },
-			 		 url:"accountFr/validateAccountCode" 
+			 		 url:"${pageContext.request.contextPath}/accountFr/validateAccountCode" 
 				 }
 			 },
 			 "accountBank":{
@@ -163,5 +167,15 @@ $(document).ready(function() {
 		}
 	});
 })
+
+function pageClick(currentPage){
+	$("#currentPage").val(currentPage);
+	$("#searchFrUserForm").submit();
+}
+
+function searchFrUser(){
+	$("#currentPage").val("1");
+	$("#searchFrUserForm").submit();
+}
 </script>
 </html>

@@ -258,7 +258,7 @@
 
 /*上传*/
 .imgShow{ padding-top:10px;}
-.imgShow img{ margin-right:10px; margin-bottom:10px; float:left;}
+.imgShow span{display:block;width:100px;height:130px;text-align:center; margin-right:10px; margin-bottom:10px; float:left;}
 .jsSelect{ background-color:#ebe9e9; padding:10px 0;}
 .jsSelect li{ float:left;width:47%; padding-left:3%; color:#777;}
 .jsSelect li input{ margin-right:5px;}

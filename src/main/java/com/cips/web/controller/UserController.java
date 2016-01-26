@@ -2,7 +2,10 @@ package com.cips.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -452,7 +455,7 @@ public class UserController {
 		}
 		resultMap.put("success", true);
 		try {
-			userService.updateUser(loginUser);
+			userService.updateUser(nUser);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -461,6 +464,7 @@ public class UserController {
 		}
 		if(resultMap.get("success").equals(true)){
 			loginUser.setPassword(MD5.md5(password));
+			loginUser.setIsFirstLogin(1);
 			request.getSession().setAttribute(GlobalPara.USER_SESSION_TOKEN, loginUser);
 		}
 		return resultMap;
@@ -494,11 +498,32 @@ public class UserController {
 		
 		String fileName = null;
 		String filePath = "";
+		//String finalFileName = "";
+		String ymdName = "";
 		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
 			MultipartFile mf = entity.getValue();
 			fileName = mf.getOriginalFilename();
-			
-			File uploadFile = new File(finalPath + fileName);
+			System.out.println("====================="+fileName);
+			int idex = fileName.indexOf(".");
+			String iFileName = fileName.substring(0, idex);
+			System.out.println("====================="+iFileName);
+			ymdName = ymd + fileName.substring(idex);
+			System.out.println("====================="+ymdName);
+//			String finalFileName = URLDecoder.decode(fileName, "UTF-8");
+//			System.out.println("====================="+finalFileName);
+//			try {
+//				
+//				String userAgent = request.getHeader("USER-AGENT");
+//				if (userAgent.toLowerCase().indexOf("firefox") > 0) {// google,火狐浏览器
+//					finalFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+//				} else {
+//					finalFileName = URLEncoder.encode(fileName, "UTF-8");// 其他浏览器
+//				}
+//				//response.addHeader("Content-Disposition", "attachment;filename=" + finalFileName);
+//			} catch (UnsupportedEncodingException e) {
+//
+//			}
+			File uploadFile = new File(finalPath + ymdName);
 			try {
 				FileCopyUtils.copy(mf.getBytes(), uploadFile);
 				String picPath = xdPath+fileName;
@@ -512,7 +537,11 @@ public class UserController {
 				// TODO: handle exception
 			}
 		}
+		//response.setHeader("Content-Type", "text/html;charset=UTF-8");
 		
+		
+		filePath = xdPath + ymdName;
+		System.out.println("====================="+ymdName);
 		response.getWriter().print(filePath);
 		
 		

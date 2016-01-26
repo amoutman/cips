@@ -1,6 +1,7 @@
 package com.cips.web.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -3105,6 +3106,9 @@ public class TaskController {
 		//凭证存储的相对路径
 		//String certPath = orderNo + File.separator + taskPath + File.separator;
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+		String ymd = sdf.format(new Date());
+		
 		String certPath = orderNo + "/" + taskPath + "/";
 				
 		File file = new File(finalPath);
@@ -3119,14 +3123,17 @@ public class TaskController {
 		//String certName = null;
 		OrderCert oCert = null;
 		TaskCert tCert = null;
-		int fileIndex = 1;
+		//int fileIndex = 1;
 		boolean isSuccess = true;
 		String filePath = "";
+		String ymdName = "";
 		for(Map.Entry<String, MultipartFile> entity:mfMap.entrySet()){
 			MultipartFile mf = entity.getValue();
 			fileName = mf.getOriginalFilename();
 			//certName = "cert" + fileIndex;
-			fileIndex = fileIndex + 1;
+			//fileIndex = fileIndex + 1;
+			int idex = fileName.indexOf(".");
+			ymdName = ymd + fileName.substring(idex);
 			//生成凭证存储List
 			oCert = new OrderCert();
 			oCert.setId(PKIDUtils.getUuid());
@@ -3134,7 +3141,7 @@ public class TaskController {
 			oCert.setTaskType(taskType);
 			oCert.setStatus(0);
 			oCert.setOrderId(order.getId());
-			oCert.setCertPic(certPath + fileName);
+			oCert.setCertPic(certPath + ymdName);
 			oCert.setCreatedId(user.getId());
 			oCert.setCreatedDate(new Date());
 			
@@ -3145,11 +3152,11 @@ public class TaskController {
 			tCert.setTaskId(taskId);
 			tCert.setType(0);
 			
-			String targetPath = finalPath + fileName;
-			File uploadFile = new File(finalPath + fileName);
+			//String targetPath = finalPath + fileName;
+			File uploadFile = new File(finalPath + ymdName);
 			try {
 				FileCopyUtils.copy(mf.getBytes(), uploadFile);
-				String picPath = certPath+fileName;
+				String picPath = certPath+ymdName;
 				if(filePath==""){
 					filePath = picPath;
 				}else{

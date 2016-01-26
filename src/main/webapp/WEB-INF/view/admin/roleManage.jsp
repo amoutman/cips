@@ -120,12 +120,15 @@ $(document).ready(function(){
 		'uploadLimit':5,
 		'fileObjectName':'file',
 		'mult':true,
+		'onSelect' : function(file) {  
+	        this.addPostParam("file_name",encodeURI(file.name));//改变文件名的编码
+	    },
 		'onUploadSuccess':function(file,data,response){
 			//var dataArray = data.split(",");
 			//var img = "";
 			//for(var i=0;i<dataArray.length;i++){
 				//if(img == ""){
-			
+			alert(data);
 			var	img = "<a rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'><img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a>";
 					
 				//}
@@ -133,7 +136,7 @@ $(document).ready(function(){
 			//}
 			//var imgShow = $("#imgShow").html();
 			$("#imgShow").html("<span id='picli'><p><input type='hidden' id='filePath' value='"+data+"'><a rel='example_group' href='uploadImgFiles/"+data+"' title='Lorem ipsum dolor sit amet'>"+
-			"<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a></p><br><p><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></span></p>");
+			"<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a></p><p><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></p></span>");
 			window.onload = showBigPic();
 		}
 	});
@@ -145,7 +148,7 @@ $(document).ready(function(){
 function deletePic(obj){
 	var filePath = $(obj).parents("#picli").find("#filePath").val();
 	$.post(
-			"user/deletePic",
+			"${pageContext.request.contextPath}/user/deletePic",
 			{
 				filePath:filePath
 			},
@@ -173,7 +176,7 @@ function addRole(){
 		alert("角色名称不能为空");
 	}else{
 		$.post(
-				"user/insertRole",
+				"${pageContext.request.contextPath}/user/insertRole",
 				{
 					roleName:roleName
 				},
@@ -199,7 +202,7 @@ function updateRole(obj){
 		alert("角色名称不能为空");
 	}else{
 		$.post(
-				"user/updateRole",
+				"${pageContext.request.contextPath}/user/updateRole",
 				{
 					roleId:roleId,
 					roleName:roleName
@@ -220,7 +223,7 @@ function updateRole(obj){
 function deleteRole(id){
 	if(confirm("是否删除该角色")){
 		$.post(
-				"user/deleteRole",
+				"${pageContext.request.contextPath}/user/deleteRole",
 				{
 					roleId:id
 				},
