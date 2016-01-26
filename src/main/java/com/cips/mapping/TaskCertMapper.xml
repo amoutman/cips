@@ -79,4 +79,20 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=CHAR}
   </update>
+  
+  <select id="searchTaskCertByParam" parameterType="Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_task_cert
+ 	where 1=1
+    <if test="taskId != null" >
+      and task_id = #{taskId,jdbcType=CHAR},
+    </if>
+    <if test="certId != null" >
+      and  cert_id = #{certId,jdbcType=CHAR},
+    </if>
+    <if test="type != null" >
+      and type = #{type,jdbcType=INTEGER},
+    </if>
+  </select>
 </mapper>

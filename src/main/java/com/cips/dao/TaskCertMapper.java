@@ -1,5 +1,7 @@
 package com.cips.dao;
 
+import java.util.Map;
+
 import com.cips.model.TaskCert;
 
 public interface TaskCertMapper {
@@ -14,4 +16,6 @@ public interface TaskCertMapper {
     int updateByPrimaryKeySelective(TaskCert record);
 
     int updateByPrimaryKey(TaskCert record);
+    
+    TaskCert selectTaskCertByParam(Map<String,Object> param);
 }

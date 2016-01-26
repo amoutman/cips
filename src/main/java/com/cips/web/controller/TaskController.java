@@ -35,6 +35,7 @@ import com.cips.model.OrderOperate;
 import com.cips.model.Rate;
 import com.cips.model.Role;
 import com.cips.model.Task;
+import com.cips.model.TaskCert;
 import com.cips.model.User;
 import com.cips.page.Pager;
 import com.cips.service.AccountFrService;
@@ -230,12 +231,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
-				
 				paramMap.put("taskType", 4);
 				paramMap.put("reTaskType", 6);
 				paramMap.put("status", 0);
 				ocList = orderCertService.getOrderCertList(paramMap);
-	
+
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -1520,6 +1520,24 @@ public class TaskController {
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
+			}
+			
+			if(ocList != null){
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("taskId", task.getId());
+				TaskCert taskCert = orderCertService.searchTaskCertByParam(paramMap);
+				if(taskCert == null){
+					for (OrderCert orderCert : ocList) {
+						//保存任务与凭证对应记录
+						taskCert = new TaskCert();
+						taskCert.setId(PKIDUtils.getUuid());
+						taskCert.setTaskId(task.getId());
+						taskCert.setCertId(orderCert.getId());
+						taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+						
+						orderCertService.insertTaskCert(taskCert);
+					}
+				}
 			}
 			
 			return mv;
@@ -3091,7 +3109,9 @@ public class TaskController {
 			Rate curRToURate = null;
 			Map<String,Object> paramMap =  null;
 			//凭证信息
-			List<OrderCert> ocList = null;
+			List<OrderCert> ocCList = null;
+			List<OrderCert> ocVList = null;
+			TaskCert taskCert = null;
 			switch (task.getTaskType()) {
 			case 1:
 				//获取海外账户信息
@@ -3157,9 +3177,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 4);
-				ocList = orderCertService.getOrderCertList(paramMap);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3173,9 +3197,12 @@ public class TaskController {
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
 				//查询上传图片信息
-				paramMap.put("taskType", 4);
-				ocList = orderCertService.getOrderCertList(paramMap);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 	
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
@@ -3188,9 +3215,10 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
-				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
@@ -3204,9 +3232,15 @@ public class TaskController {
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
 				//查询上传图片信息
-				paramMap.put("taskType", 4);
-				ocList = orderCertService.getOrderCertList(paramMap);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -3218,9 +3252,10 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
-				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
@@ -3235,9 +3270,10 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				//查询上传图片信息
-				paramMap.put("taskType",4);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				//查询出华创维护的国内国外账户信息
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
@@ -3249,6 +3285,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3266,10 +3304,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 8);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3283,11 +3324,15 @@ public class TaskController {
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
-				//查询上传图片信息
-				paramMap.put("taskType", 8);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
 				
+				//查询上传图片信息
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3301,11 +3346,17 @@ public class TaskController {
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
-				//查询上传图片信息 并重新上传收款凭证
-				paramMap.put("taskType", 8);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
 				
+				//查询上传图片信息
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3319,11 +3370,15 @@ public class TaskController {
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
-				//查询上传图片信息
-				paramMap.put("taskType", 8);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
 				
+				//查询上传图片信息
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3339,10 +3394,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType",12);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				
@@ -3359,10 +3417,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType",12);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "好望角上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3378,10 +3439,15 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 12);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3397,10 +3463,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 12);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "好望角上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3416,10 +3485,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 16);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3435,10 +3507,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 16);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3454,10 +3529,15 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 16);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3473,10 +3553,13 @@ public class TaskController {
 				hcAccT3 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 16);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT3);
@@ -3492,10 +3575,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 20);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3511,10 +3597,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 20);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3530,10 +3619,15 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 20);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3549,10 +3643,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 20);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3568,10 +3665,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 24);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3587,10 +3687,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 24);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3606,10 +3709,15 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 24);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3625,10 +3733,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType",24);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -3644,10 +3755,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 28);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3663,10 +3777,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 28);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3682,10 +3799,15 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 28);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3701,10 +3823,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 28);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3720,10 +3845,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 32);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3739,10 +3867,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 32);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3758,10 +3889,15 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 32);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3777,10 +3913,13 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 32);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3796,10 +3935,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 36);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3815,10 +3957,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 36);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3834,10 +3979,15 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 36);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3853,10 +4003,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 36);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3872,10 +4025,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 40);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3891,10 +4047,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 40);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "好望角上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3910,10 +4069,15 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 40);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3929,10 +4093,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 40);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "好望角上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -3953,10 +4120,13 @@ public class TaskController {
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 44);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3972,9 +4142,10 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 44);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -3982,6 +4153,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -3997,9 +4170,12 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 44);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -4007,6 +4183,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -4022,9 +4200,10 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 44);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -4032,6 +4211,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -4047,9 +4228,10 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 48);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -4057,6 +4239,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -4072,9 +4256,10 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 48);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -4082,6 +4267,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -4097,9 +4284,12 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 48);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -4107,6 +4297,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -4122,9 +4314,10 @@ public class TaskController {
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 48);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
 				//查询rmb兑美元汇率
 				paramMap =  new HashMap<String,Object>();
@@ -4132,6 +4325,8 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("accInfo", hcAccT4);
@@ -4147,10 +4342,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType",52);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4159,17 +4357,20 @@ public class TaskController {
 				mv.setViewName("task/viewProTask");
 				break;
 			case 53:
-				//查询海外用户账户信息 上传打款凭证
+				//查询海外用户账户信息 
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType",52);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4185,10 +4386,15 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType", 52);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4204,10 +4410,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType", 52);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4223,10 +4432,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType", 56);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4242,10 +4454,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType", 56);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4261,10 +4476,15 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType", 56);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4280,10 +4500,13 @@ public class TaskController {
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 
 				//查询上传图片信息
-				paramMap.put("taskType", 56);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwUserAcc);
@@ -4299,10 +4522,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 60);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4318,10 +4544,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 60);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4337,10 +4566,15 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 60);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4356,10 +4590,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 60);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4375,10 +4612,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 64);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4394,10 +4634,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 64);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4412,10 +4655,16 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
-				paramMap.put("taskType", 64);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				//查询上传图片信息
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_COMMIT);
+				ocCList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);
@@ -4431,10 +4680,13 @@ public class TaskController {
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
 				//查询上传图片信息
-				paramMap.put("taskType", 64);
-				ocList = orderCertService.getOrderCertList(paramMap);
-				mv.addObject("ocList", ocList);
+				taskCert = new TaskCert();
+				taskCert.setTaskId(task.getId());
+				taskCert.setType(BusConstants.TASK_CERT_TYPE_VIEW);
+				ocVList = orderCertService.getOrderCertListByTaskCert(taskCert);
 				
+				mv.addObject("ocCList", ocCList);
+				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("accInfo", hwAcc);

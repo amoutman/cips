@@ -213,4 +213,22 @@
       task_type = #{reTaskType} or task_type = #{taskType}
      </trim>
   </update>
+  
+  <select id="getOrderCertListByTaskCert" parameterType="com.cips.model.TaskCert" resultType="com.cips.model.OrderCert" >
+    select 
+         oc.id id,  oc.order_id orderId,  oc.task_id taskId,  oc.order_account_id orderAccountId,  oc.task_type taskType,  
+         oc.status status,  oc.cert_pic certPic,  oc.created_id createdId, oc.created_date createdDate, oc.modified_id modifiedId, oc.modified_date modifiedDate
+    from tb_order_cert o,
+    	 tb_task_cert t
+ 	where oc.id = tc.cert_id
+    <if test="taskId != null" >
+      and t.task_id = #{taskId,jdbcType=CHAR},
+    </if>
+    <if test="certId != null" >
+      and t.cert_id = #{certId,jdbcType=CHAR},
+    </if>
+    <if test="type != null" >
+      and t.type = #{type,jdbcType=INTEGER}
+    </if>
+  </select>
 </mapper>

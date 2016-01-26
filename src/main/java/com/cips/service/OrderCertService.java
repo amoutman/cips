@@ -18,4 +18,7 @@ public interface OrderCertService {
     
     void insertTaskCert(TaskCert taskCert);
     
+    TaskCert searchTaskCertByParam(Map<String,Object> param);
+    
+    List<OrderCert> getOrderCertListByTaskCert(TaskCert taskCert);
 }
