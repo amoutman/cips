@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cips.dao.OrderCertMapper;
+import com.cips.dao.TaskCertMapper;
 import com.cips.model.OrderCert;
+import com.cips.model.TaskCert;
 
 @Service("orderCertService")
 public class OrderCertServiceImpl implements OrderCertService {
@@ -17,6 +19,13 @@ public class OrderCertServiceImpl implements OrderCertService {
 	@Autowired
 	public void setOrderCertMapper(OrderCertMapper orderCertMapper) {
 		this.orderCertMapper = orderCertMapper;
+	}
+	
+	private TaskCertMapper taskCertMapper;
+
+	@Autowired
+	public void setTaskCertMapper(TaskCertMapper taskCertMapper) {
+		this.taskCertMapper = taskCertMapper;
 	}
 
 	@Override
@@ -39,6 +48,11 @@ public class OrderCertServiceImpl implements OrderCertService {
 	
 	public void updateOrderCertByParam(Map<String,Object> param){
 		orderCertMapper.updateOrderCertByParam(param);
+	}
+
+	@Override
+	public void insertTaskCert(TaskCert taskCert) {
+		taskCertMapper.insertSelective(taskCert);
 	}
 
 }

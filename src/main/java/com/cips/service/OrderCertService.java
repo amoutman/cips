@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cips.model.OrderCert;
+import com.cips.model.TaskCert;
 
 public interface OrderCertService {
 	
@@ -14,4 +15,7 @@ public interface OrderCertService {
     List<OrderCert> getOrderCertList(Map<String,Object> param);
     
     void updateOrderCertByParam(Map<String,Object> param);
+    
+    void insertTaskCert(TaskCert taskCert);
+    
 }
