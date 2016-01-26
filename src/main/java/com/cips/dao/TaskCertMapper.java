@@ -17,5 +17,7 @@ public interface TaskCertMapper {
 
     int updateByPrimaryKey(TaskCert record);
     
+    TaskCert selectTaskCertByParam(Map<String,Object> param);
+    
     int deleteTaskCertByCertId(Map<String,Object> param);
 }

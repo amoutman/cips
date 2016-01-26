@@ -30,19 +30,16 @@ public class OrderCertServiceImpl implements OrderCertService {
 
 	@Override
 	public void insertOrderCertList(List<OrderCert> ocList) {
-		// TODO Auto-generated method stub
 		orderCertMapper.insertOrderCertList(ocList);
 	}
 
 	@Override
 	public void deleteOrderCertByParam(Map<String, Object> param) {
-		// TODO Auto-generated method stub
 		orderCertMapper.deleteOrderCertByParam(param);
 	}
 
 	@Override
 	public List<OrderCert> getOrderCertList(Map<String, Object> param) {
-		// TODO Auto-generated method stub
 		return orderCertMapper.getOrderCertList(param);
 	}
 	
@@ -61,6 +58,16 @@ public class OrderCertServiceImpl implements OrderCertService {
 	
 	public void deleteTaskCertByCertId(Map<String,Object> param){
 		taskCertMapper.deleteTaskCertByCertId(param);
+	}
+
+	@Override
+	public TaskCert searchTaskCertByParam(Map<String, Object> param) {
+		return taskCertMapper.selectTaskCertByParam(param);
+	}
+
+	@Override
+	public List<OrderCert> getOrderCertListByTaskCert(TaskCert taskCert) {
+		return orderCertMapper.getOrderCertListByTaskCert(taskCert);
 	}
 
 }

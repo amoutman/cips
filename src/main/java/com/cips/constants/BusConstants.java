@@ -40,6 +40,10 @@ public class BusConstants {
 	public static final Integer POUNDAGE_STATUS_YES = 0;
 	public static final Integer POUNDAGE_STATUS_NO = 1;
 	
+	/**TaskCert Type : 0：提交；1：查看*/
+	public static final Integer TASK_CERT_TYPE_COMMIT = 0;
+	public static final Integer TASK_CERT_TYPE_VIEW = 1;
+	
 	/**待办类型及待办信息*/
 	//订单已提交发送到平台操作员进行信息维护
 	public static final Integer TASK_TYPE_COMMIT = 1; 

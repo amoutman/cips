@@ -32,13 +32,12 @@
                <h2>订单信息</h2>
                <div class="wtbox">
                  <div class="clearFix">
-                     <div class="w470"><label>订  单  号：</label> <span>${order.orderNo}</span> </div>
-                     <div class="w235"><label></label> <span></span> </div>
+                     <div class="w235"><label>订  单  号：</label> <span>${order.orderNo}</span> </div>
+                     <div class="w235"><label>订单状态：</label> <span>${order.statusDesc}</span> </div>
                      <div class="w235"><label>提  交  人：</label> <span>${user.userName}</span> </div>
                      <div class="w235"><label>提交时间：</label> <span><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></span> </div>
-                     <div class="w235"><label>订单状态：</label> <span>${order.statusDesc}</span> </div>
 					 <div class="w235"><label>申请金额：</label> <span class="color_orange font18">${order.applyAmount}$</span> </div>
-                     <div class="w470"><label>应付金额：</label> <span class="color_orange font18">${order.payAmount}￥</span> </div>
+                     <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${order.payAmount}￥</span> </div>
                  </div>
                  <div class="clearFix">
                  <div class="wt-t">海外账户信息</div>
@@ -51,7 +50,7 @@
                </div>
                
                <h2>海外用户账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
  			   <div class="wt_skzh clearFix">
 	                 <div class="clearFix">
 	                     <div class="w235"><label>收款人姓名： </label> <span>${hwUserAcc.accountName}</span> </div>

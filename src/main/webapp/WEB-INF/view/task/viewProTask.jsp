@@ -44,7 +44,7 @@
                </div>
                <c:if test="${task.taskType == 5 || task.taskType == 7}">
                <h2>华创账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
 			   <div class="clearFix">
                  <div class="clearFix">
                     <table width="100%" class="dataTable zhtable" id="accTab">
@@ -71,10 +71,11 @@
                  </div>
 			   </div>
 			   </c:if>
-			   <h2>${title2 }</h2>
-               <div class="wtbox mt10">
+			  <c:if test="${ocVList != null}">
+			   <h2>驳回凭证信息</h2>
+               <div class="wtbox">
                  <div id="ImgPr" class="imgShow clearFix">
-                 <c:forEach var="oc" items="${ocList}">
+                 <c:forEach var="oc" items="${ocVList}">
                  	<a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
                  	<div class="tcDiv">
                		<span class="close"></span>
@@ -82,8 +83,22 @@
           		    </div>
                  </c:forEach>
                  </div>
-                 
                </div>
+               </c:if>
+			   <c:if test="${ocCList != null}">
+			   <h2>${title2 }</h2>
+               <div class="wtbox">
+                 <div id="ImgPr" class="imgShow clearFix">
+                 <c:forEach var="oc" items="${ocCList}">
+                 	<a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnck"><img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="100" height="100"/></a>
+                 	<div class="tcDiv">
+               		<span class="close"></span>
+                   	<img id="imgShow_WU_FILE_0" src="uploadImgFiles/${oc.certPic }" width="500" height="300"/>
+          		    </div>
+                 </c:forEach>
+                 </div>
+               </div>
+               </c:if>
                <div class="btnDiv tac"><a href="javascript:history.back();" class="btnGrey" onclick="">返回</a></div>
            </div>
      </div>

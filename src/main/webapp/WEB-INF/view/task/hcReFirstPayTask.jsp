@@ -44,7 +44,7 @@
                </div>
        
 				<h2>华创账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
 			      <div class="wt_skzh clearFix rolebox">
                    <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnBlue btnck">添加收款账户</a></h2>
                <!--弹窗start-->
@@ -106,7 +106,7 @@
                  </div>
 			   </div>
 			   <h2>驳回凭证信息</h2>
-			   <div class="wtbox mt10">
+			   <div class="wtbox">
                  <div id="ImgShow" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
                  	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
@@ -121,9 +121,9 @@
                  </div>
                </div>
                </c:if>
-               </div>
+               
 			   <h2>${title2 }</h2>
-			   <div class="wtbox mt10">
+			   <div class="wtbox">
                  <ul>
                     <li>
                     	<input type="hidden" id="taskId" value="${task.id }"/>

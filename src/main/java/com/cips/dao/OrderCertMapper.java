@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cips.model.OrderCert;
+import com.cips.model.TaskCert;
 
 public interface OrderCertMapper {
     int deleteByPrimaryKey(String id);
@@ -25,6 +26,8 @@ public interface OrderCertMapper {
     List<OrderCert> getOrderCertList(Map<String,Object> param);
     
     int updateOrderCertByParam(Map<String,Object> param);
+    
+    List<OrderCert> getOrderCertListByTaskCert(TaskCert taskCert);
     
     OrderCert selectOrderCertByParam(Map<String,Object> param);
     

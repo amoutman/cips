@@ -109,7 +109,7 @@
 .part-right .content{ padding:30px 0; min-height:400px;}
 .w120{width:120px;}
 .w210{width:210px;}
-.w235{width:235px;}
+.w235{width:325px;}
 .w470{width:470px;}
 .w430{width:430px !important;}
 .w210 .btnOrage{width:142px; height:40px; line-height:40px;}
@@ -132,7 +132,7 @@
 .barbox dd{ float:left; line-height:14px; margin:0 2px;}
 
 .waitevent{width:830px; margin:0 auto;}
-.waitevent li{ height:58px; border:1px solid #d2d2d2;  margin-top:22px;}
+.waitevent li{ /*height:58px;*/ border:1px solid #d2d2d2;  margin-top:22px;}
 .waitevent li:hover{box-shadow:0px 1px 5px #ccc;}
 .waitevent .wt-lf{position:relative;height:58px;height:58px;width:8px; float:left;}
 .waitevent .wt-border{ display:block;width:9px; height:60px; background-color:#009ce5; position:absolute; left:-1px; top:-1px;}
@@ -140,7 +140,7 @@
 .waitevent .wt-num,.waitevent .wt-event{ float:left; }
 .waitevent .wt-deal{ float:right; padding:17px 15px 0 0;  height:41px;}
 .waitevent .wt-num{width:270px; padding-left:45px; color:#888;}
-.waitevent .wt-event{width:360px;color:#009ce5;}
+.waitevent .wt-event{width:340px;padding-left:20px;padding-top:18px;padding-bottom:15px;height:auto; line-height:18px;color:#009ce5;}
 
 .wtcon{width:760px; margin:15px auto 0;  padding:0 35px 10px; background-color:#f6f6f6;border:1px solid #dcdcdc;}
 .wtcon h2{ line-height:44px; color:#009ce5;}
@@ -163,7 +163,7 @@
 .tcbox label{ display:inline-block; color:#666;}
 .tcbox .wt-t{width:100%; color:#c2c2c2;border-top:1px solid #dcdcdc; margin-top:15px; padding:25px 0 10px;}
 /*弹窗透明层*/
-.bg {background-color: #000; display:none;width: 100%;height: 100%;left:0;top:0;/*FF IE7*/filter:alpha(opacity=40);/*IE*/opacity:0.4;/*FF*/z-index:900;position:fixed!important;/*FF IE7*/position:absolute;/*IE6*/_top:expression(eval(document.compatMode &&
+.bg {background-color: #000; display:none;width: 100%;height: 150%;left:0;top:0;/*FF IE7*/filter:alpha(opacity=40);/*IE*/opacity:0.4;/*FF*/z-index:900;position:fixed!important;/*FF IE7*/position:absolute;/*IE6*/_top:expression(eval(document.compatMode &&
             document.compatMode=='CSS1Compat') ?
             documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
             document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/}
@@ -282,3 +282,28 @@
 .xzzh_tc .tcbox{padding:20px 10px;}
 
 .select-txt{width:120px; height:30px;margin-left:5px;border:1px solid #d2d2d2}
+
+.zhtable th{ height:30px; line-height:30px; text-align:center;}
+.zhtable td{ padding:10px 0;}
+.zhtc li{ border:none;   height: auto; margin-top: 10px;}
+.zhtc li:hover{ box-shadow:none;}
+
+/*2016126*/
+#content {
+	width: 360px;
+	margin: 30px auto;
+	padding: 20px 60px;
+	border: 1px solid #D2D2D2;
+	-moz-box-shadow: 0 0 30px #CCC;
+	-webkit-box-shadow: 0 0 30px #CCC;
+	box-shadow: 0 0 30px #CCC;
+	height:900px;
+	background: #FFF;
+	background: -webkit-gradient(linear, left top, left 15, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+	background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 15px);
+}
+#content a img{ width:79px; height:79px;}
+
+.back_tc{width:360px !important;}
+.back_tc .s-form textarea{width:90%;height:90px;}
+.back_tc .s-form li{height:auto;}
