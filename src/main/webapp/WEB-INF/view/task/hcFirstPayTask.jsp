@@ -44,7 +44,7 @@
                </div>
        
 				<h2>华创账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
 			      <div class="wt_skzh clearFix rolebox">
 			       <input type="hidden" id="rmbAccount"/>
                    <input type="hidden" id="hwAccount" />
@@ -96,7 +96,7 @@
                  </div>
 			   </div>
 			   <h2>${title2 }</h2>
-			   <div class="wtbox mt10">
+			   <div class="wtbox">
                  <ul>
                     <li>
                     	<input type="hidden" id="taskId" value="${task.id }"/>

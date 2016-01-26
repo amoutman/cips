@@ -230,7 +230,7 @@
     <if test="type != null" >
       and t.type = #{type,jdbcType=INTEGER}
     </if>
-    
+    </select>
   <select id="selectOrderCertByParam" resultMap="BaseResultMap" parameterType="map">
   	select 
     <include refid="Base_Column_List" />

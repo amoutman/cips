@@ -45,7 +45,7 @@
                </div>
                <c:if test="${task.taskType == 5 || task.taskType == 7}">
                <h2>华创账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
 			   <div class="clearFix">
                  <div class="clearFix">
                     <table width="100%" class="dataTable zhtable" id="accTab">
@@ -73,7 +73,7 @@
 			   </div>
 			   </c:if>
 			   <h2>${title2 }</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
                  <div id="imgShow" class="lightBox imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
              		<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>

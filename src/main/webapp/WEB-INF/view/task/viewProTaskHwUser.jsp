@@ -50,7 +50,7 @@
                </div>
                
                <h2>海外用户账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
  			   <div class="wt_skzh clearFix">
 	                 <div class="clearFix">
 	                     <div class="w235"><label>收款人姓名： </label> <span>${hwUserAcc.accountName}</span> </div>

@@ -56,7 +56,7 @@
                </div>
                </c:if>
                <h2>${title2 }</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
                  <ul>
                     <li>
                     	<input type="hidden" id="taskId" value="${task.id }"/>

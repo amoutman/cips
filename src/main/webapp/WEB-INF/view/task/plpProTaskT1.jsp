@@ -49,7 +49,7 @@
                  </div>
                </div>
 			<h2>海外用户账户信息</h2>
-               <div class="wtbox mt10">
+               <div class="wtbox">
  			   <div class="wt_skzh clearFix">
                    <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:void(0)" class="btnBlue btnck">选择收款账户信息</a></h2>
 	                <!--弹窗start-->
