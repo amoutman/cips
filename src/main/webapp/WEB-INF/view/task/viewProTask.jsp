@@ -112,6 +112,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	showBigPic();
+	$("#fancybox-wrap").dragDiv();
 });
 function downloadCert(path){
 	$.post(

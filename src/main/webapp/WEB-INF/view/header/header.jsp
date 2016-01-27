@@ -14,7 +14,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="resource/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="resource/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="resource/js/style.js"></script>
+<script type="text/javascript" src="resource/js/dragDiv.js"></script>
 <script type="text/javascript">
+$("ul.menu li:first").addClass("curr");
+$("ul.menu li").click(function(){
+	   $(this).addClass("curr").siblings().removeClass("curr");										  
+});
+
 </script>
 <!--左侧栏目 start-->
   <div class="part-left">

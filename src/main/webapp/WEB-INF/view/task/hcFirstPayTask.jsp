@@ -255,6 +255,7 @@ $(document).ready(function(){
 			);
 		}
 	});
+	$("#fancybox-wrap").dragDiv();
 })
 
 function deletePic(obj){
@@ -347,6 +348,9 @@ function showBigPic(){
 	});
 }
 
-
+$(document).ready(function() {
+	
+	 // $("#fancybox-wrap").dragDiv();//拖拽整个div
+	});
 </script>
 </html>

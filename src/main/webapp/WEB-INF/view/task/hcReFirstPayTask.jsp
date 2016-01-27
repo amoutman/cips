@@ -274,6 +274,7 @@ $(document).ready(function(){
 			);
 		}
 	});
+	$("#fancybox-wrap").dragDiv();
 })
 
 function showBigPic(){
