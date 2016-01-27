@@ -27,9 +27,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <form id="changePwForm">
        <ul class="s-form">
        			 <input type="hidden" name="password" id="password" value="${user.password }"/>
-                 <li><label>旧密码：</label><input type="text" class="input-txt" id="oldPassword" name="oldPassword"> </li>
-                 <li><label>新密码：</label><input type="text" class="input-txt" id="newPassword" name="newPassword"></li>
-                 <li><label>确认密码：</label><input type="text" class="input-txt" id="confirmNewPw" name="confirmNewPw"></li>
+                 <li><label>旧密码：</label><input type="password" class="input-txt" id="oldPassword" name="oldPassword"> </li>
+                 <li><label>新密码：</label><input type="password" class="input-txt" id="newPassword" name="newPassword"></li>
+                 <li><label>确认密码：</label><input type="password" class="input-txt" id="confirmNewPw" name="confirmNewPw"></li>
        		
        	</ul>
        </form>
@@ -93,7 +93,7 @@ $(document).ready(function() {
 				function(data){
 					if(data['success']){
 						alert("修改密码成功");
-						window.location.href="${pageContext.request.contextPath}/user/toPageUserManage";
+						window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 					}else{
 						alert("修改密码失败");
 					}
