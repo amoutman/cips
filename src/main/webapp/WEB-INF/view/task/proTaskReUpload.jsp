@@ -149,6 +149,8 @@ $(document).ready(function(){
 	$("#returnBtn").click(function(){
 		window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 	})
+	
+	$("#fancybox-wrap").dragDiv();
 
 });
 function downloadCert(path){

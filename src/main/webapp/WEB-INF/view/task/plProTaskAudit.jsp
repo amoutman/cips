@@ -180,6 +180,8 @@ $(document).ready(function() {
 		'transitionIn'		: 'none',
 		'transitionOut'		: 'none'
 	});
+	
+	$("#fancybox-wrap").dragDiv();
 });
 function taskConfirm(taskId){
 	$.post(
