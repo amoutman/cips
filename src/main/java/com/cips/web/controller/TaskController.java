@@ -220,6 +220,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -250,6 +251,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
@@ -282,6 +284,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
@@ -315,6 +318,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
@@ -331,6 +335,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -351,6 +356,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -371,6 +377,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -391,6 +398,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -405,7 +413,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
-				
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -427,6 +435,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "好望角上传打款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -448,6 +457,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -469,6 +479,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "好望角上传打款凭证信息");
+				mv.addObject("title3", "好望角国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -483,6 +494,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -504,6 +516,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -525,6 +538,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -546,6 +560,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -560,6 +575,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -581,6 +597,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -602,6 +619,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -623,6 +641,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -637,6 +656,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -658,6 +678,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -679,6 +700,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -700,6 +722,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -714,6 +737,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -735,6 +759,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -756,6 +781,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -777,6 +803,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -791,6 +818,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -812,6 +840,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -833,6 +862,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -854,6 +884,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -868,6 +899,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -889,6 +921,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -910,6 +943,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -931,6 +965,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -945,6 +980,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -966,6 +1002,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "好望角上传收款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -987,6 +1024,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1008,6 +1046,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "好望角上传收款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1027,6 +1066,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1054,6 +1094,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1081,6 +1122,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1108,6 +1150,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");//.add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100)))
 				mv.addObject("task", task);
@@ -1128,6 +1171,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1155,6 +1199,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1182,6 +1227,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1209,6 +1255,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1223,13 +1270,14 @@ public class TaskController {
 
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
 			case 53:
-				//查询海外用户账户信息 上传打款凭证
+				//查询海外用户账户信息 
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("orderId", task.getOrderId());
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
@@ -1243,7 +1291,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "国内客户上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1265,6 +1314,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1285,7 +1335,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "国内客户上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1300,6 +1351,7 @@ public class TaskController {
 
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1320,7 +1372,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1342,6 +1395,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1362,7 +1416,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -1377,6 +1432,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1397,7 +1453,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1419,6 +1476,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1439,7 +1497,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1454,6 +1513,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1474,7 +1534,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "国内客户上传收款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1495,6 +1556,7 @@ public class TaskController {
 				
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1515,7 +1577,8 @@ public class TaskController {
 				mv.addObject("ocList", ocList);
 				
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "国内客户上传收款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -1526,6 +1589,7 @@ public class TaskController {
 			if(ocList != null){
 				paramMap =  new HashMap<String,Object>();
 				paramMap.put("taskId", task.getId());
+				paramMap.put("type", BusConstants.TASK_CERT_TYPE_VIEW);
 				TaskCert taskCert = orderCertService.searchTaskCertByParam(paramMap);
 				if(taskCert == null){
 					for (OrderCert orderCert : ocList) {
@@ -1731,12 +1795,27 @@ public class TaskController {
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 14:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_CONFIRM_REJECT);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 16:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_VOUCHER);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 18:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJPAY_HCRECEIPT_VOUCHER_REJECT);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 20:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 22:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
@@ -1746,7 +1825,17 @@ public class TaskController {
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_VOUCHER);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 26:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCPAY_RECEIPT_VOUCHER);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 28:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HWUSERPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 30:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HWUSERPAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
@@ -1756,7 +1845,17 @@ public class TaskController {
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCRECEIPT_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 34:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_FIRST_HCRECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 36:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HC_HWPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 38:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HC_HWPAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
@@ -1766,7 +1865,17 @@ public class TaskController {
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJ_HWRECEIPT_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 42:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWJ_HWRECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 44:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HWUSERPAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 46:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HWUSERPAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
@@ -1776,7 +1885,17 @@ public class TaskController {
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCRECEIPT_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 50:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_SECOND_HCRECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 52:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 54:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_PAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
@@ -1786,12 +1905,27 @@ public class TaskController {
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_RECEIPT_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 58:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_RECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 60:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_PAY_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
 					break;
+				case 62:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_HWUSER_PAY_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
 				case 64:
+					//生成新的待办任务至平台操作员
+					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_RECEIPT_CONFIRM);
+					newTask.setOrderStatus(curTask.getOrderStatus());
+					break;
+				case 66:
 					//生成新的待办任务至平台操作员
 					newTask = taskService.initNewTask(curTask.getOrderId(), BusConstants.TASK_TYPE_CUSTOMER_RECEIPT_CONFIRM);
 					newTask.setOrderStatus(curTask.getOrderStatus());
@@ -3207,6 +3341,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3240,6 +3375,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
@@ -3277,6 +3413,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
@@ -3310,6 +3447,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
@@ -3334,6 +3472,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3356,6 +3495,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3380,6 +3520,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3402,6 +3543,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3424,6 +3566,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
@@ -3447,6 +3590,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "好望角上传打款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3471,6 +3615,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3493,6 +3638,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "好望角上传打款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3515,6 +3661,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3537,6 +3684,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3561,6 +3709,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3583,6 +3732,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创国内收款账户信息");
 				mv.addObject("accInfo", hcAccT3);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3605,6 +3755,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3627,6 +3778,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3651,6 +3803,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3673,6 +3826,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3695,6 +3849,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3717,6 +3872,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3741,6 +3897,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3763,6 +3920,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -3785,6 +3943,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3807,6 +3966,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3831,6 +3991,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3853,6 +4014,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3875,6 +4037,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3897,6 +4060,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3921,6 +4085,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3943,6 +4108,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3965,6 +4131,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -3987,6 +4154,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4011,6 +4179,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4033,6 +4202,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4055,6 +4225,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4077,6 +4248,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "好望角上传收款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4101,6 +4273,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4123,6 +4296,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "好望角上传收款凭证信息");
+				mv.addObject("title3", "好望角海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4150,6 +4324,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4178,6 +4353,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4208,6 +4384,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4236,6 +4413,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：大于");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");//.add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100)))
 				mv.addObject("task", task);
@@ -4264,6 +4442,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4292,6 +4471,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4322,6 +4502,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4350,6 +4531,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：大于");
 				mv.addObject("title2", "华创上传收款凭证信息");
+				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4372,6 +4554,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4393,7 +4576,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "国内客户上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4418,6 +4602,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4439,7 +4624,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "国内客户上传打款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4462,6 +4648,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4483,7 +4670,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4508,6 +4696,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4529,7 +4718,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "海外用户上传收款凭证信息");
+				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("payMoney", order.getPayAmount()+"￥");
 				mv.addObject("task", task);
@@ -4552,6 +4742,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4573,7 +4764,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4598,6 +4790,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4619,7 +4812,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应打款金额：");
-				mv.addObject("title2", "上传打款凭证信息");
+				mv.addObject("title2", "海外用户上传打款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4642,6 +4836,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4663,7 +4858,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "国内客户上传收款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4688,6 +4884,7 @@ public class TaskController {
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
@@ -4709,7 +4906,8 @@ public class TaskController {
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
 				mv.addObject("title1", "应收款金额：");
-				mv.addObject("title2", "上传收款凭证信息");
+				mv.addObject("title2", "国内客户上传收款凭证信息");
+				mv.addObject("title3", "国内客户海外收款账户信息");
 				mv.addObject("accInfo", hwAcc);
 				mv.addObject("payMoney", order.getApplyAmount()+"$");
 				mv.addObject("task", task);
