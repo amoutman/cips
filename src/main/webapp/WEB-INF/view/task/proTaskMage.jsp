@@ -43,7 +43,7 @@
        </c:if>
        </ul>
        <!-- 分页 -->
-       <jsp:include page="../header/pager.jsp"></jsp:include>
+       <c:if test="${size > 0}"><jsp:include page="../header/pager.jsp"></jsp:include></c:if>
      </div>
   </div>
   <!--右侧模块 end-->

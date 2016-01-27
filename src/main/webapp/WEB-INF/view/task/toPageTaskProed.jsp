@@ -43,21 +43,27 @@
           <tr>
             <th width="30%">订单号</th>
             <th>任务信息</th>
+            <th>任务完成时间</th>
             <th class="w120">操作</th>
           </tr>
          </thead>
           <tbody>
+          <c:if test="${taskNum <= 0}"><h2>您还没有处理过待办任务</h2></c:if>
+          <c:if test="${taskNum > 0}">
           <c:forEach items="${tasks}" var="task">
 	          <tr>
 	            <td>${task.orderNo}</td>
 	            <td>${task.msg}</td> 
+	            <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${task.endTime}" type="both"/>
 	            <td><a href="task/viewProTask?taskId=${task.id}" class="colorBlue">查看</a></td>
 	          </tr>
           </c:forEach>
+          </c:if>
           </tbody>
        </table>
-            <!-- 分页 -->
-     <jsp:include page="../header/pager.jsp"></jsp:include>
+       <!-- 分页 -->
+       <c:if test="${taskNum > 0}"><jsp:include page="../header/pager.jsp"></jsp:include></c:if>
+     
      </div>
   </div>
   <!--右侧模块 end-->

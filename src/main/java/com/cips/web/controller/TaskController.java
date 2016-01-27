@@ -87,17 +87,19 @@ public class TaskController {
 			ModelAndView mv = new ModelAndView();
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//根据用户角色查询该角色所有未处理任务
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put(GlobalPara.PAGER_SESSION, pager);
+	        params.put("status", BusConstants.TASK_STATUS_NOT_PROCESS);
 			//根据userId查询该用户所属角色
 			List<Role> roles = roleService.getRoleListByUserId(user.getId());
 			List<String> roleIds = new ArrayList<String>();
 			for (Role role : roles) {
 				roleIds.add(role.getId());
+				if(!GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName())){
+					params.put("userId", user.getId());
+				}
 			}
-			//根据用户角色查询该角色所有未处理任务
-			Map<String,Object> params = new HashMap<String,Object>();
-			params.put(GlobalPara.PAGER_SESSION, pager);
-	        params.put("status", BusConstants.TASK_STATUS_NOT_PROCESS);
-	        params.put("userId", user.getId());
 	        params.put("roleIds", roleIds);
 	        
 			List<Task> tasks = taskService.getTaskListByParams(params);
@@ -2968,12 +2970,17 @@ public class TaskController {
 			Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
 			//获取客户用户名userId
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
-			
+			//获取用户角色
+			List<Role> roles = roleService.getRoleListByUserId(user.getId());
 			
 			Map<String,Object> params = new HashMap<String,Object>();
 			params.put(GlobalPara.PAGER_SESSION, pager);
 	        params.put("status", BusConstants.TASK_STATUS_PROCESSED);
-	        params.put("operatedId", user.getId());
+	        for (Role role : roles) {
+				if(!GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName())){
+					 params.put("operatedId", user.getId());
+				}
+			}
 	        
 	        if(StringUtils.isNotBlank(task.getOrderNo())){
 	        	params.put("orderNo", task.getOrderNo());
@@ -2991,6 +2998,7 @@ public class TaskController {
 			mv.addObject("task", task);
 			mv.addObject("pager", pager);
 			mv.addObject("tasks", tasks);
+			mv.addObject("taskNum", tasks.size());
 			mv.setViewName("task/toPageTaskProed");
 			return mv;
 		} catch (Exception e) {

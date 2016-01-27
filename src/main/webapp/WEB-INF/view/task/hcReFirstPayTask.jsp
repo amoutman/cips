@@ -43,7 +43,7 @@
                  </div>
                </div>
        
-				<h2>华创账户信息</h2>
+				<h2>华创客户账户信息</h2>
                <div class="wtbox">
 			      <div class="wt_skzh clearFix rolebox">
                    <h2 class="ck-deal"><a onclick="javascript:showDiv()" href="javascript:vote(0)" class="btnBlue btnck">添加收款账户</a></h2>

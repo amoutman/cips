@@ -48,6 +48,8 @@
           </tr>
          </thead>
           <tbody>
+          <c:if test="${orderNum <= 0}"><h2>您还没有提交过订单申请</h2></c:if>
+          <c:if test="${orderNum > 0}">
           <c:forEach items="${orders}" var="order" >
           <tr>
             <td>${order.orderNo}</td>
@@ -60,10 +62,11 @@
             </td>
           </tr>
           </c:forEach>
+          </c:if>
           </tbody>
        </table>
        <!--分页 start-->
-       <jsp:include page="../header/pager.jsp"></jsp:include>
+       <c:if test="${orderNum > 0}"><jsp:include page="../header/pager.jsp"></jsp:include></c:if>
        <!--分页 end-->
      </div>
   </div>

@@ -40,7 +40,7 @@
                      <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${order.payAmount}￥</span> </div>
                  </div>
                  <div class="clearFix">
-                 <div class="wt-t">海外账户信息</div>
+                 <div class="wt-t">申请人海外账户信息</div>
                  <div class="clearFix">
                      <div class="w235"><label>收款人姓名： </label> <span>${hwAcc.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${hwAcc.accountCode}</span> </div>
@@ -49,7 +49,7 @@
                  </div>
                </div>
                
-               <h2>海外用户账户信息</h2>
+               <h2>海外用户人民币账户信息</h2>
                <div class="wtbox">
  			   <div class="wt_skzh clearFix">
 	                 <div class="clearFix">

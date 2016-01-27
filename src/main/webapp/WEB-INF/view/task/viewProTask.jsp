@@ -13,7 +13,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="resource/css/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
-<title>代办事项</title>
+<title>已办事项</title>
 </head>
 
 <body>
