@@ -39,7 +39,7 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 				request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
 				return false;
 			}
-			if(user.getIsFirstLogin() == 0 && !(url.matches(".*toChangePassword.*") || url.matches(".*updatePassword.*"))){
+			if(user.getIsFirstLogin() == 0 && !(url.matches(".*toChangePassword.*") || url.matches(".*updatePassword.*") || url.matches(".*signOut.*"))){
 				String contextPath=request.getContextPath();
 				response.sendRedirect(contextPath+"/user/toChangePassword");
 				return false;
@@ -72,7 +72,7 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 		//List<Menu> menuList = (List<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
 		if(mv!=null){
 			mv.addObject("menuList", request.getSession().getAttribute(GlobalPara.MENU_SESSION));
-			mv.addObject("user", request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN));
+			mv.addObject("loginUser", request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN));
 		}
 	}
 

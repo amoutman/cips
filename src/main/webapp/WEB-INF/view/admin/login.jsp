@@ -82,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						if(data["isFirstLogin"]){
 							window.location.href="${pageContext.request.contextPath}/user/toChangePassword";
 						}else{
-							window.location.href="${pageContext.request.contextPath}/user/toPageUserManage";
+							window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
 						}
 					}else{
 						alert("登录失败");

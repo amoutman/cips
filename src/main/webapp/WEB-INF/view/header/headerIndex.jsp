@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <span class="avatar-shade"></span>
           <span class="avatar-img"><img src="resource/images/head.gif" width="43" height="43" /></span>
         </span>
-        <span class="word">${user.userName }欢迎您！</span>
+        <span class="word">${loginUser.userName }欢迎您！</span>
      </div>
   </div>
 </div>
