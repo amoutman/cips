@@ -587,9 +587,9 @@ public class UserController {
 				roleIds.add(role.getId());
 				if(!GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName())){
 					params.put("userId", user.getId());
+					params.put("roleIds", roleIds);
 				}
 			}
-	        params.put("roleIds", roleIds);
 	        
 			Integer taskNum = taskService.getTaskNum(params);
 			map.put("num", taskNum);
