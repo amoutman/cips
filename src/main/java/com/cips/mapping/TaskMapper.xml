@@ -199,4 +199,21 @@
  		and t.task_type = #{taskType}
  	</if>
   </select>
+  <select id="getTaskNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select 
+       count(1)
+    from tb_task t where 1=1
+ 	<if test="roleIds != null">
+ 	 and t.role_id in 
+ 	  <foreach item="roleId" index="index" collection="roleIds" open="(" separator="," close=")">
+ 	  	#{roleId,jdbcType=CHAR}
+ 	  </foreach> 
+ 	 </if>
+ 	<if test="status != null">
+      	and t.status = #{status,jdbcType=INTEGER}
+    </if>
+ 	<if test="userId != null and userId != ''">
+      	and (t.operated_id = #{userId,jdbcType=CHAR} or t.operated_id IS NULL)
+    </if>
+   </select>
 </mapper>

@@ -185,6 +185,7 @@ public class OrderController {
 			
 			mv.addObject("order", order);
 			mv.addObject("orders", orders);
+			mv.addObject("orderNum", orders.size());
 			mv.addObject("pager", pager);
 			mv.setViewName("order/toPageOrders");
 			return mv;

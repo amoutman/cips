@@ -44,7 +44,7 @@
                  </div>
                </div>
                <c:if test="${task.taskType == 5 || task.taskType == 7}">
-               <h2>华创账户信息</h2>
+               <h2>华创客户账户信息</h2>
                <div class="wtbox">
 			   <div class="clearFix">
                  <div class="clearFix">
@@ -204,7 +204,10 @@ function taskConfirm(taskId){
 
 function taskRejected(taskId){
 	var remark = $("#remark").val();
-	
+	if(remark == null || remark == ""){
+		$("#remark").parent().after("<li class='color_red'>请填写驳回原因</li>");
+		return;
+	}
 	$.post(
 			"${pageContext.request.contextPath}/task/plpProTaskRejected",
 			{

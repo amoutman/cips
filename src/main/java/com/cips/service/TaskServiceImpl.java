@@ -758,4 +758,9 @@ public class TaskServiceImpl implements TaskService {
 		
 	}
 
+	@Override
+	public Integer getTaskNum(Map<String, Object> params) throws Exception {
+		return taskMapper.getTaskNum(params);
+	}
+
 }

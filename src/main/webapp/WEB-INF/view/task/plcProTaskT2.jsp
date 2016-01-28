@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>代办事项</title>
+<title>待办事项</title>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
                      <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${order.payAmount}￥</span> </div>
                  </div>
                  <div class="clearFix">
-                 <div class="wt-t">海外账户信息</div>
+                 <div class="wt-t">申请人海外账户信息</div>
                  <div class="clearFix">
                      <div class="w235"><label>收款人姓名： </label> <span>${hwAcc.accountName}</span> </div>
                      <div class="w235"><label>收款人账号：</label> <span>${hwAcc.accountCode}</span> </div>
@@ -49,7 +49,7 @@
                  </div>
                </div>
                
-               <h2>海外用户账户信息</h2>
+               <h2>海外用户人民币账户信息</h2>
                <div class="wtbox">
  			   <div class="wt_skzh clearFix">
 	                 <div class="clearFix">
@@ -108,7 +108,10 @@ function taskConfirm(taskId){
 
 function taskRejected(taskId){
 	var remark = $("#remark").val();
-	
+	if(remark == null || remark == ""){
+		$("#remark").parent().after("<li class='color_red'>请填写驳回原因</li>");
+		return;
+	}
 	$.post(
 			"task/plpProTaskRejected",
 			{

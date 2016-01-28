@@ -47,4 +47,12 @@ public interface TaskService {
 	public void saveNewTask(Task newTask) throws Exception;
 	
 	public void hcFirstPayConfirm(OrderDetails hcAccT3, OrderDetails hcAccT4, OrderOperate orderOperate, Task curTask, Task newTask) throws Exception;
+	
+	/**
+	 * 获取待办数量
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer getTaskNum(Map<String, Object> params) throws Exception;
 }

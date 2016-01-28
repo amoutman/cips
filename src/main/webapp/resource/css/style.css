@@ -308,3 +308,7 @@
 .back_tc{width:360px !important;}
 .back_tc .s-form textarea{width:90%;height:90px;}
 .back_tc .s-form li{height:auto;}
+
+/*待办数量图标*/
+.menu li{ position:relative;}
+.menu li .waitnum{ position:absolute; left:125px; top:10px; width:16px; font-size:12px; font-family:"宋体"; color:#fff; text-align:center; height:16px; line-height:16px;background:url(../images/dotnum.png) no-repeat; }

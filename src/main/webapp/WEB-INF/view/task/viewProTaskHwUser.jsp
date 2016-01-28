@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>代办事项</title>
+<title>已办事项</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
   <!--右侧模块 start-->
   <div class="part-right">
      <div class="r-tit">
-         <h2 class="icon-db">待办事项</h2>
+         <h2 class="icon-db">已办事项</h2>
      </div>
      <div class="content">
        <div class="wtcon">
