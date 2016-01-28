@@ -204,7 +204,10 @@ function taskConfirm(taskId){
 
 function taskRejected(taskId){
 	var remark = $("#remark").val();
-	
+	if(remark == null || remark == ""){
+		$("#remark").parent().after("<li class='color_red'>请填写驳回原因</li>");
+		return;
+	}
 	$.post(
 			"${pageContext.request.contextPath}/task/plpProTaskRejected",
 			{

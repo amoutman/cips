@@ -16,18 +16,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="resource/js/style.js"></script>
 <script type="text/javascript" src="resource/js/dragDiv.js"></script>
 <script type="text/javascript">
-$("ul.menu li:first").addClass("curr");
-$("ul.menu li").click(function(){
-	   $(this).addClass("curr").siblings().removeClass("curr");										  
-});
-
+$(document).ready(function () {  
+	reLoadMenu();
+    setInterval("reLoadMenu()", 10000);  
+});  
+function reLoadMenu() {  
+	$.post(
+			"user/reLoadMenu",
+			function(data){
+				if(data.msg == "1"){
+					if(data.num > 0){
+						$("#waitnum").text(data.num);
+						$("#waitnum").show();
+					}else{
+						$("#waitnum").hide();
+					}
+				}else{
+					$("#waitnum").hide();
+				}
+			},
+			"json"
+			
+		);  
+}  
 </script>
 <!--左侧栏目 start-->
   <div class="part-left">
   	<ul class="menu">
   	<c:forEach var="menu" items="${menuList }">
   		<c:if test="${menu.menuType == 1 }">
-  			<li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			<c:if test="${menu.menuName == '待办事项'}"><li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a><span class="waitnum" id="waitnum"></span></li></c:if>
+  			<c:if test="${menu.menuName != '待办事项'}"><li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li></c:if>
   		</c:if>
   	</c:forEach>
     </ul>

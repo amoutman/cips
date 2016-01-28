@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>代办事项</title>
+<title>待办事项</title>
 </head>
 
 <body>
@@ -108,7 +108,10 @@ function taskConfirm(taskId){
 
 function taskRejected(taskId){
 	var remark = $("#remark").val();
-	
+	if(remark == null || remark == ""){
+		$("#remark").parent().after("<li class='color_red'>请填写驳回原因</li>");
+		return;
+	}
 	$.post(
 			"task/plpProTaskRejected",
 			{

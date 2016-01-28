@@ -54,7 +54,7 @@
 	          <tr>
 	            <td>${task.orderNo}</td>
 	            <td>${task.msg}</td> 
-	            <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${task.endTime}" type="both"/>
+	            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${task.endTime}" type="both"/></td>
 	            <td><a href="task/viewProTask?taskId=${task.id}" class="colorBlue">查看</a></td>
 	          </tr>
           </c:forEach>

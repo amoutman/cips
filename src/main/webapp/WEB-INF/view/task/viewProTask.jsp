@@ -27,7 +27,7 @@
   <!--右侧模块 start-->
   <div class="part-right">
      <div class="r-tit">
-         <h2 class="icon-db">待办事项</h2>
+         <h2 class="icon-db">已办事项</h2>
      </div>
      <div class="content">
        <div class="wtcon">

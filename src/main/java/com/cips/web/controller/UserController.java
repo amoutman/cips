@@ -30,16 +30,19 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.druid.util.StringUtils;
+import com.cips.constants.BusConstants;
 import com.cips.constants.GlobalPara;
 import com.cips.model.Menu;
 import com.cips.model.Rate;
 import com.cips.model.Role;
+import com.cips.model.Task;
 import com.cips.model.User;
 import com.cips.model.UserRole;
 import com.cips.page.Pager;
 import com.cips.service.FeeService;
 import com.cips.service.MenuService;
 import com.cips.service.RoleService;
+import com.cips.service.TaskService;
 import com.cips.service.UserService;
 import com.cips.util.MD5;
 import com.cips.util.PKIDUtils;
@@ -56,6 +59,8 @@ public class UserController {
 	private MenuService menuService;
 	@Resource
 	private FeeService feeService;
+	@Resource(name="taskService")
+	private TaskService taskService;
 	
 	@RequestMapping("/toIndexPage")
 	public ModelAndView toIndexPage(HttpServletRequest request,HttpServletResponse response){
@@ -565,6 +570,40 @@ public class UserController {
 		return resultMap;
 	}
 	
+	@RequestMapping(value="/reLoadMenu",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> reLoadMenu(HttpServletRequest request){
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//根据用户角色查询该角色所有未处理任务
+			Map<String,Object> params = new HashMap<String,Object>();
+	        params.put("status", BusConstants.TASK_STATUS_NOT_PROCESS);
+			//根据userId查询该用户所属角色
+			List<Role> roles = roleService.getRoleListByUserId(user.getId());
+			List<String> roleIds = new ArrayList<String>();
+			for (Role role : roles) {
+				roleIds.add(role.getId());
+				if(!GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName())){
+					params.put("userId", user.getId());
+				}
+			}
+	        params.put("roleIds", roleIds);
+	        
+			Integer taskNum = taskService.getTaskNum(params);
+			map.put("num", taskNum);
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			map = new HashMap<String,Object>();
+			map.put("num", 0);
+			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
+			return map;
+		}
+	}
+	
 	private List<Menu> getMenuListByRoleId(String[] roleId){
 		Map<String,Object> paraMap = new HashMap<String,Object>();
 		paraMap.put("roleId", roleId);
@@ -586,6 +625,5 @@ public class UserController {
 		
 		return menuList;
 	}
-	
 	
 }
