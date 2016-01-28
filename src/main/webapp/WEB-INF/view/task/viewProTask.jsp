@@ -13,7 +13,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="resource/css/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
-<title>代办事项</title>
+<title>已办事项</title>
 </head>
 
 <body>
@@ -77,7 +77,7 @@
                <div class="wtbox">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocVList}">
-                 	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
+                 	<a rel="example_group" onclick="javascript:movePic()" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  	
                  </c:forEach>
                  </div>
@@ -88,7 +88,7 @@
                <div class="wtbox">
                  <div id="ImgPr" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocCList}">
-                 	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
+                 	<a rel="example_group" onclick="javascript:movePic()" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  </c:forEach>
                  </div>
                </div>
@@ -112,7 +112,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	showBigPic();
-	$("#fancybox-wrap").dragDiv();
+	//$("#fancybox-wrap").dragDiv();
 });
 function downloadCert(path){
 	$.post(
@@ -202,6 +202,11 @@ function showBigPic(){
 		'transitionIn'		: 'none',
 		'transitionOut'		: 'none'
 	});
+}
+
+
+function movePic(){
+	$('#fancybox-wrap').dragDiv();
 }
 </script>
 </html>

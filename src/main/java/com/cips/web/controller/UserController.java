@@ -117,7 +117,7 @@ public class UserController {
 				}else{
 					roleIdArray = new String[]{roleIds};
 				}
-				List<Menu> menuList = getMenuListByRoleId(roleIdArray);
+				List<Menu> menuList = (ArrayList<Menu>)getMenuListByRoleId(roleIdArray);
 				request.getSession().setAttribute(GlobalPara.MENU_SESSION, menuList);
 				resultMap.put("success", true);
 			}

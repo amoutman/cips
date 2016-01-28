@@ -109,7 +109,7 @@
 			   <div class="wtbox">
                  <div id="ImgShow" class="imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
-                 	<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
+                 	<a rel="example_group" onclick="javascript:movePic()" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  </c:forEach>
                  </div>
                  <c:if test="${task.remark != null}">
@@ -170,7 +170,7 @@ $(document).ready(function(){
 			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
 		},
 		'onUploadSuccess':function(file,data,response){
-			var	img = "<span id='picli'><p><input type='hidden' id='filePath' value='"+data+"'><a id='showPicA' rel='example_group' href='uploadImgFiles/"+data+
+			var	img = "<span id='picli'><p><input type='hidden' id='filePath' value='"+data+"'><a id='showPicA' onclick='javascript:movePic()' rel='example_group' href='uploadImgFiles/"+data+
 			  "' title='Lorem ipsum dolor sit amet'>"+
 			  "<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a></p><p><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></p></span>";
 		   var imgPr = $("#ImgPr").html();
@@ -274,7 +274,7 @@ $(document).ready(function(){
 			);
 		}
 	});
-	$("#fancybox-wrap").dragDiv();
+	//$("#fancybox-wrap").dragDiv();
 })
 
 function showBigPic(){
@@ -349,6 +349,7 @@ function showBigPic(){
 function deletePic(obj){
 	var filePath = $(obj).parents("#picli").find("#filePath").val();
 	var taskId = $("#taskId").val();
+	if(confirm("确定取消上传该凭证？")){
 	$.post(
 			"task/deletePic",
 			{
@@ -365,6 +366,11 @@ function deletePic(obj){
 			},
 			"json"
 	);
+	}
+}
+
+function movePic(){
+	$('#fancybox-wrap').dragDiv();
 }
 
 

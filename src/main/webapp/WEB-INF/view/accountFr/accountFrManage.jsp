@@ -71,17 +71,17 @@
                <div class="tcbox">
                     <ul>
                     <form action="${pageContext.request.contextPath}/accountFr/updateAccountFr" method="post" id="updateAccountFrForm">
-                     <li>
-                      <label>用户名</label>
-                      <span class="color_666">${accountFr.userName }</span>
+                     <li class="clearFix">
+                      <label class="left">用户名：</label>
+                      <label class="color_666 left">${accountFr.userName }</label>
                     </li>
-                    <li>
-                      <label>类别</label>
+                    <li class="clearFix">
+                      <label class="left">类别：</label>
                       <input type="hidden" name="id" id="id" value="${accountFr.id}">
                       <input type="hidden" name="accountType" id="accountType" value="${accountFr.accountType}">
-                      <c:if test="${accountFr.accountType == 1}">国内账户</c:if><c:if test="${accountFr.accountType == 2}">海外账户</c:if>
+                      <label class="color_666 left"><c:if test="${accountFr.accountType == 1}">国内账户</c:if><c:if test="${accountFr.accountType == 2}">海外账户</c:if></label>
                     </li>
-                    <li>
+                    <li class="clearFix">
                       <label>账户名</label>
                       <input type="text" name=accountName id="accountName" class="input-txt" placeholder="账户名" value="${accountFr.accountName }"/>
                     </li>
@@ -174,7 +174,7 @@ $(document).ready(function() {
 			 }
 		 },
 		 errorPlacement: function(error, element) {
-				var span = $("<span class='icon errorInfo' />").append(error);
+				var span = $("<span class='icon color_red' />").append(error);
 				span.appendTo(element.parent());
 		 }
 

@@ -155,7 +155,7 @@ $(document).ready(function() {
 			 }
 		 },
 		 errorPlacement: function(error, element) {
-				var span = $("<span class='icon errorInfo' />").append(error);
+				var span = $("<span class='icon color_red' />").append(error);
 				span.appendTo(element.parent());
 		 }
 

@@ -24,8 +24,18 @@ public class Menu {
     private String modifiedId;
 
     private Date modifiedDate;
+    
+    private Integer isCheck;
 
-    public String getId() {
+    public Integer getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(Integer isCheck) {
+		this.isCheck = isCheck;
+	}
+
+	public String getId() {
         return id;
     }
 

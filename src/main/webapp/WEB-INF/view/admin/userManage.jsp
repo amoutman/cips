@@ -46,11 +46,11 @@
                <div class="tcbox">
                     <ul>
                     <form action="user/insertUser" method="post" id="addUserForm">
-                     <li class="li_user">
+                     <li>
                       <label>用户名</label>
                       <input type="text" name="userName" id="userName" class="input-txt"/>
                     </li>
-                    <li class="li_sex">
+                    <li >
                        <label>角色<input type="hidden" name="roleId" id="roleId"/></label>
                        <ul class="jsSelect clearFix">
                       	<c:forEach var="role" items="${roleList }">
@@ -103,12 +103,12 @@
                <div class="tcbox">
                     <ul>
                     <form action="user/updateUser" method="post" id="updateUserForm${vs.index + 1 }">
-                     <li class="li_user">
+                     <li>
                       <label>用户名</label>
                       <input type="hidden" name="id" id="id" value="${user.id }"/>
                       <input type="text" name="userName" id="userName" class="input-txt" value="${user.userName }"/>
                     </li>
-                    <li class="li_sex">
+                    <li>
                      <label>角色<input type="hidden" name="roleId" id="roleId" value="${user.roleId }"/></label>
                       <ul class="jsSelect clearFix">
                       		<c:forEach var="role" items="${user.roleList }">
@@ -218,7 +218,7 @@ $(document).ready(function() {
 			}
 		},
 		errorPlacement: function(error, element) {
-			var span = $("<span class='icon errorInfo' />").append(error);
+			var span = $("<span class='icon color_red' />").append(error);
 			span.appendTo(element.parent());
 		}
 	});
@@ -324,7 +324,7 @@ $('#addUserForm').validate({
 		}
 	},
 	errorPlacement: function(error, element) {
-		var span = $("<span class='icon errorInfo' />").append(error);
+		var span = $("<span class='icon color_red' />").append(error);
 		span.appendTo(element.parent());
 	}
 });

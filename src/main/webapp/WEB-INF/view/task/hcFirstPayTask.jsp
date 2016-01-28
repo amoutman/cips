@@ -143,7 +143,7 @@ $(document).ready(function(){
 			$("#uploadimg").uploadify("settings", "formData", {"taskId":$('#taskId').val()}); 
 		},
 		'onUploadSuccess':function(file,data,response){
-			var	img = "<p id='picli'><input type='hidden' id='filePath' value='"+data+"'><a id='showPicA' rel='example_group' href='uploadImgFiles/"+data+
+			var	img = "<p id='picli'><input type='hidden' id='filePath' value='"+data+"'><a id='showPicA' rel='example_group' onclick='javascript:movePic()' href='uploadImgFiles/"+data+
 					  "' title='Lorem ipsum dolor sit amet'>"+
 					  "<img alt='' src='uploadImgFiles/"+data+"' width='100' height='100'/></a><br><a href='javascript:void(0)' onclick='deletePic(this)'>删除该凭证</a></p>";
 			var imgPr = $("#ImgPr").html();
@@ -255,28 +255,39 @@ $(document).ready(function(){
 			);
 		}
 	});
-	$("#fancybox-wrap").dragDiv();
+	//$('#fancybox-wrap').dragDiv();
+
+	//setinterval("movePic()",1);
 })
+
+function movePic(){
+	$('#fancybox-wrap').dragDiv();
+}
+
+
 
 function deletePic(obj){
 	var filePath = $(obj).parents("#picli").find("#filePath").val();
 	var taskId = $("#taskId").val();
-	$.post(
-			"task/deletePic",
-			{
-				taskId:taskId,
-				filePath:filePath
-			},
-			function(data){
-				if(data.success){
-					alert("删除成功");
-					$(obj).parents("#picli").html("");
-				}else{
-					alert("删除失败");
-				}
-			},
-			"json"
-	);
+	if(confirm("确定取消上传该凭证？")){
+		$.post(
+				"task/deletePic",
+				{
+					taskId:taskId,
+					filePath:filePath
+				},
+				function(data){
+					if(data.success){
+						alert("删除成功");
+						$(obj).parents("#picli").html("");
+					}else{
+						alert("删除失败");
+					}
+				},
+				"json"
+		);
+	}
+	
 }
 
 function showBigPic(){

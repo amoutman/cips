@@ -27,14 +27,25 @@ $("ul.menu li").click(function(){
   	<ul class="menu">
   	<c:forEach var="menu" items="${menuList }">
   		<c:if test="${menu.menuType == 1 }">
-  			<li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			<c:if test="${menu.isCheck == 1 }">
+  				<li class="menu0 curr"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			</c:if>
+  			<c:if test="${menu.isCheck == 0 }">
+  				<li class="menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			</c:if>
+  			
   		</c:if>
   	</c:forEach>
     </ul>
     <ul class="menu rolemenu">
     <c:forEach var="menu" items="${menuList }">
   		<c:if test="${menu.menuType == 0 }">
-  			<li class="menuli menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			<c:if test="${menu.isCheck == 1 }">
+  				<li class="menu0 curr"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			</c:if>
+  			<c:if test="${menu.isCheck == 0 }">
+  				<li class="menu0"><a href="${menu.menuPath }">${menu.menuName }</a></li>
+  			</c:if>
   		</c:if>
   	</c:forEach>
     </ul>

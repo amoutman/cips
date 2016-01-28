@@ -1,5 +1,8 @@
 package com.cips.interceptor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.cips.constants.GlobalPara;
+import com.cips.model.Menu;
 import com.cips.model.User;
 import com.cips.page.Pager;
 
@@ -70,10 +74,28 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv) throws Exception {
 		// TODO Auto-generated method stub
 		//List<Menu> menuList = (List<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
-		if(mv!=null){
-			mv.addObject("menuList", request.getSession().getAttribute(GlobalPara.MENU_SESSION));
-			mv.addObject("loginUser", request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN));
+		String url = request.getRequestURL().toString();
+		
+		if(!(url.matches(".*login.*") || url.matches(".*toLogin.*") || url.matches(".*toIndexPage.*"))){
+			List<Menu> menuList = (ArrayList<Menu>)request.getSession().getAttribute(GlobalPara.MENU_SESSION);
+			List<Menu> newMenuList = new ArrayList<Menu>();
+			for(Menu m:menuList){
+				
+				if(url.matches(".*"+m.getMenuPath()+".*")){
+					m.setIsCheck(1);
+				}else{
+					m.setIsCheck(0);
+				}
+				newMenuList.add(m);
+			}
+
+			if(mv!=null){
+				mv.addObject("menuList", newMenuList);
+				mv.addObject("loginUser", request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN));
+			}
+			
 		}
+		
 	}
 
 

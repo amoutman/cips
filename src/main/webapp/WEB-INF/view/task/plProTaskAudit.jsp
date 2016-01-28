@@ -76,7 +76,7 @@
                <div class="wtbox">
                  <div id="imgShow" class="lightBox imgShow clearFix">
                  <c:forEach var="oc" items="${ocList}">
-             		<a rel="example_group" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
+             		<a rel="example_group" onclick="javascript:movePic()" href="uploadImgFiles/${oc.certPic}" title="Lorem ipsum dolor sit amet"><img alt="" src="uploadImgFiles/${oc.certPic}" width="100" height="100"/></a>
                  </c:forEach>
                  </div>
                  
@@ -181,7 +181,7 @@ $(document).ready(function() {
 		'transitionOut'		: 'none'
 	});
 	
-	$("#fancybox-wrap").dragDiv();
+	//$("#fancybox-wrap").dragDiv();
 });
 function taskConfirm(taskId){
 	$.post(
@@ -243,6 +243,10 @@ function downloadCert(path){
 function clickImg(obj){
 	obj.width=360;
     obj.height=300;
+}
+
+function movePic(){
+	$('#fancybox-wrap').dragDiv();
 }
 </script>
 </html>
