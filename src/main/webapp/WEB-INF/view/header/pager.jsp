@@ -21,7 +21,7 @@
 								<a href="javascript:void(0)" onclick="pageClick(${pNo})">${pNo}</a>
 							</c:when>  
 							<c:otherwise>  
-								<a href="javascript:void(0)">${pNo}</a>
+								<a href="javascript:void(0)" class="active">${pNo}</a>
 							</c:otherwise>  
 						</c:choose>  
 					</c:forEach>
