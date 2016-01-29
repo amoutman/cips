@@ -39,8 +39,28 @@ public class Order {
     private String hwUserId;
     
     private BigDecimal matchAmount;
+    
+    private BigDecimal hcApplyAmount;
+    
+    private Integer isMatch; //是否100%匹配
 
-    public BigDecimal getMatchAmount() {
+    public Integer getIsMatch() {
+		return isMatch;
+	}
+
+	public void setIsMatch(Integer isMatch) {
+		this.isMatch = isMatch;
+	}
+
+	public BigDecimal getHcApplyAmount() {
+		return hcApplyAmount;
+	}
+
+	public void setHcApplyAmount(BigDecimal hcApplyAmount) {
+		this.hcApplyAmount = hcApplyAmount;
+	}
+
+	public BigDecimal getMatchAmount() {
 		return matchAmount;
 	}
 

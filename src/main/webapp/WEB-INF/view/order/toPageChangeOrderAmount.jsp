@@ -41,6 +41,7 @@
           <tr>
             <th>订单号</th>
             <th>申请金额</th>
+            <th>华创申请金额</th>
             <th>支付金额</th>
             <th>已维护金额</th>
             <th>时间</th>
@@ -54,11 +55,12 @@
           <tr>
             <td>${order.orderNo}</td>
             <td><span class="colorBlue">$${order.applyAmount}</span></td>
+            <td><span class="colorBlue">$${order.hcApplyAmount}</span></td>
             <td><span class="color_orange">￥${order.payAmount}</span></td>
-            <td><span class="color_grey">${order.matchAmount }</span></td>
+            <td><span class="color_grey">$${order.matchAmount }</span></td>
             <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></td>
             <td>
-             <a  href="order/viewMatchOrderAmount?orderId=${order.id }" class="colorBlue">修改撮合金额</a>
+             <c:if test="${order.isMatch == 0 }"><a href="${pageContext.request.contextPath}/order/viewMatchOrderAmount?orderId=${order.id }" class="colorBlue">修改撮合金额</a></c:if>
             </td>
           </tr>
           </c:forEach>
