@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cips.constants.BusConstants;
 import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
+import com.cips.model.Amount;
 import com.cips.model.Dictionary;
 import com.cips.model.Order;
 import com.cips.model.OrderDetails;
@@ -252,6 +254,104 @@ public class OrderController {
 			e.printStackTrace();
 			throw new RuntimeException("订单查看页面异常，请重试!");
 		}
+	}
+	
+	/**
+	 * 订单查询
+	 */
+	@RequestMapping(value = "/toPageMatchOrderAmount")
+	public ModelAndView toPageMatchOrderAmount(HttpServletRequest request, Order order){
+		try {
+			ModelAndView mv = new ModelAndView();
+			//分页条件
+			Pager pager = (Pager)request.getAttribute(GlobalPara.PAGER_SESSION);
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//获取用户角色
+			List<Role> roles = roleService.getRoleListByUserId(user.getId());
+			//查询参数
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put(GlobalPara.PAGER_SESSION, pager);
+			for (Role role : roles) {
+				if(GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName()) || GlobalPara.RNAME_PL_CHECKER.equals(role.getRoleName()) 
+						|| GlobalPara.RNAME_PL_OPERATOR.equals(role.getRoleName())){
+				}else{
+					order.setApplyId(user.getId());
+				}
+			}
+			order.setStatus(0);
+			params.put("order", order);
+			//分页查询
+			List<Order> orders = orderService.toPageOrderListByParams(params);
+			for (Order o : orders) {
+				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
+			}
+			
+			mv.addObject("order", order);
+			mv.addObject("orders", orders);
+			mv.addObject("orderNum", orders.size());
+			mv.addObject("pager", pager);
+			mv.setViewName("order/toPageOrders");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("订单查询页面异常，请重试!");
+		}
+	}
+	
+	/**
+	 * 查看订单
+	 * @param orderId
+	 * @return
+	 */
+	@RequestMapping(value = "/viewMatchOrderAmount")
+	public ModelAndView viewMatchOrderAmount(@RequestParam("orderId")String orderId){
+		try {
+			ModelAndView mv = new ModelAndView();
+			Order order = orderService.getOrderById(orderId);
+			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+			User user = userService.getUserByUserId(order.getApplyId());
+			//获取海外账户信息
+			Map<String,Object> paramMap =  new HashMap<String,Object>();
+			paramMap.put("orderId", order.getId());
+			paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
+			OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
+			
+			BigDecimal mMatchAmount = order.getApplyAmount().multiply(new BigDecimal("2"));
+			
+			mv.addObject("mMatchAmount", mMatchAmount);
+			mv.addObject("hwAcc", hwAcc);
+			mv.addObject("user", user);
+			mv.addObject("order", order);
+			mv.setViewName("order/viewOrder");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("订单查看页面异常，请重试!");
+		}
+	}
+	
+	@RequestMapping(value="/updateMatchAmount",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updateMatchAmount(HttpServletRequest request,@RequestParam("orderId")String orderId,@RequestParam("matchAmount")String matchAmount){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		//获取客户用户名userId
+		User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+		
+		Amount uAmount = new Amount();
+		uAmount.setAmountTotal(new BigDecimal(matchAmount));
+		uAmount.setOrderId(orderId);
+		uAmount.setModifiedId(user.getId());
+		uAmount.setModifiedDate(new Date());
+		
+		try {
+			orderService.updateMatchAmountByOrderId(uAmount);
+			resultMap.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+		} catch (Exception e) {
+			// TODO: handle exception
+			resultMap.put(GlobalPara.AJAX_KEY, "更新失败");
+		}
+		return resultMap;
 	}
 	
 	/**

@@ -3,6 +3,7 @@
 <mapper namespace="com.cips.dao.AmountMapper" >
   <resultMap id="BaseResultMap" type="com.cips.model.Amount" >
     <id column="id" property="id" jdbcType="CHAR" />
+    <result column="order_id" property="orderId" jdbcType="CHAR" />
     <result column="amount_total" property="amountTotal" jdbcType="DECIMAL" />
     <result column="created_id" property="createdId" jdbcType="CHAR" />
     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
@@ -10,7 +11,7 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, amount_total, created_id, created_date, modified_id, modified_date
+    id,order_id, amount_total, created_id, created_date, modified_id, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -26,7 +27,7 @@
     insert into tb_account_amount (id, amount_total, created_id, 
       created_date, modified_id, modified_date
       )
-    values (#{id,jdbcType=CHAR}, #{amountTotal,jdbcType=DECIMAL}, #{createdId,jdbcType=CHAR}, 
+    values (#{id,jdbcType=CHAR},#{orderId,jdbcType=CHAR}, #{amountTotal,jdbcType=DECIMAL}, #{createdId,jdbcType=CHAR}, 
       #{createdDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -35,6 +36,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
       </if>
       <if test="amountTotal != null" >
         amount_total,
@@ -55,6 +59,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=CHAR},
+      </if>
+       <if test="orderId != null" >
+        #{orderId,jdbcType=CHAR},
       </if>
       <if test="amountTotal != null" >
         #{amountTotal,jdbcType=DECIMAL},
@@ -92,7 +99,7 @@
         modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=CHAR}
+    where order_id = #{orderId,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cips.model.Amount" >
     update tb_account_amount
@@ -103,4 +110,10 @@
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <select id="selectMatchAmountByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_account_amount
+    where order_id = #{orderId,jdbcType=CHAR}
+  </select>
 </mapper>

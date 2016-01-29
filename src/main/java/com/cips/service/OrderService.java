@@ -3,6 +3,7 @@ package com.cips.service;
 import java.util.List;
 import java.util.Map;
 
+import com.cips.model.Amount;
 import com.cips.model.Order;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
@@ -23,4 +24,6 @@ public interface OrderService {
 	public Order getOrderByOrderNo(String orderNo) throws Exception;
 	public OrderDetails getOrderDetailsById(String orderDetailsId);
 	
+	public Amount selectMatchAmountByOrderId(String orderId);
+	public void updateMatchAmountByOrderId(Amount amount);
 }

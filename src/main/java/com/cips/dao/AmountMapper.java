@@ -14,4 +14,6 @@ public interface AmountMapper {
     int updateByPrimaryKeySelective(Amount record);
 
     int updateByPrimaryKey(Amount record);
+    
+    Amount selectMatchAmountByOrderId(String orderId);
 }

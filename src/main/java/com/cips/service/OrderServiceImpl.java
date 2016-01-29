@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cips.dao.AmountMapper;
 import com.cips.dao.OrderDetailsMapper;
 import com.cips.dao.OrderMapper;
 import com.cips.dao.OrderOperateMapper;
 import com.cips.dao.TaskMapper;
+import com.cips.model.Amount;
 import com.cips.model.Order;
 import com.cips.model.OrderDetails;
 import com.cips.model.OrderOperate;
@@ -44,6 +46,13 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	public void setOrderDetailsMapper(OrderDetailsMapper orderDetailsMapper) {
 		this.orderDetailsMapper = orderDetailsMapper;
+	}
+	
+	private AmountMapper amountMapper;
+
+	@Autowired
+	public void setAmountMapper(AmountMapper amountMapper) {
+		this.amountMapper = amountMapper;
 	}
 
 	@Override
@@ -109,4 +118,11 @@ public class OrderServiceImpl implements OrderService {
 		orderDetailsMapper.insertSelective(orderDetails);		
 	}
 
+	public Amount selectMatchAmountByOrderId(String orderId){
+		return amountMapper.selectMatchAmountByOrderId(orderId);
+	}
+	
+	public void updateMatchAmountByOrderId(Amount amount){
+		amountMapper.updateByPrimaryKeySelective(amount);
+	}
 }

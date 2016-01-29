@@ -196,11 +196,47 @@
       hw_user_id = #{hwUserId,jdbcType=CHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+  <!--  
   <select id="toPageOrderListByParams" parameterType="Map" resultMap="BaseResultMap">
 	select
     <include refid="Base_Column_List" />
     from tb_order o
 	where 1=1
+    <if test="order.applyId != null and order.applyId != ''">
+ 		and o.apply_id = #{order.applyId}
+    </if>
+ 	<if test="order.status != null and order.status != ''">
+ 		and o.status = #{order.status}
+ 	</if>
+ 	<if test="order.orderNo != null and order.orderNo != ''">
+ 		and o.order_no = #{order.orderNo}
+ 	</if>
+ 	<if test="order.applyBDate != null and order.applyBDate != ''">
+ 		and str_to_date(o.apply_date,'%Y-%m-%d') &gt;= str_to_date(#{order.applyBDate},'%Y-%m-%d')
+ 	</if>
+ 	<if test="order.applyEDate != null and order.applyEDate != ''">
+ 		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
+ 	</if>
+  </select>-->
+  <select id="toPageOrderListByParams" parameterType="Map" resultMap="com.cips.model.Order">
+	select
+      o.id id, 
+      o.order_no orderNo, 
+      o.apply_amount applyAmount, 
+      o.pay_amount payAmount, 
+      o.poundage_ratio poundageRatio, 
+      o.exchange_rate_rmb exchangeRateRmb, 
+      o.exchange_rate_usd exchangeRateUsd, 
+      o.apply_id applyId, 
+      o.apply_date applyDate, 
+      o.status status, 
+      o.modified_id modifiedId, 
+      o.modified_date modifiedDate, 
+      o.completed_date completedDate, 
+      o.hw_user_id hwUserId,
+      a.match_amount matchAmount
+    from tb_order o,tb_account_amount a
+	where o.id = a.order_id
     <if test="order.applyId != null and order.applyId != ''">
  		and o.apply_id = #{order.applyId}
     </if>
