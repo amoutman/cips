@@ -98,9 +98,12 @@ public class TaskController {
 				roleIds.add(role.getId());
 				if(!GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName())){
 					params.put("userId", user.getId());
+					params.put("roleIds", roleIds);
+					mv.addObject("admin", "0");
+				}else{
+					mv.addObject("admin", "1");
 				}
 			}
-	        params.put("roleIds", roleIds);
 	        
 			List<Task> tasks = taskService.getTaskListByParams(params);
 			

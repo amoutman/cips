@@ -45,7 +45,7 @@ function reLoadMenu() {
   	<ul class="menu">
   	<c:forEach var="menu" items="${menuList }">
   		<c:if test="${menu.menuType == 1 }">
-  			<c:if test="${menu.menuName == '待办事项'}"><li class="menu0 <c:if test='${menu.isCheck == 1 }'>curr</c:if>" ><a href="${menu.menuPath }">${menu.menuName }</a><span class="waitnum" id="waitnum"></span></li></c:if>
+  			<c:if test="${menu.menuName == '待办事项'}"><li class="menu0 <c:if test='${menu.isCheck == 1 }'>curr</c:if>" ><a href="${menu.menuPath }">${menu.menuName }</a><span class="waitnum" style="display: none" id="waitnum"></span></li></c:if>
   			<c:if test="${menu.menuName != '待办事项'}"><li class="menu0 <c:if test='${menu.isCheck == 1 }'>curr</c:if>"><a href="${menu.menuPath }">${menu.menuName }</a></li></c:if>
   		</c:if>
   	</c:forEach>

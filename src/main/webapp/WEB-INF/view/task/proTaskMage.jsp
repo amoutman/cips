@@ -37,7 +37,8 @@
 	           <div class="wt-lf"><span class="wt-border"></span></div>
 	           <div class="wt-num">订单号：${task.orderNo}</div>
 	           <div class="wt-event">${task.msg}</div>
-	           <div class="wt-deal"><a href="javascript:void(0);" class="btnBlue"  onclick="processingTask('${task.id}')">处理</a></div>
+	           <c:if test="${admin==1}"><div class="wt-deal"><a href="${pageContext.request.contextPath}/task/viewProTask?taskId=${task.id}" class="btnBlue">查看</a></div></c:if>
+	           <c:if test="${admin==0}"><div class="wt-deal"><a href="javascript:void(0);" class="btnBlue"  onclick="processingTask('${task.id}')">处理</a></div></c:if>
 	         </li>
          </c:forEach>
        </c:if>

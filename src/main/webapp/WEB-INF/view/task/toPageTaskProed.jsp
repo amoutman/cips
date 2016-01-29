@@ -48,7 +48,6 @@
           </tr>
          </thead>
           <tbody>
-          <c:if test="${taskNum <= 0}"><h2>您还没有处理过待办任务</h2></c:if>
           <c:if test="${taskNum > 0}">
           <c:forEach items="${tasks}" var="task">
 	          <tr>
@@ -61,6 +60,7 @@
           </c:if>
           </tbody>
        </table>
+       <c:if test="${taskNum <= 0}"><h2 class="mt10 tac">您还没有处理过待办任务</h2></c:if>
        <!-- 分页 -->
        <c:if test="${taskNum > 0}"><jsp:include page="../header/pager.jsp"></jsp:include></c:if>
      
