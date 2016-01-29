@@ -5,8 +5,18 @@ import java.util.Date;
 
 public class Amount {
     private String id;
+    
+    private String orderId;
 
-    private BigDecimal amountTotal;
+    public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	private BigDecimal amountTotal;
 
     private String createdId;
 

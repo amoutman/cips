@@ -37,8 +37,18 @@ public class Order {
     private Date completedDate;
 
     private String hwUserId;
+    
+    private BigDecimal matchAmount;
 
-    public String getId() {
+    public BigDecimal getMatchAmount() {
+		return matchAmount;
+	}
+
+	public void setMatchAmount(BigDecimal matchAmount) {
+		this.matchAmount = matchAmount;
+	}
+
+	public String getId() {
         return id;
     }
 
