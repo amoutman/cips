@@ -182,7 +182,7 @@
     <if test="endTime != null and endTime != ''">
     	and str_to_date(t.end_time,'%Y-%m-%d') &lt;= str_to_date(#{endTime},'%Y-%m-%d')
     </if>
-    order by t.end_time desc
+    order by t.operated_id,t.end_time desc
    </select>
    <select id="getTaskByParams" parameterType="Map" resultType="com.cips.model.Task">
 	select
