@@ -318,6 +318,13 @@ public class OrderController {
 			List<Order> orders = orderService.toPageOrderListByParams(params);
 			for (Order o : orders) {
 				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
+				//查询申请金额是不是100%匹配
+				BigDecimal totalAmount = o.getApplyAmount().add(o.getHcApplyAmount());
+				if(totalAmount.equals(o.getMatchAmount())){
+					o.setIsMatch(1);
+				}else{
+					o.setIsMatch(0);
+				}
 			}
 			
 			mv.addObject("order", order);

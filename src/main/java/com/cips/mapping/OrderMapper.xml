@@ -16,6 +16,7 @@
     <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
     <result column="completed_date" property="completedDate" jdbcType="TIMESTAMP" />
     <result column="hw_user_id" property="hwUserId" jdbcType="CHAR" />
+    <result column="hc_apply_amount" property="hcApplyAmount" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_no, apply_amount, pay_amount, poundage_ratio, exchange_rate_rmb, exchange_rate_usd, 
@@ -190,6 +191,9 @@
       <if test="hwUserId != null" >
         hw_user_id = #{hwUserId,jdbcType=CHAR},
       </if>
+      <if test="hcApplyAmount != null" >
+        hc_apply_amount = #{hcApplyAmount,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
@@ -249,6 +253,8 @@
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
       a.amount_total matchAmount
+      o.hc_apply_amount hcApplyAmount,
+      a.match_amount matchAmount
     from tb_order o,tb_account_amount a
 	where o.id = a.order_id
     <if test="order.applyId != null and order.applyId != ''">
