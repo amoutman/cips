@@ -48,6 +48,12 @@
                  </div>
                  </div>
                </div>
+             <h2>华创客户申请金额</h2>
+               <div class="wtbox">
+                 <div class="clearFix">
+					 <div class="w235"><label>华创客户申请金额：</label> <span class="color_orange font18" id="matchAmount">${order.matchAmount}$</span> </div>
+                 </div>
+               </div>
 			<h2>海外用户人民币账户信息</h2>
                <div class="wtbox">
  			   <div class="wt_skzh clearFix">
@@ -104,11 +110,36 @@
   <!--右侧模块 end-->
 </div>
 <!--主题内容 end-->
-
-<div class="bg"></div>
+<div class="bg" style="display:none;"></div>
+<!--弹窗start-->
+           <div class="tcDiv waitDiv" style="display:none;">
+               <h2>待办事项</h2>
+               <div class="tcbox">
+                   <div class="clearFix">
+                     <div class="w470"><label>订  单  号：</label> <span>${order.orderNo}</span> </div>
+                     <div class="w470"><label>订单申请金额：</label> <span class="color_orange font18">${order.orderNo}￥</span> </div>
+                     <div class="w470"><label>华创申请金额：</label> <input type="text" name="textfield2" id="textfield2" class="input-txt" />
+                        <P class="log-txt"><span class="color_red font12">(备注：您填写的金额必须大于订单申请金额.)</span></P>
+                     </div>
+                     <div class="w470"><label>应付人民币：</label> <span class="color_orange font18">${order.orderNo}￥</span> </div>
+                     
+                 </div>
+                 <div class="btnDiv tac"><a class="btnGrey" href="task/toPageTaskMage">返回</a><a class="btnOrage" href="javascript:void(0)">确认</a></div>
+               </div>
+               
+           </div>
+<!--弹窗end-->
 
 </body>
 <script type="text/javascript">
+$(document).ready(function () {  
+	var matchAmount = $("#matchAmount").text();
+	if(matchAmount == null || matchAmount == ""){
+		$(".bg").show();
+		$(".tcDiv waitDiv").show();
+	}
+});
+
 function getAccountInfo(){
 	var userName = $("#searchAccountForm").find("#userName").val();
 	var accountCode = $("#searchAccountForm").find("#accountCode").val();

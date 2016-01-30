@@ -40,12 +40,9 @@
         <thead>
           <tr>
             <th>订单号</th>
-            <th>申请金额</th>
-            <th>应付金额</th>
             <th>撮合进度</th>
             <th>状态</th>
             <th>时间</th>
-            <th class="w120">操作</th>
           </tr>
          </thead>
           <tbody>
@@ -53,8 +50,6 @@
           <c:forEach items="${orders}" var="order" >
           <tr>
             <td>${order.orderNo}</td>
-            <td><span class="colorBlue">$${order.applyAmount}</span></td>
-            <td><span class="color_orange">￥${order.payAmount}</span></td>
             <td>
 	            <dl class="barbox">
 	              <dd class="barline">
@@ -65,15 +60,12 @@
             </td>
             <td><span class="color_grey">${order.statusDesc}</span></td>
             <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></td>
-            <td>
-             <a  href="order/viewOrder?orderId=${order.id}"  class="colorBlue">查看</a> <c:if test="${order.status == 0}"><a href="javascript:void(0);" class="color_888" onclick="deleteOrder('${order.id}')">删除</a></c:if>
-            </td>
           </tr>
           </c:forEach>
           </c:if>
           </tbody>
        </table>
-        <c:if test="${orderNum <= 0}"><h2 class="mt10 tac">您还没有提交过订单申请</h2></c:if>
+        <c:if test="${orderNum <= 0}"><h2 class="mt10 tac">您还没有处理过订单申请</h2></c:if>
        <!--分页 start-->
        <c:if test="${orderNum > 0}"><jsp:include page="../header/pager.jsp"></jsp:include></c:if>
        <!--分页 end-->

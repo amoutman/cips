@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.cglib.beans.BeanGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +39,9 @@ import com.cips.service.TaskService;
 import com.cips.service.UserService;
 import com.cips.util.PKIDUtils;
 import com.cips.util.PropertiesUtil;
+import com.sun.org.apache.bcel.internal.generic.BIPUSH;
+
+import sun.net.www.content.audio.basic;
 
 @Controller
 @RequestMapping("/order")
@@ -129,6 +133,15 @@ public class OrderController {
 			orderDetails.setType(BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 			orderDetails.setTaskType(BusConstants.TASK_TYPE_COMMIT);
 			
+			/**tb_account_amount 插入记录用来维护撮合进度 */
+			Amount amount = new Amount();
+			amount.setId(PKIDUtils.getUuid());
+			amount.setOrderId(order.getId());
+			amount.setAmountTotal(new BigDecimal(0));
+			amount.setCreatedId(user.getId());
+			amount.setCreatedDate(new Date());
+			amount.setModifiedId(user.getId());
+			amount.setModifiedDate(new Date());
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
 			oOperate.setId(PKIDUtils.getUuid());
@@ -143,7 +156,7 @@ public class OrderController {
 			task.setOrderStatus(order.getStatus());
 			
 			//订单生成
-			orderService.createOrder(order, orderDetails, oOperate, task);
+			orderService.createOrder(order, orderDetails, oOperate, task, amount);
 			
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map; 
@@ -177,19 +190,31 @@ public class OrderController {
 				}else{
 					order.setApplyId(user.getId());
 				}
+				if(GlobalPara.RNAME_HC_OPERATOR.equals(role.getRoleName())){
+					mv.setViewName("order/toPageOrdersForHc");
+				}else{
+					mv.setViewName("order/toPageOrders");
+				}
 			}
 			params.put("order", order);
 			//分页查询
 			List<Order> orders = orderService.toPageOrderListByParams(params);
 			for (Order o : orders) {
 				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
+				BigDecimal matchAmount = o.getMatchAmount().multiply(new BigDecimal(100)).divide(o.getApplyAmount().multiply(new BigDecimal(2)));
+				if(matchAmount.compareTo(new BigDecimal(100)) == 0){
+					o.setMatchPercent("99%");
+				}else if(matchAmount.compareTo(new BigDecimal(100)) < 0){
+					o.setMatchPercent(matchAmount + "%");
+				}else if(matchAmount.compareTo(new BigDecimal(100)) > 0){
+					o.setMatchPercent("100%");
+				}
 			}
 			
 			mv.addObject("order", order);
 			mv.addObject("orders", orders);
 			mv.addObject("orderNum", orders.size());
 			mv.addObject("pager", pager);
-			mv.setViewName("order/toPageOrders");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -238,6 +263,14 @@ public class OrderController {
 			ModelAndView mv = new ModelAndView();
 			Order order = orderService.getOrderById(orderId);
 			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
+			BigDecimal matchAmount = order.getMatchAmount().multiply(new BigDecimal(100)).divide(order.getApplyAmount().multiply(new BigDecimal(2)));
+			if(matchAmount.compareTo(new BigDecimal(100)) == 0){
+				order.setMatchPercent("99%");
+			}else if(matchAmount.compareTo(new BigDecimal(100)) < 0){
+				order.setMatchPercent(matchAmount + "%");
+			}else if(matchAmount.compareTo(new BigDecimal(100)) > 0){
+				order.setMatchPercent("100%");
+			}
 			User user = userService.getUserByUserId(order.getApplyId());
 			//获取海外账户信息
 			Map<String,Object> paramMap =  new HashMap<String,Object>();

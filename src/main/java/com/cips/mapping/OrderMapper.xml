@@ -21,11 +21,25 @@
     id, order_no, apply_amount, pay_amount, poundage_ratio, exchange_rate_rmb, exchange_rate_usd, 
     apply_id, apply_date, status, modified_id, modified_date, completed_date, hw_user_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultType="com.cips.model.Order" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from tb_order
-    where id = #{id,jdbcType=CHAR}
+      o.id id, 
+      o.order_no orderNo, 
+      o.apply_amount applyAmount, 
+      o.pay_amount payAmount, 
+      o.poundage_ratio poundageRatio, 
+      o.exchange_rate_rmb exchangeRateRmb, 
+      o.exchange_rate_usd exchangeRateUsd, 
+      o.apply_id applyId, 
+      o.apply_date applyDate, 
+      o.status status, 
+      o.modified_id modifiedId, 
+      o.modified_date modifiedDate, 
+      o.completed_date completedDate, 
+      o.hw_user_id hwUserId,
+      a.amount_total matchAmount
+    from tb_order o,tb_account_amount a
+	where o.id = a.order_id and o.id = #{id,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_order
@@ -218,7 +232,7 @@
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
  	</if>
   </select>-->
-  <select id="toPageOrderListByParams" parameterType="Map" resultMap="com.cips.model.Order">
+  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
 	select
       o.id id, 
       o.order_no orderNo, 
@@ -234,7 +248,7 @@
       o.modified_date modifiedDate, 
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
-      a.match_amount matchAmount
+      a.amount_total matchAmount
     from tb_order o,tb_account_amount a
 	where o.id = a.order_id
     <if test="order.applyId != null and order.applyId != ''">
