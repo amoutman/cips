@@ -185,15 +185,15 @@ public class TaskController {
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
 				mv.addObject("task", task);
-//				List<Role> roles = roleService.getRoleListByUserId(order.getApplyId());
-//				for (Role role : roles) {
-//					if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
-//						
-//					}
-//					if(GlobalPara.RNAME_CN_OTHER_CUSTOMER.equals(role.getRoleName())){
-//					}
-//				}
-				mv.setViewName("task/plpProTaskT1");
+				List<Role> roles = roleService.getRoleListByUserId(order.getApplyId());
+				for (Role role : roles) {
+					if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
+						mv.setViewName("task/plpProTaskT1");
+					}
+					if(GlobalPara.RNAME_CN_OTHER_CUSTOMER.equals(role.getRoleName())){
+						mv.setViewName("task/plpProTaskT3");
+					}
+				}
 				break;
 			case 2:
 				//获取海外账户信息
