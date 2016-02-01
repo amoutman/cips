@@ -335,7 +335,7 @@ public class OrderController {
 			order.setStatus(0);
 			params.put("order", order);
 			//分页查询
-			List<Order> orders = orderService.toPageOrderListByParams(params);
+			List<Order> orders = orderService.toPageMatchOrderListByParams(params);
 			for (Order o : orders) {
 				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
 				//查询申请金额是不是100%匹配

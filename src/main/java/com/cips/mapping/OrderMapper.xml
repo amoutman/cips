@@ -255,7 +255,7 @@
       hc_pay_amount = #{hcPayAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <!--  
+    
   <select id="toPageOrderListByParams" parameterType="Map" resultMap="BaseResultMap">
 	select
     <include refid="Base_Column_List" />
@@ -276,8 +276,8 @@
  	<if test="order.applyEDate != null and order.applyEDate != ''">
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
  	</if>
-  </select>-->
-  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
+  </select>
+  <select id="toPageMatchOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
 	select
       o.id id, 
       o.order_no orderNo, 

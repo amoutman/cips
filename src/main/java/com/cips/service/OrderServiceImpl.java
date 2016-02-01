@@ -132,4 +132,8 @@ public class OrderServiceImpl implements OrderService {
 	public Order selectOrderByOrderId(String orderId){
 		return orderMapper.selectOrderByOrderId(orderId);
 	}
+	
+	public List<Order> toPageMatchOrderListByParams(Map<String,Object> paramMap){
+		return orderMapper.toPageMatchOrderListByParams(paramMap);
+	}
 }
