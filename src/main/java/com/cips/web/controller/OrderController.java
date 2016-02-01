@@ -131,15 +131,23 @@ public class OrderController {
 			orderDetails.setType(BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 			orderDetails.setTaskType(BusConstants.TASK_TYPE_COMMIT);
 			
-			/**tb_account_amount 插入记录用来维护撮合进度 */
-			Amount amount = new Amount();
-			amount.setId(PKIDUtils.getUuid());
-			amount.setOrderId(order.getId());
-			amount.setAmountTotal(new BigDecimal(0));
-			amount.setCreatedId(user.getId());
-			amount.setCreatedDate(new Date());
-			amount.setModifiedId(user.getId());
-			amount.setModifiedDate(new Date());
+			//获取用户角色
+			Amount amount = null;
+			List<Role> roles = roleService.getRoleListByUserId(user.getId());
+			for (Role role : roles) {
+				if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
+					/**tb_account_amount 插入记录用来维护撮合进度 */
+					amount = new Amount();
+					amount.setId(PKIDUtils.getUuid());
+					amount.setOrderId(order.getId());
+					amount.setAmountTotal(new BigDecimal(0));
+					amount.setCreatedId(user.getId());
+					amount.setCreatedDate(new Date());
+					amount.setModifiedId(user.getId());
+					amount.setModifiedDate(new Date());
+				}
+			}
+
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
 			oOperate.setId(PKIDUtils.getUuid());
@@ -179,39 +187,36 @@ public class OrderController {
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 			//获取用户角色
 			List<Role> roles = roleService.getRoleListByUserId(user.getId());
+			//查询参数
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put(GlobalPara.PAGER_SESSION, pager);
+			params.put("order", order);
 			for (Role role : roles) {
 				if(GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName()) || GlobalPara.RNAME_PL_CHECKER.equals(role.getRoleName()) 
 						|| GlobalPara.RNAME_PL_OPERATOR.equals(role.getRoleName())){
 					mv.setViewName("order/toPageOrders");
 				}else if(GlobalPara.RNAME_HC_OPERATOR.equals(role.getRoleName())){
 					mv.setViewName("order/toPageOrdersForHc");
+					if(StringUtils.isBlank(roleType) || roleType.equals("1")){
+						order.setApplyId(user.getId());
+					}else if(roleType.equals("2")){
+						Map<String, Object> param = new HashMap<String, Object>();
+						param.put("taskType", BusConstants.TASK_TYPE_FIRST_HCPAY);
+						param.put("operatedId", user.getId());
+						List<Task> tasks = taskService.getTasksByParams(param);
+						List<String> orderIds = new ArrayList<String>();
+						for (Task task : tasks) {
+					        if(!orderIds.contains(task.getOrderId())){  
+					        	orderIds.add(task.getOrderId()); 
+					        } 
+						}
+						params.put("orderIds", orderIds);
+					}
 				}else{
 					order.setApplyId(user.getId());
 					mv.setViewName("order/toPageOrders");
 				}
 			}
-			//查询参数
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put(GlobalPara.PAGER_SESSION, pager);
-			
-			if(StringUtils.isBlank(roleType) || roleType.equals("1")){
-				order.setApplyId(user.getId());
-
-			}else if(roleType.equals("2")){
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("taskType", BusConstants.TASK_TYPE_FIRST_HCPAY);
-				param.put("operatedId", user.getId());
-				List<Task> tasks = taskService.getTasksByParams(param);
-				List<String> orderIds = new ArrayList<String>();
-				for (Task task : tasks) {
-			        if(!orderIds.contains(task.getOrderId())){  
-			        	orderIds.add(task.getOrderId()); 
-			        } 
-				}
-				params.put("orderIds", orderIds);
-			}
-			
-			params.put("order", order);
 			//分页查询
 			List<Order> orders = orderService.toPageOrderListByParams(params);
 			for (Order o : orders) {

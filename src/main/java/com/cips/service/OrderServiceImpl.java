@@ -91,7 +91,9 @@ public class OrderServiceImpl implements OrderService {
 		//生成新的待办任务
 		taskMapper.insert(task);
 		//插入撮合金额维护记录
-		amountMapper.insertSelective(amount);
+		if(amount != null){
+			amountMapper.insertSelective(amount);
+		}
 	}
 
 	@Override

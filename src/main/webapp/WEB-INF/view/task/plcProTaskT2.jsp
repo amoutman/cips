@@ -48,6 +48,7 @@
                  </div>
                  </div>
                </div>
+               <c:if test="${order.hcApplyAmount != null && order.hcApplyAmount != ''}">
                <h2>华创客户申请金额</h2>
                <div class="wtbox">
                  <div class="clearFix">
@@ -55,6 +56,7 @@
                  	<div class="w235"><label>华创客户应付金额：</label> <span class="color_orange font18" id="hcPAmount">${order.hcPayAmount}￥</span> </div>
                  </div>
                </div>
+               </c:if>
                <h2>海外用户人民币账户信息</h2>
                <div class="wtbox">
  			   <div class="wt_skzh clearFix">
