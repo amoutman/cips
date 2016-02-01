@@ -167,7 +167,8 @@
     	a.pid pid,
     	a.menu_name menuName,
     	a.menu_path menuPath,
-    	a.menu_type menuType
+    	a.menu_type menuType,
+    	a.level level
     from tb_menu a,tb_right b
     where a.id = b.menu_id
       <if test="roleId != null">
@@ -177,6 +178,6 @@
  		</foreach>
       </if>
       and a.pid = #{pid,jdbcType=VARCHAR}
-      and a.status = 0
+      and a.status = 0 order by a.menu_type,a.level
   </select>
 </mapper>
