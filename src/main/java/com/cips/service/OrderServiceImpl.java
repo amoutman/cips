@@ -90,10 +90,8 @@ public class OrderServiceImpl implements OrderService {
 		orderOperateMapper.insert(operate);
 		//生成新的待办任务
 		taskMapper.insert(task);
-		//插入撮合金额维护记录
-		if(amount != null){
-			amountMapper.insertSelective(amount);
-		}
+		//生成撮合金额记录
+		amountMapper.insertSelective(amount);
 	}
 
 	@Override
@@ -127,6 +125,12 @@ public class OrderServiceImpl implements OrderService {
 	
 	public void updateMatchAmountByOrderId(Amount amount){
 		amountMapper.updateByPrimaryKeySelective(amount);
+	}
+
+	@Override
+	public void updateHcApplyAmount(Order order, Amount amount) throws Exception {
+		orderMapper.updateByPrimaryKeySelective(order);
+		amountMapper.insertSelective(amount);
 	}
 	
 	public Order selectOrderByOrderId(String orderId){

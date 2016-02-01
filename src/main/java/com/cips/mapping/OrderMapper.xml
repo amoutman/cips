@@ -40,9 +40,10 @@
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
       o.hc_pay_amount hcPayAmount,
-      o.hc_apply_amount hcApplyAmount
-    from tb_order o
-	where o.id = #{id,jdbcType=CHAR}
+      o.hc_apply_amount hcApplyAmount,
+      a.amount_total matchAmount
+    from tb_order o,tb_account_amount a
+	where o.id = a.order_id and o.id = #{orderId,jdbcType=CHAR}
   </select>
    <select id="selectOrderByOrderId" resultType="com.cips.model.Order" parameterType="java.lang.String" >
     select 
@@ -258,9 +259,25 @@
     
   <select id="toPageOrderListByParams" parameterType="Map" resultMap="BaseResultMap">
 	select
-    <include refid="Base_Column_List" />
-    from tb_order o
-	where 1=1
+      o.id id, 
+      o.order_no orderNo, 
+      o.apply_amount applyAmount, 
+      o.pay_amount payAmount, 
+      o.poundage_ratio poundageRatio, 
+      o.exchange_rate_rmb exchangeRateRmb, 
+      o.exchange_rate_usd exchangeRateUsd, 
+      o.apply_id applyId, 
+      o.apply_date applyDate, 
+      o.status status, 
+      o.modified_id modifiedId, 
+      o.modified_date modifiedDate, 
+      o.completed_date completedDate, 
+      o.hw_user_id hwUserId,
+      a.amount_total matchAmount,
+      o.hc_apply_amount hcApplyAmount,
+      o.hc_pay_amount hcPayAmount
+    from tb_order o,tb_account_amount a
+	where o.id = a.order_id
     <if test="order.applyId != null and order.applyId != ''">
  		and o.apply_id = #{order.applyId}
     </if>
@@ -275,6 +292,12 @@
  	</if>
  	<if test="order.applyEDate != null and order.applyEDate != ''">
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
+ 	</if>
+ 	<if test="orderIds != null">
+ 	  and o.id in 
+ 	  <foreach item="id" index="index" collection="orderIds" open="(" separator="," close=")">
+ 	  	#{id,jdbcType=CHAR}
+ 	  </foreach> 
  	</if>
   </select>
   <select id="toPageMatchOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">

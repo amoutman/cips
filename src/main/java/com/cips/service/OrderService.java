@@ -23,7 +23,7 @@ public interface OrderService {
 	public void insertOrderDetails(OrderDetails orderDetails);
 	public Order getOrderByOrderNo(String orderNo) throws Exception;
 	public OrderDetails getOrderDetailsById(String orderDetailsId);
-	
+	public void updateHcApplyAmount(Order order, Amount amount)throws Exception;
 	public Amount selectMatchAmountByOrderId(String orderId);
 	public void updateMatchAmountByOrderId(Amount amount);
 	public Order selectOrderByOrderId(String orderId);

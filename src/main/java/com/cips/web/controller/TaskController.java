@@ -30,6 +30,7 @@ import com.cips.constants.BusConstants;
 import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
 import com.cips.model.AccountFr;
+import com.cips.model.Amount;
 import com.cips.model.Order;
 import com.cips.model.OrderCert;
 import com.cips.model.OrderDetails;
@@ -4978,8 +4979,8 @@ public class TaskController {
 			order.setModifiedId(user.getId());
 			order.setModifiedDate(new Date());
 			
+			//更新订单
 			orderService.updateOrderById(order);
-			
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map;
 		} catch (Exception e) {
