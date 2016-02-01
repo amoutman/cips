@@ -368,7 +368,7 @@ public class OrderController {
 	public ModelAndView viewMatchOrderAmount(@RequestParam("orderId")String orderId){
 		try {
 			ModelAndView mv = new ModelAndView();
-			Order order = orderService.getOrderById(orderId);
+			Order order = orderService.selectOrderByOrderId(orderId);
 			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
 			User user = userService.getUserByUserId(order.getApplyId());
 			//获取海外账户信息
@@ -377,7 +377,7 @@ public class OrderController {
 			paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 			OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
 			
-			BigDecimal mMatchAmount = order.getApplyAmount().multiply(new BigDecimal("2"));
+			BigDecimal mMatchAmount = order.getApplyAmount().add(order.getHcApplyAmount());
 			
 			mv.addObject("mMatchAmount", mMatchAmount);
 			mv.addObject("hwAcc", hwAcc);

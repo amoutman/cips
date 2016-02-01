@@ -128,4 +128,8 @@ public class OrderServiceImpl implements OrderService {
 	public void updateMatchAmountByOrderId(Amount amount){
 		amountMapper.updateByPrimaryKeySelective(amount);
 	}
+	
+	public Order selectOrderByOrderId(String orderId){
+		return orderMapper.selectOrderByOrderId(orderId);
+	}
 }

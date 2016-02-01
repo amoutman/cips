@@ -26,4 +26,5 @@ public interface OrderService {
 	
 	public Amount selectMatchAmountByOrderId(String orderId);
 	public void updateMatchAmountByOrderId(Amount amount);
+	public Order selectOrderByOrderId(String orderId);
 }

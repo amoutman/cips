@@ -21,4 +21,6 @@ public interface OrderMapper {
     List<Order> toPageOrderListByParams(Map<String,Object> paramMap);
     
     Order getOrderByOrderNo(String orderNo);
+    
+    Order selectOrderByOrderId(String orderId);
 }
