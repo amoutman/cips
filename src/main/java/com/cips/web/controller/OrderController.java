@@ -131,22 +131,6 @@ public class OrderController {
 			orderDetails.setType(BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 			orderDetails.setTaskType(BusConstants.TASK_TYPE_COMMIT);
 			
-			//获取用户角色
-			Amount amount = null;
-			List<Role> roles = roleService.getRoleListByUserId(user.getId());
-			for (Role role : roles) {
-				if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
-					/**tb_account_amount 插入记录用来维护撮合进度 */
-					amount = new Amount();
-					amount.setId(PKIDUtils.getUuid());
-					amount.setOrderId(order.getId());
-					amount.setAmountTotal(new BigDecimal(0));
-					amount.setCreatedId(user.getId());
-					amount.setCreatedDate(new Date());
-					amount.setModifiedId(user.getId());
-					amount.setModifiedDate(new Date());
-				}
-			}
 
 			/**订单日志记录*/
 			OrderOperate oOperate = new OrderOperate();
@@ -162,7 +146,7 @@ public class OrderController {
 			task.setOrderStatus(order.getStatus());
 			
 			//订单生成
-			orderService.createOrder(order, orderDetails, oOperate, task, amount);
+			orderService.createOrder(order, orderDetails, oOperate, task);
 			
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map; 
@@ -310,7 +294,7 @@ public class OrderController {
 	}
 	
 	/**
-	 * 订单查询
+	 * 撮合金额维护
 	 */
 	@RequestMapping(value = "/toPageMatchOrderAmount")
 	public ModelAndView toPageMatchOrderAmount(HttpServletRequest request, Order order){

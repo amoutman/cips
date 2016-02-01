@@ -30,6 +30,7 @@ import com.cips.constants.BusConstants;
 import com.cips.constants.EnumConstants.OrderStsEnum;
 import com.cips.constants.GlobalPara;
 import com.cips.model.AccountFr;
+import com.cips.model.Amount;
 import com.cips.model.Order;
 import com.cips.model.OrderCert;
 import com.cips.model.OrderDetails;
@@ -4978,8 +4979,18 @@ public class TaskController {
 			order.setModifiedId(user.getId());
 			order.setModifiedDate(new Date());
 			
-			orderService.updateOrderById(order);
+			/**tb_account_amount 插入记录用来维护撮合进度 */
+			Amount amount = new Amount();
+			amount.setId(PKIDUtils.getUuid());
+			amount.setOrderId(order.getId());
+			amount.setAmountTotal(new BigDecimal(0));
+			amount.setCreatedId(user.getId());
+			amount.setCreatedDate(new Date());
+			amount.setModifiedId(user.getId());
+			amount.setModifiedDate(new Date());
 			
+			//更新订单并生成撮合金额维护数据
+			orderService.updateHcApplyAmount(order, amount);
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map;
 		} catch (Exception e) {

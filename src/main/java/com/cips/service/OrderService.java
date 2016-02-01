@@ -11,7 +11,7 @@ import com.cips.model.Task;
 
 public interface OrderService {
 
-	public void createOrder(Order order, OrderDetails orderDetails, OrderOperate operate, Task task, Amount amount) throws Exception;
+	public void createOrder(Order order, OrderDetails orderDetails, OrderOperate operate, Task task) throws Exception;
 	public void saveOrder(Order order) throws Exception;
 	public Order getOrderById(String orderId) throws Exception;
 	public void updateOrderById(Order order) throws Exception;
@@ -23,7 +23,7 @@ public interface OrderService {
 	public void insertOrderDetails(OrderDetails orderDetails);
 	public Order getOrderByOrderNo(String orderNo) throws Exception;
 	public OrderDetails getOrderDetailsById(String orderDetailsId);
-	
+	public void updateHcApplyAmount(Order order, Amount amount)throws Exception;
 	public Amount selectMatchAmountByOrderId(String orderId);
 	public void updateMatchAmountByOrderId(Amount amount);
 }
