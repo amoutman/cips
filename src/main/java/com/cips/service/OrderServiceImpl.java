@@ -130,4 +130,12 @@ public class OrderServiceImpl implements OrderService {
 		orderMapper.updateByPrimaryKeySelective(order);
 		amountMapper.insertSelective(amount);
 	}
+	
+	public Order selectOrderByOrderId(String orderId){
+		return orderMapper.selectOrderByOrderId(orderId);
+	}
+	
+	public List<Order> toPageMatchOrderListByParams(Map<String,Object> paramMap){
+		return orderMapper.toPageMatchOrderListByParams(paramMap);
+	}
 }

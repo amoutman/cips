@@ -26,4 +26,6 @@ public interface OrderService {
 	public void updateHcApplyAmount(Order order, Amount amount)throws Exception;
 	public Amount selectMatchAmountByOrderId(String orderId);
 	public void updateMatchAmountByOrderId(Amount amount);
+	public Order selectOrderByOrderId(String orderId);
+	public List<Order> toPageMatchOrderListByParams(Map<String,Object> paramMap);
 }

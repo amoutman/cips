@@ -319,7 +319,7 @@ public class OrderController {
 			order.setStatus(0);
 			params.put("order", order);
 			//分页查询
-			List<Order> orders = orderService.toPageOrderListByParams(params);
+			List<Order> orders = orderService.toPageMatchOrderListByParams(params);
 			for (Order o : orders) {
 				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
 				//查询申请金额是不是100%匹配
@@ -352,7 +352,7 @@ public class OrderController {
 	public ModelAndView viewMatchOrderAmount(@RequestParam("orderId")String orderId){
 		try {
 			ModelAndView mv = new ModelAndView();
-			Order order = orderService.getOrderById(orderId);
+			Order order = orderService.selectOrderByOrderId(orderId);
 			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
 			User user = userService.getUserByUserId(order.getApplyId());
 			//获取海外账户信息
@@ -361,7 +361,7 @@ public class OrderController {
 			paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 			OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
 			
-			BigDecimal mMatchAmount = order.getApplyAmount().multiply(new BigDecimal("2"));
+			BigDecimal mMatchAmount = order.getApplyAmount().add(order.getHcApplyAmount());
 			
 			mv.addObject("mMatchAmount", mMatchAmount);
 			mv.addObject("hwAcc", hwAcc);

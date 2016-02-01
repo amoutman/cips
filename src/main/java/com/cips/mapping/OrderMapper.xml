@@ -40,10 +40,31 @@
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
       o.hc_pay_amount hcPayAmount,
+      o.hc_apply_amount hcApplyAmount
+    from tb_order o
+	where o.id = #{id,jdbcType=CHAR}
+  </select>
+   <select id="selectOrderByOrderId" resultType="com.cips.model.Order" parameterType="java.lang.String" >
+    select 
+      o.id id, 
+      o.order_no orderNo, 
+      o.apply_amount applyAmount, 
+      o.pay_amount payAmount, 
+      o.poundage_ratio poundageRatio, 
+      o.exchange_rate_rmb exchangeRateRmb, 
+      o.exchange_rate_usd exchangeRateUsd, 
+      o.apply_id applyId, 
+      o.apply_date applyDate, 
+      o.status status, 
+      o.modified_id modifiedId, 
+      o.modified_date modifiedDate, 
+      o.completed_date completedDate, 
+      o.hw_user_id hwUserId,
+      o.hc_pay_amount hcPayAmount,
       o.hc_apply_amount hcApplyAmount,
       a.amount_total matchAmount
     from tb_order o,tb_account_amount a
-	where o.id = a.order_id and o.id = #{id,jdbcType=CHAR}
+	where o.id = a.order_id and o.id = #{orderId,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_order
@@ -234,7 +255,7 @@
       hc_pay_amount = #{hcPayAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <!--  
+    
   <select id="toPageOrderListByParams" parameterType="Map" resultMap="BaseResultMap">
 	select
     <include refid="Base_Column_List" />
@@ -255,8 +276,8 @@
  	<if test="order.applyEDate != null and order.applyEDate != ''">
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
  	</if>
-  </select>-->
-  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
+  </select>
+  <select id="toPageMatchOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
 	select
       o.id id, 
       o.order_no orderNo, 
