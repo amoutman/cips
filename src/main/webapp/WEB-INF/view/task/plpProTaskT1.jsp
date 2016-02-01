@@ -48,12 +48,15 @@
                  </div>
                  </div>
                </div>
-             <h2>华创客户申请金额</h2>
+             <c:if test="${order.hcApplyAmount != null || order.hcApplyAmount != ''}">
+             	<h2>华创客户申请金额</h2>
                <div class="wtbox">
                  <div class="clearFix">
-					 <div class="w235"><label>华创客户申请金额：</label> <span class="color_orange font18" id="matchAmount">${order.matchAmount}$</span> </div>
+					 <div class="w235"><label>华创客户申请金额：</label> <span class="color_orange font18" id="hcAppAmount">${order.hcApplyAmount}$</span> </div>
+					 <div class="w235"><label>华创客户应付金额：</label> <span class="color_orange font18" id="hcPAmount">${order.hcPayAmount}￥</span> </div>
                  </div>
                </div>
+             </c:if>
 			<h2>海外用户人民币账户信息</h2>
                <div class="wtbox">
  			   <div class="wt_skzh clearFix">
@@ -103,7 +106,7 @@
 	             </c:if>
                </div>
                </div>
-               <div class="btnDiv tac"><a href="javascript:void(0)" class="btnGrey">返回</a><a href="javascript:void(0)" class="btnOrage" onClick="confirmOrder()" >确认</a></div>
+               <div class="btnDiv tac"><a href="task/toPageTaskMage" class="btnGrey">返回</a><a href="javascript:void(0)" class="btnOrage" onClick="confirmOrder()" >确认</a></div>
            </div>
      </div>
   </div>
@@ -117,14 +120,16 @@
                <div class="tcbox">
                    <div class="clearFix">
                      <div class="w470"><label>订  单  号：</label> <span>${order.orderNo}</span> </div>
-                     <div class="w470"><label>订单申请金额：</label> <span class="color_orange font18">${order.orderNo}￥</span> </div>
-                     <div class="w470"><label>华创申请金额：</label> <input type="text" name="textfield2" id="textfield2" class="input-txt" />
-                        <P class="log-txt"><span class="color_red font12">(备注：您填写的金额必须大于订单申请金额.)</span></P>
+                     <div class="w470"><label>订单申请金额：</label> <span class="color_orange font18">${order.applyAmount}$</span> </div>
+                     <div class="w470"><label>华创申请金额：</label> <input type="text" name="hcApplyAmount" id="hcApplyAmount" class="input-txt" value=""/>
+                     <input type="hidden" name="curUToRRate" id="curUToRRate" value="${curUToRRate.rateHigh}" />
+                     <input type="hidden" name="applyAmount" id="applyAmount" value="${order.applyAmount}" />
+                        <P class="log-txt"><span class="color_red font12" id="msg">(备注：您填写的金额必须大于订单申请金额.)</span></P>
                      </div>
-                     <div class="w470"><label>应付人民币：</label> <span class="color_orange font18">${order.orderNo}￥</span> </div>
+                     <div class="w470"><label>应付人民币：</label> <span class="color_orange font18" id="hcPayAmount"></span> </div>
                      
                  </div>
-                 <div class="btnDiv tac"><a class="btnGrey" href="task/toPageTaskMage">返回</a><a class="btnOrage" href="javascript:void(0)">确认</a></div>
+                 <div class="btnDiv tac"><a class="btnGrey" href="task/toPageTaskMage">返回</a><a class="btnOrage" href="javascript:void(0)" onclick="hcApplyAmountConfirm('${order.id}')">确认</a></div>
                </div>
                
            </div>
@@ -133,12 +138,55 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function () {  
-	var matchAmount = $("#matchAmount").text();
-	if(matchAmount == null || matchAmount == ""){
+	
+	var hcAppAmount = $("#hcAppAmount").text();
+	if(hcAppAmount == "$"){
 		$(".bg").show();
-		$(".tcDiv waitDiv").show();
+		$(".waitDiv").show();
 	}
+	
+	$("#hcApplyAmount").blur( function () {
+		var hcApplyAmount = $("#hcApplyAmount").val();
+		var curUToRRate = $("#curUToRRate").val();
+		var hcPayAmount = hcApplyAmount * curUToRRate/100;
+		$("#hcPayAmount").text(hcPayAmount+"￥"); 
+	});
 });
+
+function hcApplyAmountConfirm(orderId){
+	var hcApplyAmount = $("#hcApplyAmount").val();
+	if(hcApplyAmount == "" || hcApplyAmount == null){
+		$("#msg").text("华创申请金额不能为空.");
+		return;
+	}
+	var applyAmount = $("#applyAmount").val();
+	if(parseFloat(hcApplyAmount) <= parseFloat(applyAmount)){
+		$("#msg").text("您填写的金额必须大于订单申请金额.");
+		return;
+	}
+	$("#hcAppAmount").text(hcApplyAmount+"$");
+	var hcPAmount = $("#hcPayAmount").text(); 
+	$("#hcPAmount").text(hcPAmount);
+	$.post(
+			"task/saveHcApplyAmount",
+			{
+				orderId:orderId,
+				hcApplyAmount:hcApplyAmount
+			},
+			function(data){
+				if(data.msg == "1"){
+					alert("提交成功");
+					$(".tcDiv").fadeOut(300);
+					$('div.bg').fadeOut(200);
+				}else{
+					alert(data.msg);
+					window.location.href="${pageContext.request.contextPath}/task/toPageTaskMage";
+				}
+			},
+			"json"
+			
+		)
+}
 
 function getAccountInfo(){
 	var userName = $("#searchAccountForm").find("#userName").val();

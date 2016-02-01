@@ -2,6 +2,7 @@ package com.cips.web.controller;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.cglib.beans.BeanGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,9 +40,6 @@ import com.cips.service.TaskService;
 import com.cips.service.UserService;
 import com.cips.util.PKIDUtils;
 import com.cips.util.PropertiesUtil;
-import com.sun.org.apache.bcel.internal.generic.BIPUSH;
-
-import sun.net.www.content.audio.basic;
 
 @Controller
 @RequestMapping("/order")
@@ -172,7 +170,7 @@ public class OrderController {
 	 * 订单查询
 	 */
 	@RequestMapping(value = "/toPageOrders")
-	public ModelAndView toPageOrderListByParams(HttpServletRequest request, Order order){
+	public ModelAndView toPageOrderListByParams(HttpServletRequest request, Order order, @RequestParam(value="roleType",required=false)String roleType){
 		try {
 			ModelAndView mv = new ModelAndView();
 			//分页条件
@@ -181,39 +179,57 @@ public class OrderController {
 			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
 			//获取用户角色
 			List<Role> roles = roleService.getRoleListByUserId(user.getId());
-			//查询参数
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put(GlobalPara.PAGER_SESSION, pager);
 			for (Role role : roles) {
 				if(GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName()) || GlobalPara.RNAME_PL_CHECKER.equals(role.getRoleName()) 
 						|| GlobalPara.RNAME_PL_OPERATOR.equals(role.getRoleName())){
-				}else{
-					order.setApplyId(user.getId());
-				}
-				if(GlobalPara.RNAME_HC_OPERATOR.equals(role.getRoleName())){
+					mv.setViewName("order/toPageOrders");
+				}else if(GlobalPara.RNAME_HC_OPERATOR.equals(role.getRoleName())){
 					mv.setViewName("order/toPageOrdersForHc");
 				}else{
+					order.setApplyId(user.getId());
 					mv.setViewName("order/toPageOrders");
 				}
 			}
+			//查询参数
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put(GlobalPara.PAGER_SESSION, pager);
+			
+			if(StringUtils.isBlank(roleType) || roleType.equals("1")){
+				order.setApplyId(user.getId());
+
+			}else if(roleType.equals("2")){
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("taskType", BusConstants.TASK_TYPE_FIRST_HCPAY);
+				param.put("operatedId", user.getId());
+				List<Task> tasks = taskService.getTasksByParams(param);
+				List<String> orderIds = new ArrayList<String>();
+				for (Task task : tasks) {
+			        if(!orderIds.contains(task.getOrderId())){  
+			        	orderIds.add(task.getOrderId()); 
+			        } 
+				}
+				params.put("orderIds", orderIds);
+			}
+			
 			params.put("order", order);
 			//分页查询
 			List<Order> orders = orderService.toPageOrderListByParams(params);
 			for (Order o : orders) {
 				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
-				BigDecimal matchAmount = o.getMatchAmount().multiply(new BigDecimal(100)).divide(o.getApplyAmount().multiply(new BigDecimal(2)));
-				if(matchAmount.compareTo(new BigDecimal(100)) == 0){
-					o.setMatchPercent("99%");
-				}else if(matchAmount.compareTo(new BigDecimal(100)) < 0){
-					o.setMatchPercent(matchAmount + "%");
-				}else if(matchAmount.compareTo(new BigDecimal(100)) > 0){
-					o.setMatchPercent("100%");
+				BigDecimal matchAmount = null;
+				if(o.getHcApplyAmount() == null){
+					matchAmount = o.getMatchAmount().multiply(new BigDecimal(100)).divide(o.getApplyAmount(), 0, BigDecimal.ROUND_HALF_UP);
+				}else{
+					matchAmount = o.getMatchAmount().multiply(new BigDecimal(100)).divide(o.getApplyAmount().add(o.getHcApplyAmount()), 0, BigDecimal.ROUND_HALF_UP);
 				}
+				
+				o.setMatchPercent(matchAmount + "%");
 			}
 			
 			mv.addObject("order", order);
 			mv.addObject("orders", orders);
 			mv.addObject("orderNum", orders.size());
+			mv.addObject("roleType", roleType);
 			mv.addObject("pager", pager);
 			return mv;
 		} catch (Exception e) {
@@ -263,14 +279,13 @@ public class OrderController {
 			ModelAndView mv = new ModelAndView();
 			Order order = orderService.getOrderById(orderId);
 			order.setStatusDesc(OrderStsEnum.getNameByCode(order.getStatus().toString()));
-			BigDecimal matchAmount = order.getMatchAmount().multiply(new BigDecimal(100)).divide(order.getApplyAmount().multiply(new BigDecimal(2)));
-			if(matchAmount.compareTo(new BigDecimal(100)) == 0){
-				order.setMatchPercent("99%");
-			}else if(matchAmount.compareTo(new BigDecimal(100)) < 0){
-				order.setMatchPercent(matchAmount + "%");
-			}else if(matchAmount.compareTo(new BigDecimal(100)) > 0){
-				order.setMatchPercent("100%");
+			BigDecimal matchAmount = null;
+			if(order.getHcApplyAmount() == null){
+				matchAmount = order.getMatchAmount().multiply(new BigDecimal(100)).divide(order.getApplyAmount(), 0, BigDecimal.ROUND_HALF_UP);
+			}else{
+				matchAmount = order.getMatchAmount().multiply(new BigDecimal(100)).divide(order.getApplyAmount().add(order.getHcApplyAmount()), 0, BigDecimal.ROUND_HALF_UP);
 			}
+			order.setMatchPercent(matchAmount + "%");
 			User user = userService.getUserByUserId(order.getApplyId());
 			//获取海外账户信息
 			Map<String,Object> paramMap =  new HashMap<String,Object>();

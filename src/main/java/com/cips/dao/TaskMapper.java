@@ -22,5 +22,7 @@ public interface TaskMapper {
     
     Task getTaskByParams(Map<String, Object> params) throws Exception;
     
+    List<Task> getTasksByParams(Map<String, Object> params) throws Exception;
+    
     Integer getTaskNum(Map<String, Object> params);
 }

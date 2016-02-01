@@ -1,6 +1,7 @@
 package com.cips.web.controller;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -173,10 +174,25 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 				hwAcc = orderService.getOrderDetailsByParams(paramMap);
 				
+				//订单使用汇率 分别设置$对RMB RMB对$
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("status", BusConstants.RATE_STATUS_YES);
+				paramMap.put("type", BusConstants.RATE_TYPE_US_TO_RMB);
+				Rate curUToRRate = feeService.getCurrentRate(paramMap);
+				
 				mv.addObject("order", order);
+				mv.addObject("curUToRRate", curUToRRate);
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
 				mv.addObject("task", task);
+//				List<Role> roles = roleService.getRoleListByUserId(order.getApplyId());
+//				for (Role role : roles) {
+//					if(GlobalPara.RNAME_HWJ_OPERATOR.equals(role.getRoleName())){
+//						
+//					}
+//					if(GlobalPara.RNAME_CN_OTHER_CUSTOMER.equals(role.getRoleName())){
+//					}
+//				}
 				mv.setViewName("task/plpProTaskT1");
 				break;
 			case 2:
@@ -224,11 +240,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/hcFirstPayTask");
 				break;
@@ -255,14 +271,14 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -288,14 +304,14 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("ocList", ocList);
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/hcReFirstPayTask");
 				break;
@@ -322,13 +338,13 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HC_HWACC);
 				hcAccT4 = orderService.getOrderDetailsByParams(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -339,11 +355,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -360,11 +376,11 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -381,11 +397,11 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -402,11 +418,11 @@ public class TaskController {
 				ocList = orderCertService.getOrderCertList(paramMap);
 				mv.addObject("ocList", ocList);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -1070,11 +1086,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -1098,11 +1114,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -1126,11 +1142,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -1154,11 +1170,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");//.add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100)))
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");//.add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100)))
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -1175,11 +1191,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskUpload");
 				break;
@@ -1203,11 +1219,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -1231,11 +1247,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/proTaskReUpload");
 				break;
@@ -1259,11 +1275,11 @@ public class TaskController {
 				paramMap.put("type", BusConstants.RATE_TYPE_RMB_TO_US);
 				curRToURate = feeService.getCurrentRate(paramMap);
 				
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/plProTaskAudit");
 				break;
@@ -3292,9 +3308,15 @@ public class TaskController {
 				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
 				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
 				
+				paramMap =  new HashMap<String,Object>();
+				paramMap.put("orderId", task.getOrderId());
+				paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_HWUSER_LOCACC);
+				hwUserAcc = orderService.getOrderDetailsByParams(paramMap);
+				
 				mv.addObject("order", order);
 				mv.addObject("user", user);
 				mv.addObject("hwAcc", hwAcc);
+				mv.addObject("hwUserAcc", hwUserAcc);
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTaskHwUser");
 				break;
@@ -3351,11 +3373,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3385,13 +3407,13 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3423,13 +3445,13 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3457,13 +3479,13 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "华创上传打款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
 				mv.addObject("hcT3", hcAccT3);
 				mv.addObject("hcT4", hcAccT4);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3482,11 +3504,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3505,11 +3527,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3530,11 +3552,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -3553,11 +3575,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "海外用户上传收款凭证信息");
 				mv.addObject("title3", "海外用户国内收款账户信息");
 				mv.addObject("accInfo", hwUserAcc);
-				mv.addObject("payMoney", order.getPayAmount()+"￥");
+				mv.addObject("payMoney", order.getHcPayAmount()+"￥");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4334,11 +4356,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4363,11 +4385,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4394,11 +4416,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "上传打款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4423,11 +4445,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应打款金额：大于");
+				mv.addObject("title1", "应打款金额：");
 				mv.addObject("title2", "海外用户上传打款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");//.add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100)))
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");//.add(new BigDecimal(50000).multiply(curRToURate.getRateHigh()).divide(new BigDecimal(100)))
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4452,11 +4474,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4481,11 +4503,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4512,11 +4534,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "上传收款凭证信息");
 				mv.addObject("title3", "收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4541,11 +4563,11 @@ public class TaskController {
 				
 				mv.addObject("ocCList", ocCList);
 				mv.addObject("ocVList", ocVList);
-				mv.addObject("title1", "应收款金额：大于");
+				mv.addObject("title1", "应收款金额：");
 				mv.addObject("title2", "华创上传收款凭证信息");
 				mv.addObject("title3", "华创海外收款账户信息");
 				mv.addObject("accInfo", hcAccT4);
-				mv.addObject("payMoney", order.getApplyAmount()+"$");
+				mv.addObject("payMoney", order.getHcApplyAmount()+"$");
 				mv.addObject("task", task);
 				mv.setViewName("task/viewProTask");
 				break;
@@ -4931,6 +4953,40 @@ public class TaskController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("待办处理页面异常!");
+		}
+	}
+	
+	/**
+	 * 保存更新华创申请金额
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/saveHcApplyAmount")
+	public Object saveHcApplyAmount(HttpServletRequest request, @RequestParam("orderId")String orderId, @RequestParam("hcApplyAmount")BigDecimal hcApplyAmount){
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			//获取客户用户名userId
+			User user = (User) request.getSession().getAttribute(GlobalPara.USER_SESSION_TOKEN);
+			//订单使用汇率 分别设置$对RMB RMB对$
+			Map<String,Object> paramMap =  new HashMap<String,Object>();
+			paramMap.put("status", BusConstants.RATE_STATUS_YES);
+			paramMap.put("type", BusConstants.RATE_TYPE_US_TO_RMB);
+			Rate curUToRRate = feeService.getCurrentRate(paramMap);
+			//获取订单
+			Order order = orderService.getOrderById(orderId);
+			order.setHcApplyAmount(hcApplyAmount);
+			order.setHcPayAmount(order.getHcApplyAmount().multiply(curUToRRate.getRateHigh()).divide(new BigDecimal(100), 2));
+			order.setModifiedId(user.getId());
+			order.setModifiedDate(new Date());
+			
+			orderService.updateOrderById(order);
+			
+			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			map = new HashMap<String,Object>();
+			map.put(GlobalPara.AJAX_KEY, "待办处理异常，请重试！");
+			return map;
 		}
 	}
 }

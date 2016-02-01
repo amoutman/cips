@@ -30,7 +30,8 @@
      <div class="content">
        <div class="search clearFix">
        <form action="order/toPageOrders" id="searchForm" method="post">
-          <label>订单号</label><input type="text" name="orderNo" id="orderNo" class="inpt1" value="${order.orderNo}"/><label>提交时间</label><input type="text" name="applyBDate" id="applyBDate" class="inpt1" value="${order.applyBDate}"/><label>至</label><input type="text" name="applyEDate" id="applyEDate" class="inpt1" value="${order.applyEDate}"/></div>
+          <label>订单号</label><input type="text" name="orderNo" id="orderNo" class="inpt1" value="${order.orderNo}"/>
+          <label>提交时间</label><input type="text" name="applyBDate" id="applyBDate" class="inpt1" value="${order.applyBDate}"/><label>至</label><input type="text" name="applyEDate" id="applyEDate" class="inpt1" value="${order.applyEDate}"/></div>
           <input type="hidden" name="currentPage" id="currentPage"/>
        </form>
        <div class="btnDiv clearFix">

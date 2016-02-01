@@ -40,7 +40,11 @@ public class Order {
     
     private BigDecimal matchAmount;
     
+    private String matchPercent;
+    
     private BigDecimal hcApplyAmount;
+    
+    private BigDecimal hcPayAmount;
     
     private Integer isMatch; //是否100%匹配
 
@@ -202,5 +206,21 @@ public class Order {
 
 	public void setApplyEDate(String applyEDate) {
 		this.applyEDate = applyEDate;
+	}
+
+	public String getMatchPercent() {
+		return matchPercent;
+	}
+
+	public void setMatchPercent(String matchPercent) {
+		this.matchPercent = matchPercent;
+	}
+
+	public BigDecimal getHcPayAmount() {
+		return hcPayAmount;
+	}
+
+	public void setHcPayAmount(BigDecimal hcPayAmount) {
+		this.hcPayAmount = hcPayAmount;
 	}
 }

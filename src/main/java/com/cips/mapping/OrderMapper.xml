@@ -17,10 +17,11 @@
     <result column="completed_date" property="completedDate" jdbcType="TIMESTAMP" />
     <result column="hw_user_id" property="hwUserId" jdbcType="CHAR" />
     <result column="hc_apply_amount" property="hcApplyAmount" jdbcType="DECIMAL" />
+    <result column="hc_pay_amount" property="hcPayAmount" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_no, apply_amount, pay_amount, poundage_ratio, exchange_rate_rmb, exchange_rate_usd, 
-    apply_id, apply_date, status, modified_id, modified_date, completed_date, hw_user_id
+    apply_id, apply_date, status, modified_id, modified_date, completed_date, hw_user_id, hc_pay_amount, hc_apply_amount
   </sql>
   <select id="selectByPrimaryKey" resultType="com.cips.model.Order" parameterType="java.lang.String" >
     select 
@@ -38,6 +39,8 @@
       o.modified_date modifiedDate, 
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
+      o.hc_pay_amount hcPayAmount,
+      o.hc_apply_amount hcApplyAmount,
       a.amount_total matchAmount
     from tb_order o,tb_account_amount a
 	where o.id = a.order_id and o.id = #{id,jdbcType=CHAR}
@@ -51,12 +54,12 @@
       pay_amount, poundage_ratio, exchange_rate_rmb, 
       exchange_rate_usd, apply_id, apply_date, 
       status, modified_id, modified_date, 
-      completed_date, hw_user_id)
+      completed_date, hw_user_id, hc_pay_amount, hc_apply_amount)
     values (#{id,jdbcType=CHAR}, #{orderNo,jdbcType=VARCHAR}, #{applyAmount,jdbcType=DECIMAL}, 
       #{payAmount,jdbcType=DECIMAL}, #{poundageRatio,jdbcType=DECIMAL}, #{exchangeRateRmb,jdbcType=DECIMAL}, 
       #{exchangeRateUsd,jdbcType=DECIMAL}, #{applyId,jdbcType=CHAR}, #{applyDate,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{modifiedId,jdbcType=CHAR}, #{modifiedDate,jdbcType=TIMESTAMP}, 
-      #{completedDate,jdbcType=TIMESTAMP}, #{hwUserId,jdbcType=CHAR})
+      #{completedDate,jdbcType=TIMESTAMP}, #{hwUserId,jdbcType=CHAR}, #{hcPayAmount,jdbcType=DECIMAL}, #{hcApplyAmount,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.cips.model.Order" >
     insert into tb_order
@@ -103,6 +106,12 @@
       <if test="hwUserId != null" >
         hw_user_id,
       </if>
+      <if test="hcApplyAmount != null" >
+        hc_apply_amount,
+      </if>
+      <if test="hcPayAmount != null" >
+        hc_pay_amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -146,6 +155,12 @@
       </if>
       <if test="hwUserId != null" >
         #{hwUserId,jdbcType=CHAR},
+      </if>
+      <if test="hcApplyAmount != null" >
+        #{hcApplyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="hcPayAmount != null" >
+        #{hcPayAmount,jdbcType=DECIMAL}
       </if>
     </trim>
   </insert>
@@ -194,6 +209,9 @@
       <if test="hcApplyAmount != null" >
         hc_apply_amount = #{hcApplyAmount,jdbcType=DECIMAL},
       </if>
+      <if test="hcPayAmount != null" >
+        hc_pay_amount = #{hcPayAmount,jdbcType=DECIMAL}
+      </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
@@ -211,7 +229,9 @@
       modified_id = #{modifiedId,jdbcType=CHAR},
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
       completed_date = #{completedDate,jdbcType=TIMESTAMP},
-      hw_user_id = #{hwUserId,jdbcType=CHAR}
+      hw_user_id = #{hwUserId,jdbcType=CHAR},
+      hc_apply_amount = #{hcApplyAmount,jdbcType=DECIMAL},
+      hc_pay_amount = #{hcPayAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=CHAR}
   </update>
   <!--  
@@ -252,9 +272,9 @@
       o.modified_date modifiedDate, 
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
-      a.amount_total matchAmount
+      a.amount_total matchAmount,
       o.hc_apply_amount hcApplyAmount,
-      a.match_amount matchAmount
+      o.hc_pay_amount hcPayAmount
     from tb_order o,tb_account_amount a
 	where o.id = a.order_id
     <if test="order.applyId != null and order.applyId != ''">
@@ -271,6 +291,12 @@
  	</if>
  	<if test="order.applyEDate != null and order.applyEDate != ''">
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
+ 	</if>
+ 	<if test="orderIds != null">
+ 	  and o.id in 
+ 	  <foreach item="id" index="index" collection="orderIds" open="(" separator="," close=")">
+ 	  	#{id,jdbcType=CHAR}
+ 	  </foreach> 
  	</if>
   </select>
   <select id="getOrderByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
