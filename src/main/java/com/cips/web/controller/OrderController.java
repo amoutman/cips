@@ -333,7 +333,13 @@ public class OrderController {
 			for (Order o : orders) {
 				o.setStatusDesc(OrderStsEnum.getNameByCode(o.getStatus().toString()));
 				//查询申请金额是不是100%匹配
-				BigDecimal totalAmount = o.getApplyAmount().add(o.getHcApplyAmount());
+				BigDecimal totalAmount = new BigDecimal("0");
+				if(o.getHcApplyAmount().equals(null)){
+					totalAmount = o.getApplyAmount();
+				}else{
+					totalAmount = o.getApplyAmount().add(o.getHcApplyAmount());
+				}
+
 				if(totalAmount.equals(o.getMatchAmount())){
 					o.setIsMatch(1);
 				}else{
@@ -371,7 +377,12 @@ public class OrderController {
 			paramMap.put("type", BusConstants.ORDERDETAILS_TYPE_CUSTOMER_HWACC);
 			OrderDetails hwAcc = orderService.getOrderDetailsByParams(paramMap);
 			
-			BigDecimal mMatchAmount = order.getApplyAmount().add(order.getHcApplyAmount());
+			BigDecimal mMatchAmount = new BigDecimal("0");
+			if(order.getHcApplyAmount().equals(null)){
+				mMatchAmount = order.getApplyAmount();
+			}else{
+				mMatchAmount = order.getApplyAmount().add(order.getHcApplyAmount());
+			}
 			
 			mv.addObject("mMatchAmount", mMatchAmount);
 			mv.addObject("hwAcc", hwAcc);

@@ -42,7 +42,6 @@
             <th>订单号</th>
             <th>申请金额</th>
             <th>华创申请金额</th>
-            <th>支付金额</th>
             <th>已维护金额</th>
             <th>时间</th>
             <th class="w120">操作</th>
@@ -56,7 +55,6 @@
             <td>${order.orderNo}</td>
             <td><span class="colorBlue">$${order.applyAmount}</span></td>
             <td><span class="colorBlue">$${order.hcApplyAmount}</span></td>
-            <td><span class="color_orange">￥${order.payAmount}</span></td>
             <td><span class="color_grey">$${order.matchAmount }</span></td>
             <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></td>
             <td>
