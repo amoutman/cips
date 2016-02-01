@@ -4979,18 +4979,8 @@ public class TaskController {
 			order.setModifiedId(user.getId());
 			order.setModifiedDate(new Date());
 			
-			/**tb_account_amount 插入记录用来维护撮合进度 */
-			Amount amount = new Amount();
-			amount.setId(PKIDUtils.getUuid());
-			amount.setOrderId(order.getId());
-			amount.setAmountTotal(new BigDecimal(0));
-			amount.setCreatedId(user.getId());
-			amount.setCreatedDate(new Date());
-			amount.setModifiedId(user.getId());
-			amount.setModifiedDate(new Date());
-			
-			//更新订单并生成撮合金额维护数据
-			orderService.updateHcApplyAmount(order, amount);
+			//更新订单
+			orderService.updateOrderById(order);
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map;
 		} catch (Exception e) {

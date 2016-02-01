@@ -145,8 +145,18 @@ public class OrderController {
 			Task task = taskService.initNewTask(order.getId(), BusConstants.TASK_TYPE_COMMIT);
 			task.setOrderStatus(order.getStatus());
 			
+			/**tb_account_amount 插入记录用来维护撮合进度 */
+			Amount amount = new Amount();
+			amount.setId(PKIDUtils.getUuid());
+			amount.setOrderId(order.getId());
+			amount.setAmountTotal(new BigDecimal(0));
+			amount.setCreatedId(user.getId());
+			amount.setCreatedDate(new Date());
+			amount.setModifiedId(user.getId());
+			amount.setModifiedDate(new Date());
+			
 			//订单生成
-			orderService.createOrder(order, orderDetails, oOperate, task);
+			orderService.createOrder(order, orderDetails, oOperate, task, amount);
 			
 			map.put(GlobalPara.AJAX_KEY, GlobalPara.AJAX_SUCCESS);
 			return map; 

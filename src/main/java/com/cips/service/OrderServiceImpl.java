@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void createOrder(Order order, OrderDetails orderDetails, OrderOperate operate, Task task) throws Exception {
+	public void createOrder(Order order, OrderDetails orderDetails, OrderOperate operate, Task task, Amount amount) throws Exception {
 		//订单保存
 		orderMapper.insert(order);
 		//订单账户
@@ -90,6 +90,8 @@ public class OrderServiceImpl implements OrderService {
 		orderOperateMapper.insert(operate);
 		//生成新的待办任务
 		taskMapper.insert(task);
+		//生成撮合金额记录
+		amountMapper.insertSelective(amount);
 	}
 
 	@Override
