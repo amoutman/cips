@@ -182,7 +182,7 @@
     <if test="endTime != null and endTime != ''">
     	and str_to_date(t.end_time,'%Y-%m-%d') &lt;= str_to_date(#{endTime},'%Y-%m-%d')
     </if>
-    order by t.end_time desc
+    order by t.operated_id,t.end_time desc
    </select>
    <select id="getTaskByParams" parameterType="Map" resultType="com.cips.model.Task">
 	select
@@ -198,7 +198,30 @@
  	<if test="taskType != null">
  		and t.task_type = #{taskType}
  	</if>
+ 	<if test="operatedId != null">
+ 		and t.operated_id = #{operatedId}
+ 	</if>
   </select>
+  
+  <select id="getTasksByParams" parameterType="Map" resultType="com.cips.model.Task">
+	select
+       t.id id, t.order_id orderId, t.role_id roleId, t.order_status orderStatus, 
+       t.task_type taskType, t.begin_time beginTime, t.end_time endTime, t.status status, 
+       t.operated_id operatedId, t.remark remark, o.order_no orderNo
+    from tb_task t,
+    tb_order o
+ 	where t.order_id = o.id
+    <if test="orderId != null">
+ 		and t.order_id = #{orderId}
+    </if>
+ 	<if test="taskType != null">
+ 		and t.task_type = #{taskType}
+ 	</if>
+ 	<if test="operatedId != null">
+ 		and t.operated_id = #{operatedId}
+ 	</if>
+  </select>
+  
   <select id="getTaskNum" parameterType="java.util.Map" resultType="java.lang.Integer">
     select 
        count(1)

@@ -31,7 +31,9 @@
        <div class="search clearFix">
        <form action="order/toPageOrders" id="searchForm" method="post">
           <label>订单号</label><input type="text" name="orderNo" id="orderNo" class="inpt1" value="${order.orderNo}"/>
-          <label>提交时间</label><input type="text" name="applyBDate" id="applyBDate" class="inpt1" value="${order.applyBDate}"/><label>至</label><input type="text" name="applyEDate" id="applyEDate" class="inpt1" value="${order.applyEDate}"/></div>
+          <label>提交时间</label><input type="text" name="applyBDate" id="applyBDate" class="inpt1" value="${order.applyBDate}"/><label>至</label><input type="text" name="applyEDate" id="applyEDate" class="inpt1" value="${order.applyEDate}"/>
+          <label>发起角色</label><select name="roleType" class="inpt1" ><option value="1" selected="selected">华创</option><option value="2">好望角</option></select>
+          </div>
           <input type="hidden" name="currentPage" id="currentPage"/>
        </form>
        <div class="btnDiv clearFix">
@@ -39,6 +41,7 @@
        </div>
        <table cellpadding="0" cellspacing="0" class="dataTable">
         <thead>
+          <c:if test="${roleType == 1}">
           <tr>
             <th>订单号</th>
             <th>申请金额</th>
@@ -48,29 +51,62 @@
             <th>时间</th>
             <th class="w120">操作</th>
           </tr>
+          </c:if>
+          <c:if test="${roleType == 2}">
+          <tr>
+            <th>订单号</th>
+            <th>申请金额</th>
+            <th>应付金额</th>
+            <th>撮合进度</th>
+            <th>状态</th>
+            <th>时间</th>
+          </tr>
+          </c:if>
+
          </thead>
           <tbody>
           <c:if test="${orderNum > 0}">
-          <c:forEach items="${orders}" var="order" >
-          <tr>
-            <td>${order.orderNo}</td>
-            <td><span class="colorBlue">$${order.applyAmount}</span></td>
-            <td><span class="color_orange">￥${order.payAmount}</span></td>
-            <td>
-	            <dl class="barbox">
-	              <dd class="barline">
-	                <div class="charts" style="width:${order.matchPercent};"></div>
-	              </dd>
-	              <dd>${order.matchPercent}</dd>
-	            </dl>
-            </td>
-            <td><span class="color_grey">${order.statusDesc}</span></td>
-            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></td>
-            <td>
-             <a  href="order/viewOrder?orderId=${order.id}"  class="colorBlue">查看</a> <c:if test="${order.status == 0}"><a href="javascript:void(0);" class="color_888" onclick="deleteOrder('${order.id}')">删除</a></c:if>
-            </td>
-          </tr>
-          </c:forEach>
+          <c:if test="${roleType == 1}">
+	          <c:forEach items="${orders}" var="order" >
+	          <tr>
+	            <td>${order.orderNo}</td>
+	            <td><span class="colorBlue">$${order.applyAmount}</span></td>
+	            <td><span class="color_orange">￥${order.payAmount}</span></td>
+	            <td>
+		            <dl class="barbox">
+		              <dd class="barline">
+		                <div class="charts" style="width:${order.matchPercent};"></div>
+		              </dd>
+		              <dd>${order.matchPercent}</dd>
+		            </dl>
+	            </td>
+	            <td><span class="color_grey">${order.statusDesc}</span></td>
+	            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></td>
+	            <td>
+	             <a  href="order/viewOrder?orderId=${order.id}"  class="colorBlue">查看</a> <c:if test="${order.status == 0}"><a href="javascript:void(0);" class="color_888" onclick="deleteOrder('${order.id}')">删除</a></c:if>
+	            </td>
+	          </tr>
+	          </c:forEach>
+          </c:if>
+          <c:if test="${roleType == 2}">
+	          <c:forEach items="${orders}" var="order" >
+	          <tr>
+	            <td>${order.orderNo}</td>
+	            <td><span class="colorBlue">$${order.hcApplyAmount}</span></td>
+	            <td><span class="color_orange">￥${order.hcPayAmount}</span></td>
+	            <td>
+		            <dl class="barbox">
+		              <dd class="barline">
+		                <div class="charts" style="width:${order.matchPercent};"></div>
+		              </dd>
+		              <dd>${order.matchPercent}</dd>
+		            </dl>
+	            </td>
+	            <td><span class="color_grey">${order.statusDesc}</span></td>
+	            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></td>
+	          </tr>
+	          </c:forEach>
+          </c:if>
           </c:if>
           </tbody>
        </table>

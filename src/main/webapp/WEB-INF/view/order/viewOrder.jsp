@@ -40,6 +40,7 @@
                      <div class="w235"><label>提交时间：</label> <span><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.applyDate}" type="both"/></span> </div>
 					 <div class="w235"><label>申请金额：</label> <span class="color_orange font18">${order.applyAmount}$</span> </div>
                      <div class="w235"><label>应付金额：</label> <span class="color_orange font18">${order.payAmount}￥</span> </div>
+                     <div class="w235"><label class="left">撮合进度：</label> <dl class="barbox left" style="padding-top:10px;padding-left:3px;"><dd class="barline"><div class="charts" style="width:${order.matchPercent};"></div></dd><dd>${order.matchPercent}</dd></dl></div>
                  </div>
                  <div class="clearFix">
                  <div class="wt-t">海外账户信息</div>

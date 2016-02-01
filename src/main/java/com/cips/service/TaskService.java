@@ -55,4 +55,7 @@ public interface TaskService {
 	 * @throws Exception
 	 */
 	public Integer getTaskNum(Map<String, Object> params) throws Exception;
+	
+	
+	public List<Task> getTasksByParams(Map<String, Object> params) throws Exception;
 }

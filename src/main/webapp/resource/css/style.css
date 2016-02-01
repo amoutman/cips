@@ -312,3 +312,10 @@
 /*待办数量图标*/
 .menu li{ position:relative;}
 .menu li .waitnum{ position:absolute; left:125px; top:10px; width:16px; font-size:12px; font-family:"宋体"; color:#fff; text-align:center; height:16px; line-height:16px;background:url(../images/dotnum.png) no-repeat; }
+
+/*待办事项弹窗*/
+.waitDiv{ left:50%; margin-left:-225px; height:315px; top:50%; margin-top:-157px;}
+.waitDiv .btnDiv .btnOrage{ display:inline-block !important; margin:0 5px;}
+.waitDiv .input-txt{ border:1px solid #dcdcdc; text-align:center; height:35px; line-height:35px; width:260px;}
+.waitDiv .w470{ padding:5px 0;}
+.waitDiv .log-txt{ padding-left:100px; padding-top:5px;}

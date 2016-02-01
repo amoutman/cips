@@ -763,4 +763,9 @@ public class TaskServiceImpl implements TaskService {
 		return taskMapper.getTaskNum(params);
 	}
 
+	@Override
+	public List<Task> getTasksByParams(Map<String, Object> params) throws Exception {
+		return taskMapper.getTasksByParams(params);
+	}
+
 }
