@@ -222,7 +222,7 @@
  		and str_to_date(o.apply_date,'%Y-%m-%d') &lt;= str_to_date(#{order.applyEDate},'%Y-%m-%d')
  	</if>
   </select>-->
-  <select id="toPageOrderListByParams" parameterType="Map" resultMap="com.cips.model.Order">
+  <select id="toPageOrderListByParams" parameterType="Map" resultType="com.cips.model.Order">
 	select
       o.id id, 
       o.order_no orderNo, 
@@ -239,7 +239,7 @@
       o.completed_date completedDate, 
       o.hw_user_id hwUserId,
       o.hc_apply_amount hcApplyAmount,
-      a.match_amount matchAmount
+      a.amount_total matchAmount
     from tb_order o,tb_account_amount a
 	where o.id = a.order_id
     <if test="order.applyId != null and order.applyId != ''">

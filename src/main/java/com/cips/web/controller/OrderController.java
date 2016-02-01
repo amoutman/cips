@@ -272,13 +272,13 @@ public class OrderController {
 			//查询参数
 			Map<String, Object> params = new HashMap<String, Object>();
 			params.put(GlobalPara.PAGER_SESSION, pager);
-			for (Role role : roles) {
-				if(GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName()) || GlobalPara.RNAME_PL_CHECKER.equals(role.getRoleName()) 
-						|| GlobalPara.RNAME_PL_OPERATOR.equals(role.getRoleName())){
-				}else{
-					order.setApplyId(user.getId());
-				}
-			}
+//			for (Role role : roles) {
+//				if(GlobalPara.RNAME_SUPER_ADMIN.equals(role.getRoleName()) || GlobalPara.RNAME_PL_CHECKER.equals(role.getRoleName()) 
+//						|| GlobalPara.RNAME_PL_OPERATOR.equals(role.getRoleName())){
+//				}else{
+//					order.setApplyId(user.getId());
+//				}
+//			}
 			order.setStatus(0);
 			params.put("order", order);
 			//分页查询
@@ -298,7 +298,7 @@ public class OrderController {
 			mv.addObject("orders", orders);
 			mv.addObject("orderNum", orders.size());
 			mv.addObject("pager", pager);
-			mv.setViewName("order/toPageOrders");
+			mv.setViewName("order/toPageChangeOrderAmount");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -330,7 +330,7 @@ public class OrderController {
 			mv.addObject("hwAcc", hwAcc);
 			mv.addObject("user", user);
 			mv.addObject("order", order);
-			mv.setViewName("order/viewOrder");
+			mv.setViewName("order/matchOrderAmount");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
